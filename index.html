@@ -16,7 +16,7 @@
         .time-slot { background-color: #f0f7ff; color: #1e40af; border: 1px solid #dbeafe; text-align: center; cursor: pointer; }
         .time-slot.active { background-color: #1e40af; color: white; border-color: #1e40af; }
         .main-container { max-width: 480px; margin: 0 auto; min-height: 100vh; background: white; width: 100%; overflow-x: hidden; }
-        input[type="date"] { width: 100%; display: block; -webkit-appearance: none; }
+        input[type="date"] { width: 100%; display: block; -webkit-appearance: none; background: #fff; }
     </style>
 </head>
 <body>
@@ -60,13 +60,14 @@
                 <div class="mb-8">
                     <label class="block text-sm font-bold text-gray-400 mb-2 uppercase">1. 選擇預約日期</label>
                     <input type="date" id="bookDate" onchange="generateTimeSlots()" 
-                           class="w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-blue-500 font-medium">
+                           class="w-full border-2 border-gray-100 p-4 rounded-2xl outline-none focus:border-blue-500 font-medium text-gray-700">
                 </div>
 
                 <div id="time-area">
                     <label class="block text-sm font-bold text-gray-400 mb-4 uppercase">2. 選擇開始時間</label>
                     <div id="timeSlots" class="grid grid-cols-3 gap-2">
                         </div>
+                    <p id="no-time-msg" class="text-red-500 text-sm mt-4 hidden text-center font-bold">今天已過營業時間，請選擇其他日期。</p>
                 </div>
 
                 <button id="nextBtn" onclick="toStep(3)" disabled 
@@ -92,53 +93,80 @@
     </div>
 
     <script>
-        // 核心資料結構
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
 
-        // 1. 初始化日期限制 (今日起 60 天內)
-        function initDatePicker() {
-            const dateInput = document.getElementById('bookDate');
-            const today = new Date();
-            const maxDate = new Date();
-            maxDate.setDate(today.getDate() + 60);
-            
-            dateInput.min = today.toISOString().split('T')[0];
-            dateInput.max = maxDate.toISOString().split('T')[0];
+        // 取得台灣當前日期 (YYYY-MM-DD)
+        function getTodayString() {
+            const now = new Date();
+            const offset = now.getTimezoneOffset();
+            const localDate = new Date(now.getTime() - (offset * 60 * 1000));
+            return localDate.toISOString().split('T')[0];
         }
 
-        // 2. 選擇門市：關鍵修正 - 進入時徹底重置
+        // 1. 初始化日期限制
+        function initDatePicker() {
+            const dateInput = document.getElementById('bookDate');
+            const todayStr = getTodayString();
+            
+            const maxDate = new Date();
+            maxDate.setDate(maxDate.getDate() + 60);
+            const maxStr = maxDate.toISOString().split('T')[0];
+            
+            dateInput.min = todayStr;
+            dateInput.max = maxStr;
+        }
+
+        // 2. 選擇門市
         function selectStore(name, start, end) {
-            // 設定該門市的參數
             bookingData.store = name;
             bookingData.startH = start;
             bookingData.endH = end;
 
-            // 徹底重置之前的選擇
             bookingData.date = '';
             bookingData.time = '';
             document.getElementById('bookDate').value = '';
             document.getElementById('timeSlots').innerHTML = '';
+            document.getElementById('no-time-msg').classList.add('hidden');
             resetNextBtn();
 
-            // 進入下一步
             toStep(2);
             initDatePicker();
         }
 
-        // 3. 生成時間段：確保根據當前門市 startH/endH 動態生成
+        // 3. 生成時間段 (包含「過去時間」過濾邏輯)
         function generateTimeSlots() {
             const dateVal = document.getElementById('bookDate').value;
             bookingData.date = dateVal;
             const container = document.getElementById('timeSlots');
-            container.innerHTML = ''; // 每次更換日期也清空舊時間
+            const msg = document.getElementById('no-time-msg');
+            container.innerHTML = '';
+            msg.classList.add('hidden');
             
             if (!dateVal) return;
 
-            // 邏輯：從 startH 到 endH 每 30 分鐘一格
+            const todayStr = getTodayString();
+            const isToday = (dateVal === todayStr);
+            
+            // 取得現在的小時與分鐘
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+
+            let count = 0;
+
             for (let h = bookingData.startH; h <= bookingData.endH; h++) {
                 ['00', '30'].forEach(m => {
-                    // 指令修正：若為 endH 且為 30 分，則跳過 (不超過最晚預約時間)
                     if (h === bookingData.endH && m === '30') return;
+                    
+                    const slotHour = h;
+                    const slotMin = parseInt(m);
+
+                    // 關鍵修正：如果是今天，必須晚於目前時間
+                    if (isToday) {
+                        if (slotHour < currentHour || (slotHour === currentHour && slotMin <= currentMinute)) {
+                            return; // 過去的時間，不生成按鈕
+                        }
+                    }
                     
                     const time = `${h}:${m}`;
                     const btn = document.createElement('button');
@@ -146,9 +174,14 @@
                     btn.innerText = time;
                     btn.onclick = () => setTime(time, btn);
                     container.appendChild(btn);
+                    count++;
                 });
             }
-            resetNextBtn(); // 生成新時段後，按鈕恢復灰色，直到再次選取時間
+
+            if (count === 0) {
+                msg.classList.remove('hidden');
+            }
+            resetNextBtn();
         }
 
         function setTime(time, el) {
@@ -172,8 +205,6 @@
             document.getElementById('step-2').classList.add('hidden');
             document.getElementById('step-3').classList.add('hidden');
             document.getElementById('step-' + step).classList.remove('hidden');
-            
-            // 顯示/隱藏返回鍵
             document.getElementById('nav-bar').classList.toggle('hidden', step === 1);
             window.scrollTo(0,0);
         }
@@ -190,7 +221,7 @@
                 alert("請填寫所有欄位");
                 return;
             }
-            alert(`✅ 預約資料已備妥\n門市：${bookingData.store}\n時間：${bookingData.date} ${bookingData.time}\n\n準備進行 Google 行事曆連動測試！`);
+            alert(`✅ 預約資料已備妥\n門市：${bookingData.store}\n時間：${bookingData.date} ${bookingData.time}`);
         }
     </script>
 </body>
