@@ -32,12 +32,11 @@
             position: relative;
         }
 
-        /* 門市圖卡比例自動分配 */
         .store-list {
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            gap: 12px;
+            gap: 10px;
             min-height: 0;
         }
         .store-card {
@@ -48,18 +47,18 @@
             border-radius: 1rem;
             overflow: hidden;
             min-height: 0;
+            background: white;
         }
         .store-card img {
-            flex-grow: 1;
-            height: 40%;
+            height: 100%;
+            width: 100%;
             object-fit: cover;
+            min-height: 0;
         }
 
         .btn-yellow { background-color: #F7D358; color: #333; }
         .time-slot { background-color: #f0f7ff; color: #1e40af; border: 1px solid #dbeafe; }
         .time-slot.active { background-color: #1e40af; color: white; border-color: #1e40af; }
-
-        /* 隱藏滾動條但保持功能 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
@@ -67,46 +66,45 @@
 
     <div class="app-container shadow-2xl">
         <div id="nav-bar" class="h-14 border-b flex items-center px-4 shrink-0 hidden">
-            <button onclick="goBack()" class="text-blue-500 font-bold flex items-center">
+            <button onclick="goBack()" class="text-blue-500 font-bold flex items-center text-lg">
                 <span class="text-2xl mr-1">‹</span> 返回
             </button>
         </div>
 
-        <div id="content-area" class="flex-grow flex flex-col p-4 overflow-hidden">
+        <div id="main-content" class="flex-grow flex flex-col p-4 overflow-hidden">
             
             <div id="step-1" class="flex flex-col h-full space-y-3">
                 <h2 class="text-xl font-bold text-gray-800 shrink-0">請選擇維修門市</h2>
                 <div class="store-list">
-                    <div class="store-card shadow-sm">
+                    <div class="store-card">
                         <img src="https://placehold.co/600x300?text=BlackBox+Chinmei" alt="勤美店">
-                        <div class="p-3 bg-white shrink-0">
+                        <div class="p-3 shrink-0">
                             <h3 class="font-bold text-base">黑盒子 (勤美公益店)</h3>
-                            <p class="text-gray-500 text-xs">11:00-20:00 | 西區公益路145號</p>
-                            <button onclick="selectStore('勤美公益店', 11, 19)" class="w-full mt-2 btn-yellow font-bold py-3 rounded-xl text-sm active:scale-95 transition-transform">選擇</button>
+                            <p class="text-gray-500 text-xs">11:00-20:00 | 台中市西區公益路145號</p>
+                            <button onclick="selectStore('勤美公益店', 11, 19)" class="w-full mt-2 btn-yellow font-bold py-3 rounded-xl text-sm active:scale-95 transition-transform">選擇此門市</button>
                         </div>
                     </div>
-                    <div class="store-card shadow-sm">
+                    <div class="store-card">
                         <img src="https://placehold.co/600x300?text=BlackBox+Shalu" alt="沙鹿店">
-                        <div class="p-3 bg-white shrink-0">
+                        <div class="p-3 shrink-0">
                             <h3 class="font-bold text-base">黑盒子 (沙鹿站前店)</h3>
-                            <p class="text-gray-500 text-xs">12:00-21:00 | 沙鹿區沙田路149號</p>
-                            <button onclick="selectStore('沙鹿站前店', 12, 20)" class="w-full mt-2 btn-yellow font-bold py-3 rounded-xl text-sm active:scale-95 transition-transform">選擇</button>
+                            <p class="text-gray-500 text-xs">12:00-21:00 | 台中市沙鹿區沙田路149號</p>
+                            <button onclick="selectStore('沙鹿站前店', 12, 20)" class="w-full mt-2 btn-yellow font-bold py-3 rounded-xl text-sm active:scale-95 transition-transform">選擇此門市</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="step-2" class="hidden flex-col h-full">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 shrink-0">選擇預約日期與時間</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 shrink-0">選擇日期與時間</h2>
                 <div class="mb-4 shrink-0">
                     <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">1. 選擇預約日期</label>
-                    <input type="date" id="bookDate" onchange="handleDateChange()" 
-                           class="w-full border-2 border-gray-100 p-3 rounded-xl outline-none focus:border-blue-500">
+                    <input type="date" id="bookDate" onchange="handleDateChange()" class="w-full border-2 border-gray-100 p-3 rounded-xl outline-none focus:border-blue-500">
                 </div>
                 <div class="flex-grow flex flex-col min-h-0">
                     <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">2. 選擇開始時間</label>
                     <div id="timeSlots" class="grid grid-cols-3 gap-2 overflow-y-auto no-scrollbar pb-4"></div>
-                    <p id="no-time-msg" class="text-red-500 text-sm mt-2 hidden text-center font-bold">該日期已無可預約時段</p>
+                    <p id="no-time-msg" class="text-red-500 text-sm mt-2 hidden text-center font-bold">該日期已無時段可選</p>
                 </div>
                 <button id="nextBtn" onclick="toStep(3)" disabled class="w-full mt-4 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold shrink-0">下一步</button>
             </div>
@@ -116,13 +114,13 @@
                 <div class="space-y-4 shrink-0">
                     <input type="text" id="custName" placeholder="客戶姓名 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500">
                     <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500">
-                    <input type="text" id="deviceModel" placeholder="設備型號 (iPhone 15...)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500">
+                    <input type="text" id="deviceModel" placeholder="設備型號 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500">
                 </div>
                 <div class="mt-4 flex-grow flex flex-col min-h-0">
-                    <label class="text-xs font-bold text-gray-400 mb-1">狀況描述</label>
-                    <textarea id="issueDesc" placeholder="請描述您的問題..." class="w-full border-2 p-3 rounded-xl flex-grow outline-none focus:border-blue-500 resize-none"></textarea>
+                    <label class="text-xs font-bold text-gray-400 mb-1 uppercase">狀況描述</label>
+                    <textarea id="issueDesc" placeholder="請簡單描述維修問題..." class="w-full border-2 p-3 rounded-xl flex-grow outline-none focus:border-blue-500 resize-none"></textarea>
                 </div>
-                <button onclick="submitBooking()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-lg mt-4 shrink-0 active:scale-95 transition-transform">確認送出</button>
+                <button onclick="submitBooking()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-lg mt-4 shrink-0 active:scale-95 transition-transform">確認送出預約</button>
             </div>
 
         </div>
@@ -182,7 +180,6 @@
                 ['00', '30'].forEach(m => {
                     if (h === bookingData.endH && m === '30') return;
                     if (isToday && (h < now.getHours() || (h === now.getHours() && parseInt(m) <= now.getMinutes()))) return;
-                    
                     const time = `${h}:${m}`;
                     const btn = document.createElement('button');
                     btn.className = 'time-slot py-3 rounded-xl font-bold text-xs';
@@ -202,33 +199,28 @@
             el.classList.add('active');
             const nextBtn = document.getElementById('nextBtn');
             nextBtn.disabled = false;
-            nextBtn.classList.remove('bg-gray-200', 'text-gray-400');
-            nextBtn.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+            nextBtn.className = "w-full mt-4 bg-blue-600 text-white py-4 rounded-2xl font-bold shrink-0 shadow-md";
         }
 
         function resetNextBtn() {
             const nextBtn = document.getElementById('nextBtn');
             nextBtn.disabled = true;
-            nextBtn.classList.add('bg-gray-200', 'text-gray-400');
-            nextBtn.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+            nextBtn.className = "w-full mt-4 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold shrink-0";
             bookingData.time = '';
         }
 
         function toStep(step) {
-            // 隱藏所有步驟
-            document.getElementById('step-1').classList.add('hidden');
-            document.getElementById('step-1').classList.remove('flex');
-            document.getElementById('step-2').classList.add('hidden');
-            document.getElementById('step-2').classList.remove('flex');
-            document.getElementById('step-3').classList.add('hidden');
-            document.getElementById('step-3').classList.remove('flex');
-
-            // 顯示目標步驟
-            const target = document.getElementById('step-' + step);
-            target.classList.remove('hidden');
-            target.classList.add('flex');
-            
-            // 導航欄顯示邏輯
+            const steps = [1, 2, 3];
+            steps.forEach(s => {
+                const el = document.getElementById('step-' + s);
+                if (s === step) {
+                    el.classList.remove('hidden');
+                    el.classList.add('flex');
+                } else {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                }
+            });
             document.getElementById('nav-bar').classList.toggle('hidden', step === 1);
         }
 
@@ -243,7 +235,7 @@
                 alert("請完整填寫所有欄位");
                 return;
             }
-            alert(`✅ 預約資料已備妥！\n門市：${bookingData.store}\n日期：${bookingData.date} ${bookingData.time}`);
+            alert(`✅ 預約準備送出！\n門市：${bookingData.store}\n日期：${bookingData.date} ${bookingData.time}`);
         }
     </script>
 </body>
