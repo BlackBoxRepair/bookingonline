@@ -70,6 +70,20 @@
             color: #374151;
             width: 100%;
             outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="date"]:focus { border-color: #3b82f6; }
+
+        /* 讀取中遮罩 */
+        #loading-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.8);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -81,11 +95,16 @@
             </button>
         </div>
 
+        <div id="loading-overlay">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
+            <p class="text-blue-600 font-bold">預約資料同步中...</p>
+        </div>
+
         <div class="scroll-content" id="main-scroll">
             <div id="step-1" class="flex flex-col">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">請選擇維修門市</h2>
                 <div class="store-card">
-                    <img src="https://placehold.co/600x400?text=BlackBox+Chinmei" alt="勤美店">
+                    <img src="https://placehold.co/600x400?text=BlackBox+Chinmei" alt="勤美公益店">
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子 (勤美公益店)</h3>
                         <p class="text-gray-500 text-sm mt-1">每日 11:00-20:00 | 台中市西區公益路145號</p>
@@ -93,7 +112,7 @@
                     </div>
                 </div>
                 <div class="store-card">
-                    <img src="https://placehold.co/600x400?text=BlackBox+Shalu" alt="沙鹿店">
+                    <img src="https://placehold.co/600x400?text=BlackBox+Shalu" alt="沙鹿站前店">
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子 (沙鹿站前店)</h3>
                         <p class="text-gray-500 text-sm mt-1">每日 12:00-21:00 | 台中市沙鹿區沙田路149號</p>
@@ -111,7 +130,7 @@
                 <div class="mb-6">
                     <label class="block text-xs font-bold text-gray-400 mb-3 uppercase tracking-widest">2. 選擇開始時間</label>
                     <div id="timeSlots" class="grid grid-cols-3 gap-3"></div>
-                    <p id="no-time-msg" class="text-red-500 text-sm mt-4 hidden text-center font-bold italic">該日期已無可預約時段。</p>
+                    <p id="no-time-msg" class="text-red-500 text-sm mt-4 hidden text-center font-bold">該日期已無可選時段。</p>
                 </div>
                 <button id="nextBtn" onclick="toStep(3)" disabled class="w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold transition-all duration-300">下一步</button>
             </div>
@@ -126,14 +145,14 @@
                         <label class="text-xs font-bold text-gray-400 mb-1 block uppercase">狀況描述</label>
                         <textarea id="issueDesc" placeholder="請簡單描述您的維修需求..." class="w-full border-2 p-4 rounded-2xl h-36 outline-none focus:border-blue-500 resize-none text-base"></textarea>
                     </div>
-                    <button onclick="submitBooking()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold text-xl shadow-lg mt-4 active:scale-95 transition-transform">確認送出預約</button>
+                    <button id="finalSubmitBtn" onclick="submitBooking()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold text-xl shadow-lg mt-4 active:scale-95 transition-transform">確認送出預約</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // 禁止縮放邏輯
+        // 禁止縮放
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
         document.addEventListener('touchend', (e) => {
@@ -144,6 +163,7 @@
 
         let currentStep = 1;
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
 
         const getToday = () => {
             const now = new Date();
@@ -154,10 +174,7 @@
             bookingData = { store: n, startH: s, endH: e, date: '', time: '' };
             document.getElementById('bookDate').value = '';
             document.getElementById('timeSlots').innerHTML = '';
-            const d = document.getElementById('bookDate');
-            d.min = getToday();
-            const max = new Date(); max.setDate(max.getDate() + 60);
-            d.max = max.toISOString().split('T')[0];
+            document.getElementById('bookDate').min = getToday();
             updateNextBtnStatus();
             toStep(2);
         }
@@ -204,34 +221,46 @@
 
         function toStep(s) {
             currentStep = s;
-            // 隱藏所有步驟
-            [1, 2, 3].forEach(i => {
-                const el = document.getElementById('step-' + i);
-                el.classList.add('hidden');
-                el.classList.remove('flex');
-            });
-            // 顯示當前步驟
+            [1, 2, 3].forEach(i => document.getElementById('step-' + i).classList.replace('flex', 'hidden'));
             const target = document.getElementById('step-' + s);
-            target.classList.remove('hidden');
-            target.classList.add('flex');
-            
-            // 處理導覽列顯示
+            target.classList.replace('hidden', 'flex');
             document.getElementById('nav-bar').classList.toggle('hidden', s === 1);
             document.getElementById('main-scroll').scrollTop = 0;
         }
 
-        function goBack() {
-            if (currentStep > 1) {
-                toStep(currentStep - 1);
-            }
-        }
+        function goBack() { if (currentStep > 1) toStep(currentStep - 1); }
 
-        function submitBooking() {
+        async function submitBooking() {
             const v = (id) => document.getElementById(id).value.trim();
             if(!v('custName') || !v('custPhone') || !v('deviceModel') || !v('issueDesc')) {
                 alert("請完整填寫所有必填欄位"); return;
             }
-            alert(`✅ 預約準備送出！\n門市：${bookingData.store}\n日期時間：${bookingData.date} ${bookingData.time}`);
+
+            document.getElementById('loading-overlay').style.display = 'flex';
+
+            const finalData = {
+                store: bookingData.store,
+                date: bookingData.date,
+                time: bookingData.time,
+                name: v('custName'),
+                phone: v('custPhone'),
+                model: v('deviceModel'),
+                desc: v('issueDesc')
+            };
+
+            try {
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(finalData)
+                });
+                
+                alert(`✅ 預約成功！\n\n感謝 ${finalData.name}，資料已同步至黑盒子行事曆。`);
+                location.reload(); 
+            } catch (error) {
+                alert("連線失敗，請檢查網路。");
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
         }
     </script>
 </body>
