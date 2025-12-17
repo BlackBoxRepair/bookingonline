@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>維修預約系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+
+    <div id="booking-app" class="bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
+        <div class="flex justify-between mb-8">
+            <div id="step-dot-1" class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center">1</div>
+            <div id="step-dot-2" class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">2</div>
+            <div id="step-dot-3" class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center">3</div>
+        </div>
+
+        <div id="step-1">
+            <h2 class="text-xl font-bold mb-6 text-center">選擇維修門市</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="selectStore('勤美公益店')" class="border-2 border-gray-100 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition">
+                    <div class="text-4xl mb-2">🏢</div>
+                    <div class="font-medium">勤美公益店</div>
+                </button>
+                <button onclick="selectStore('沙鹿站前店')" class="border-2 border-gray-100 p-4 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition">
+                    <div class="text-4xl mb-2">🏪</div>
+                    <div class="font-medium">沙鹿站前店</div>
+                </button>
+            </div>
+        </div>
+
+        <div id="step-2" class="hidden">
+            <h2 class="text-xl font-bold mb-6 text-center">選擇預約日期與時間</h2>
+            <input type="date" id="bookDate" class="w-full border p-3 rounded-lg mb-4">
+            <select id="bookTime" class="w-full border p-3 rounded-lg mb-6">
+                <option value="11:00">11:00</option>
+                <option value="14:00">14:00</option>
+                <option value="16:00">16:00</option>
+                <option value="19:00">19:00</option>
+            </select>
+            <button onclick="toStep(3)" class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold">下一步</button>
+        </div>
+
+        <div id="step-3" class="hidden">
+            <h2 class="text-xl font-bold mb-6 text-center">填寫客戶資訊</h2>
+            <div class="space-y-4">
+                <input type="text" id="custName" placeholder="客戶姓名" class="w-full border p-3 rounded-lg" required>
+                <input type="tel" id="custPhone" placeholder="聯絡電話" class="w-full border p-3 rounded-lg" required>
+                <input type="text" id="deviceModel" placeholder="設備型號" class="w-full border p-3 rounded-lg" required>
+                <textarea id="issueDesc" placeholder="狀況描述" class="w-full border p-3 rounded-lg h-24" required></textarea>
+                <button onclick="submitBooking()" id="submitBtn" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold">確認送出預約</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let bookingData = { store: '', date: '', time: '' };
+
+        function selectStore(name) {
+            bookingData.store = name;
+            toStep(2);
+        }
+
+        function toStep(step) {
+            document.querySelectorAll('#booking-app > div[id^="step-"]').forEach(el => el.classList.add('hidden'));
+            document.getElementById('step-' + step).classList.remove('hidden');
+            // 更新進度條顏色
+            for(let i=1; i<=3; i++) {
+                const dot = document.getElementById('step-dot-' + i);
+                dot.className = i <= step ? "w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center" : "w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center";
+            }
+        }
+
+        function submitBooking() {
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "處理中...";
+
+            const finalData = {
+                ...bookingData,
+                date: document.getElementById('bookDate').value,
+                time: document.getElementById('bookTime').value,
+                name: document.getElementById('custName').value,
+                phone: document.getElementById('custPhone').value,
+                model: document.getElementById('deviceModel').value,
+                desc: document.getElementById('issueDesc').value
+            };
+
+            // 這裡連接到 Google Apps Script
+            console.log("送出資料:", finalData);
+            alert("預約成功！資料已傳送至行事曆。");
+            // 實際串接時使用 google.script.run
+        }
+    </script>
+</body>
+</html>
