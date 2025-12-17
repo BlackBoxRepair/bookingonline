@@ -3,85 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專業手機維修預約</title>
+    <title>黑盒子維修預約</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
         body { font-family: 'Noto Sans TC', sans-serif; }
-        .step-transition { transition: all 0.3s ease-in-out; }
+        /* 模仿截圖中的黃色按鈕顏色 */
+        .btn-yellow { background-color: #F7D358; }
+        .btn-yellow:hover { background-color: #f2c730; }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen py-10 px-4">
+<body class="bg-gray-100 min-h-screen">
 
-    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div class="bg-blue-600 p-6 text-white text-center">
-            <h1 class="text-2xl font-bold">維修預約系統</h1>
-            <p class="text-blue-100 text-sm mt-1">請填寫以下資訊，我們將為您安排時間</p>
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg flex flex-col">
+        
+        <div id="nav-bar" class="p-4 flex items-center border-b hidden">
+            <button onclick="goBack()" class="text-blue-500 flex items-center">
+                <span class="text-xl mr-1">〈</span> 返回
+            </button>
         </div>
 
-        <div class="flex items-center justify-center space-x-4 py-6 border-b border-gray-100">
-            <div id="dot-1" class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold">1</div>
-            <div class="w-10 h-0.5 bg-gray-200"></div>
-            <div id="dot-2" class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-500 font-bold">2</div>
-            <div class="w-10 h-0.5 bg-gray-200"></div>
-            <div id="dot-3" class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-500 font-bold">3</div>
-        </div>
+        <div class="p-4 flex-grow">
+            <div id="step-1" class="space-y-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">請選擇維修門市</h2>
+                
+                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                    <img src="https://placehold.co/600x400?text=BlackBox+Chinmei" alt="勤美店" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-800">黑盒子維修中心 (勤美公益店)</h3>
+                        <div class="mt-3 space-y-2 text-gray-600 text-sm">
+                            <p>服務時間：每日 11:00 - 20:00</p>
+                            <p>服務據點：台中市西區公益路145號 (近勤美誠品及NOVA)</p>
+                        </div>
+                        <button onclick="selectStore('勤美公益店')" class="w-full mt-4 btn-yellow text-gray-800 font-bold py-3 rounded-md transition duration-200">
+                            選擇
+                        </button>
+                    </div>
+                </div>
 
-        <div class="p-8">
-            <div id="step-1" class="step-transition">
-                <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">選擇維修門市</h3>
-                <div class="grid grid-cols-1 gap-4">
-                    <button onclick="selectStore('勤美公益店')" class="flex items-center p-4 border-2 border-gray-100 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition group text-left">
-                        <div class="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center text-3xl group-hover:scale-110 transition">
-                            🏢 </div>
-                        <div class="ml-4">
-                            <div class="font-bold text-gray-800">勤美公益店</div>
-                            <div class="text-xs text-gray-500">台中市西區公益路...</div>
+                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+                    <img src="https://placehold.co/600x400?text=BlackBox+Shalu" alt="沙鹿店" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-gray-800">黑盒子維修中心 (沙鹿站前店)</h3>
+                        <div class="mt-3 space-y-2 text-gray-600 text-sm">
+                            <p>服務時間：每日 11:00 - 20:00</p>
+                            <p>服務據點：台中市沙鹿區沙田路...(請填寫詳細地址)</p>
                         </div>
-                    </button>
-                    <button onclick="selectStore('沙鹿站前店')" class="flex items-center p-4 border-2 border-gray-100 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition group text-left">
-                        <div class="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center text-3xl group-hover:scale-110 transition">
-                            🏪 </div>
-                        <div class="ml-4">
-                            <div class="font-bold text-gray-800">沙鹿站前店</div>
-                            <div class="text-xs text-gray-500">台中市沙鹿區沙田路...</div>
-                        </div>
-                    </button>
+                        <button onclick="selectStore('沙鹿站前店')" class="w-full mt-4 btn-yellow text-gray-800 font-bold py-3 rounded-md transition duration-200">
+                            選擇
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div id="step-2" class="hidden step-transition">
-                <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">選擇日期與時段</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">預約日期</label>
-                        <input type="date" id="bookDate" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+            <div id="step-2" class="hidden py-4">
+                <h3 class="text-lg font-bold mb-6">選擇預約日期與時間</h3>
+                <div class="space-y-6">
+                    <input type="date" id="bookDate" class="w-full border p-4 rounded-lg text-lg">
+                    <div class="grid grid-cols-2 gap-2" id="timeSlots">
+                        <button onclick="setTime('11:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">11:00</button>
+                        <button onclick="setTime('14:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">14:00</button>
+                        <button onclick="setTime('16:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">16:00</button>
+                        <button onclick="setTime('19:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">19:00</button>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">預約時段</label>
-                        <select id="bookTime" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            <option value="11:00">11:00 (上午)</option>
-                            <option value="13:00">13:00 (下午)</option>
-                            <option value="15:00">15:00 (下午)</option>
-                            <option value="17:00">17:00 (傍晚)</option>
-                            <option value="19:00">19:00 (晚上)</option>
-                        </select>
-                    </div>
-                    <button onclick="toStep(3)" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold shadow-md transition">下一步</button>
-                    <button onclick="toStep(1)" class="w-full text-gray-400 text-sm py-2">返回上一步</button>
+                    <button onclick="toStep(3)" id="nextToStep3" disabled class="w-full bg-gray-300 text-white py-4 rounded-lg font-bold">下一步</button>
                 </div>
             </div>
 
-            <div id="step-3" class="hidden step-transition">
-                <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">填寫聯絡資訊</h3>
+            <div id="step-3" class="hidden py-4">
+                <h3 class="text-lg font-bold mb-6">填寫預約資訊</h3>
                 <div class="space-y-4">
-                    <input type="text" id="custName" placeholder="客戶姓名 (必填)" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <input type="text" id="deviceModel" placeholder="設備型號 (例: iPhone 15)" class="w-full border-gray-300 border p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <textarea id="issueDesc" placeholder="狀況描述 (例: 螢幕破裂、無法開機)" class="w-full border-gray-300 border p-3 rounded-lg h-24 focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
-                    
-                    <button onclick="submitBooking()" id="submitBtn" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-lg font-bold shadow-lg transition">確認並送出預約</button>
-                    <button onclick="toStep(2)" class="w-full text-gray-400 text-sm py-2">返回修改時間</button>
+                    <input type="text" id="custName" placeholder="客戶姓名 (必填)" class="w-full border p-4 rounded-lg">
+                    <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" class="w-full border p-4 rounded-lg">
+                    <input type="text" id="deviceModel" placeholder="設備型號 (必填)" class="w-full border p-4 rounded-lg">
+                    <textarea id="issueDesc" placeholder="狀況描述 (必填)" class="w-full border p-4 rounded-lg h-32"></textarea>
+                    <button onclick="submitBooking()" class="w-full bg-green-600 text-white py-4 rounded-lg font-bold text-lg">送出預約</button>
                 </div>
             </div>
         </div>
@@ -95,44 +91,42 @@
             toStep(2);
         }
 
+        function setTime(time) {
+            bookingData.time = time;
+            // 處理選中效果
+            document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('bg-blue-500', 'text-white'));
+            event.target.classList.add('bg-blue-500', 'text-white');
+            document.getElementById('nextToStep3').disabled = false;
+            document.getElementById('nextToStep3').classList.replace('bg-gray-300', 'bg-blue-600');
+        }
+
         function toStep(step) {
-            // 隱藏所有步驟
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.add('hidden');
             document.getElementById('step-3').classList.add('hidden');
-            
-            // 顯示當前步驟
             document.getElementById('step-' + step).classList.remove('hidden');
+            
+            // 步驟 1 不顯示返回鍵，2、3 顯示
+            document.getElementById('nav-bar').classList.toggle('hidden', step === 1);
+        }
 
-            // 更新圓點顏色
-            for (let i = 1; i <= 3; i++) {
-                const dot = document.getElementById('dot-' + i);
-                if (i <= step) {
-                    dot.classList.remove('bg-gray-200', 'text-gray-500');
-                    dot.classList.add('bg-blue-600', 'text-white');
-                } else {
-                    dot.classList.remove('bg-blue-600', 'text-white');
-                    dot.classList.add('bg-gray-200', 'text-gray-500');
-                }
-            }
+        function goBack() {
+            // 簡易的返回邏輯
+            const current = document.querySelector('div[id^="step-"]:not(.hidden)').id;
+            if (current === 'step-2') toStep(1);
+            if (current === 'step-3') toStep(2);
         }
 
         function submitBooking() {
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            if(!name || !phone) {
-                alert("請填寫姓名與電話");
-                return;
+            // 驗證欄位是否填寫
+            const fields = ['custName', 'custPhone', 'deviceModel', 'issueDesc'];
+            for(let f of fields) {
+                if(!document.getElementById(f).value) {
+                    alert("請完整填寫所有欄位");
+                    return;
+                }
             }
-
-            const btn = document.getElementById('submitBtn');
-            btn.disabled = true;
-            btn.innerText = "預約傳送中...";
-            
-            // 這裡留空，等待 GAS 網址備妥後再串接
-            alert("網頁設計已完成！請接續進行 GAS 部署後填入網址。");
-            btn.disabled = false;
-            btn.innerText = "確認並送出預約";
+            alert("資料已收集，準備與 Google 行事曆連動！");
         }
     </script>
 </body>
