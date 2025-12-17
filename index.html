@@ -7,97 +7,153 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; }
-        /* 模仿截圖中的黃色按鈕顏色 */
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f9fafb; }
         .btn-yellow { background-color: #F7D358; }
         .btn-yellow:hover { background-color: #f2c730; }
+        .time-slot { background-color: #E3F2FD; color: #1E88E5; border: 1px solid transparent; transition: all 0.2s; }
+        .time-slot.active { background-color: #1E88E5; color: white; }
+        input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="min-h-screen">
 
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg flex flex-col">
         
-        <div id="nav-bar" class="p-4 flex items-center border-b hidden">
-            <button onclick="goBack()" class="text-blue-500 flex items-center">
+        <div id="nav-bar" class="p-4 flex items-center border-b sticky top-0 bg-white z-10 hidden">
+            <button onclick="goBack()" class="text-blue-500 flex items-center font-medium">
                 <span class="text-xl mr-1">〈</span> 返回
             </button>
         </div>
 
-        <div class="p-4 flex-grow">
+        <div class="p-6 flex-grow">
             <div id="step-1" class="space-y-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-4">請選擇維修門市</h2>
                 
-                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                    <img src="https://placehold.co/600x400?text=BlackBox+Chinmei" alt="勤美店" class="w-full h-48 object-cover">
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+                    <img src="https://placehold.co/600x400?text=BlackBox+Chinmei" alt="勤美店" class="w-full h-44 object-cover">
                     <div class="p-5">
                         <h3 class="text-lg font-bold text-gray-800">黑盒子維修中心 (勤美公益店)</h3>
-                        <div class="mt-3 space-y-2 text-gray-600 text-sm">
+                        <div class="mt-2 space-y-1 text-gray-500 text-sm">
                             <p>服務時間：每日 11:00 - 20:00</p>
-                            <p>服務據點：台中市西區公益路145號 (近勤美誠品及NOVA)</p>
+                            <p>服務據點：台中市西區公益路145號</p>
                         </div>
-                        <button onclick="selectStore('勤美公益店')" class="w-full mt-4 btn-yellow text-gray-800 font-bold py-3 rounded-md transition duration-200">
-                            選擇
-                        </button>
+                        <button onclick="selectStore('勤美公益店', '11:00', '19:00')" class="w-full mt-4 btn-yellow text-gray-800 font-bold py-3 rounded-lg shadow-sm">選擇</button>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
-                    <img src="https://placehold.co/600x400?text=BlackBox+Shalu" alt="沙鹿店" class="w-full h-48 object-cover">
+                <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+                    <img src="https://placehold.co/600x400?text=BlackBox+Shalu" alt="沙鹿店" class="w-full h-44 object-cover">
                     <div class="p-5">
                         <h3 class="text-lg font-bold text-gray-800">黑盒子維修中心 (沙鹿站前店)</h3>
-                        <div class="mt-3 space-y-2 text-gray-600 text-sm">
+                        <div class="mt-2 space-y-1 text-gray-500 text-sm">
                             <p>服務時間：每日 11:00 - 20:00</p>
-                            <p>服務據點：台中市沙鹿區沙田路...(請填寫詳細地址)</p>
+                            <p>服務據點：台中市沙鹿區沙田路路段</p>
                         </div>
-                        <button onclick="selectStore('沙鹿站前店')" class="w-full mt-4 btn-yellow text-gray-800 font-bold py-3 rounded-md transition duration-200">
-                            選擇
-                        </button>
+                        <button onclick="selectStore('沙鹿站前店', '12:00', '20:00')" class="w-full mt-4 btn-yellow text-gray-800 font-bold py-3 rounded-lg shadow-sm">選擇</button>
                     </div>
                 </div>
             </div>
 
-            <div id="step-2" class="hidden py-4">
-                <h3 class="text-lg font-bold mb-6">選擇預約日期與時間</h3>
-                <div class="space-y-6">
-                    <input type="date" id="bookDate" class="w-full border p-4 rounded-lg text-lg">
-                    <div class="grid grid-cols-2 gap-2" id="timeSlots">
-                        <button onclick="setTime('11:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">11:00</button>
-                        <button onclick="setTime('14:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">14:00</button>
-                        <button onclick="setTime('16:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">16:00</button>
-                        <button onclick="setTime('19:00')" class="time-btn border p-3 rounded-md hover:bg-blue-50">19:00</button>
-                    </div>
-                    <button onclick="toStep(3)" id="nextToStep3" disabled class="w-full bg-gray-300 text-white py-4 rounded-lg font-bold">下一步</button>
+            <div id="step-2" class="hidden">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">選擇預約日期時間</h2>
+                
+                <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-6">
+                    <label class="block text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">選擇日期</label>
+                    <input type="date" id="bookDate" onchange="checkDate()" class="w-full bg-white border border-gray-200 p-3 rounded-lg text-gray-700 outline-none focus:border-blue-400">
                 </div>
+
+                <div id="time-selection" class="hidden">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">可選擇的開始時間</h3>
+                    <div id="timeSlots" class="grid grid-cols-3 gap-3">
+                        </div>
+                </div>
+
+                <button id="nextToStep3" onclick="toStep(3)" disabled class="w-full mt-10 bg-gray-200 text-gray-400 py-4 rounded-xl font-bold transition-all">
+                    下一步
+                </button>
             </div>
 
-            <div id="step-3" class="hidden py-4">
-                <h3 class="text-lg font-bold mb-6">填寫預約資訊</h3>
+            <div id="step-3" class="hidden">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">填寫預約資訊</h2>
                 <div class="space-y-4">
-                    <input type="text" id="custName" placeholder="客戶姓名 (必填)" class="w-full border p-4 rounded-lg">
-                    <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" class="w-full border p-4 rounded-lg">
-                    <input type="text" id="deviceModel" placeholder="設備型號 (必填)" class="w-full border p-4 rounded-lg">
-                    <textarea id="issueDesc" placeholder="狀況描述 (必填)" class="w-full border p-4 rounded-lg h-32"></textarea>
-                    <button onclick="submitBooking()" class="w-full bg-green-600 text-white py-4 rounded-lg font-bold text-lg">送出預約</button>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 mb-1 block">客戶姓名</label>
+                        <input type="text" id="custName" placeholder="請輸入姓名" class="w-full border-b-2 border-gray-100 p-3 focus:border-blue-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 mb-1 block">聯絡電話</label>
+                        <input type="tel" id="custPhone" placeholder="請輸入電話" class="w-full border-b-2 border-gray-100 p-3 focus:border-blue-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 mb-1 block">設備型號</label>
+                        <input type="text" id="deviceModel" placeholder="例如：iPhone 15 Pro" class="w-full border-b-2 border-gray-100 p-3 focus:border-blue-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 mb-1 block">狀況描述</label>
+                        <textarea id="issueDesc" placeholder="請簡單描述維修需求" class="w-full border-2 border-gray-100 p-3 rounded-lg h-32 focus:border-blue-500 outline-none transition"></textarea>
+                    </div>
+                    <button onclick="submitBooking()" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold text-lg mt-6 shadow-lg shadow-blue-100">確認送出</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        let bookingData = { store: '', date: '', time: '' };
+        let bookingData = { store: '', date: '', time: '', startLimit: '', endLimit: '' };
 
-        function selectStore(name) {
+        // 初始化日期範圍
+        const dateInput = document.getElementById('bookDate');
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setMonth(today.getMonth() + 2);
+        
+        dateInput.min = today.toISOString().split('T')[0];
+        dateInput.max = maxDate.toISOString().split('T')[0];
+
+        function selectStore(name, start, end) {
             bookingData.store = name;
+            bookingData.startLimit = start;
+            bookingData.endLimit = end;
             toStep(2);
         }
 
-        function setTime(time) {
+        function checkDate() {
+            if (dateInput.value) {
+                bookingData.date = dateInput.value;
+                document.getElementById('time-selection').classList.remove('hidden');
+                generateTimeSlots();
+            }
+        }
+
+        function generateTimeSlots() {
+            const container = document.getElementById('timeSlots');
+            container.innerHTML = '';
+            
+            const startHour = parseInt(bookingData.startLimit.split(':')[0]);
+            const endHour = parseInt(bookingData.endLimit.split(':')[0]);
+
+            for (let h = startHour; h <= endHour; h++) {
+                ['00', '30'].forEach(m => {
+                    if (h === endHour && m === '30') return; // 不超過結束時間
+                    const time = `${h}:${m}`;
+                    const btn = document.createElement('button');
+                    btn.className = 'time-slot py-3 rounded-lg font-bold text-sm';
+                    btn.innerText = time;
+                    btn.onclick = (e) => setTime(time, e.target);
+                    container.appendChild(btn);
+                });
+            }
+        }
+
+        function setTime(time, el) {
             bookingData.time = time;
-            // 處理選中效果
-            document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('bg-blue-500', 'text-white'));
-            event.target.classList.add('bg-blue-500', 'text-white');
-            document.getElementById('nextToStep3').disabled = false;
-            document.getElementById('nextToStep3').classList.replace('bg-gray-300', 'bg-blue-600');
+            document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('active'));
+            el.classList.add('active');
+            
+            const nextBtn = document.getElementById('nextToStep3');
+            nextBtn.disabled = false;
+            nextBtn.classList.replace('bg-gray-200', 'bg-blue-600');
+            nextBtn.classList.replace('text-gray-400', 'text-white');
         }
 
         function toStep(step) {
@@ -105,28 +161,25 @@
             document.getElementById('step-2').classList.add('hidden');
             document.getElementById('step-3').classList.add('hidden');
             document.getElementById('step-' + step).classList.remove('hidden');
-            
-            // 步驟 1 不顯示返回鍵，2、3 顯示
             document.getElementById('nav-bar').classList.toggle('hidden', step === 1);
+            window.scrollTo(0, 0);
         }
 
         function goBack() {
-            // 簡易的返回邏輯
             const current = document.querySelector('div[id^="step-"]:not(.hidden)').id;
             if (current === 'step-2') toStep(1);
             if (current === 'step-3') toStep(2);
         }
 
         function submitBooking() {
-            // 驗證欄位是否填寫
             const fields = ['custName', 'custPhone', 'deviceModel', 'issueDesc'];
             for(let f of fields) {
                 if(!document.getElementById(f).value) {
-                    alert("請完整填寫所有欄位");
+                    alert("所有欄位皆為必填");
                     return;
                 }
             }
-            alert("資料已收集，準備與 Google 行事曆連動！");
+            alert(`預約資料：\n門市：${bookingData.store}\n時間：${bookingData.date} ${bookingData.time}\n已準備好對接行事曆！`);
         }
     </script>
 </body>
