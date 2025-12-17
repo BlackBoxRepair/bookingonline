@@ -6,13 +6,14 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>黑盒子手機維修預約</title>
+    <title>黑盒子手機維修預約系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
         
+        /* 強制鎖定螢幕，禁止滾動 */
         html, body { 
-            height: 100%; 
+            height: 100vh; 
             margin: 0; 
             padding: 0; 
             overflow: hidden; 
@@ -23,7 +24,7 @@
         }
 
         .app-container {
-            height: 100vh;
+            height: 100%;
             display: flex;
             flex-direction: column;
             background-color: white;
@@ -32,11 +33,12 @@
             position: relative;
         }
 
+        /* 門市清單佈局：平分螢幕高度 */
         .store-list {
             display: flex;
             flex-direction: column;
-            flex-grow: 1;
-            gap: 10px;
+            flex: 1;
+            gap: 12px;
             min-height: 0;
         }
         .store-card {
@@ -44,22 +46,26 @@
             display: flex;
             flex-direction: column;
             border: 1px solid #e5e7eb;
-            border-radius: 1rem;
+            border-radius: 1.25rem;
             overflow: hidden;
-            min-height: 0;
             background: white;
+            min-height: 0;
         }
         .store-card img {
-            height: 100%;
             width: 100%;
+            height: 100%;
             object-fit: cover;
             min-height: 0;
+            flex: 1;
         }
 
         .btn-yellow { background-color: #F7D358; color: #333; }
         .time-slot { background-color: #f0f7ff; color: #1e40af; border: 1px solid #dbeafe; }
         .time-slot.active { background-color: #1e40af; color: white; border-color: #1e40af; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        /* 避免 iOS 輸入框縮放 */
+        input, textarea { font-size: 16px !important; }
     </style>
 </head>
 <body>
@@ -71,56 +77,56 @@
             </button>
         </div>
 
-        <div id="main-content" class="flex-grow flex flex-col p-4 overflow-hidden">
+        <div class="flex-grow flex flex-col p-4 overflow-hidden relative">
             
             <div id="step-1" class="flex flex-col h-full space-y-3">
                 <h2 class="text-xl font-bold text-gray-800 shrink-0">請選擇維修門市</h2>
                 <div class="store-list">
-                    <div class="store-card">
-                        <img src="https://placehold.co/600x300?text=BlackBox+Chinmei" alt="勤美店">
-                        <div class="p-3 shrink-0">
+                    <div class="store-card shadow-sm">
+                        <img src="https://placehold.co/600x400?text=BlackBox+Chinmei" alt="勤美店">
+                        <div class="p-3 bg-white shrink-0 z-10">
                             <h3 class="font-bold text-base">黑盒子 (勤美公益店)</h3>
                             <p class="text-gray-500 text-xs">11:00-20:00 | 台中市西區公益路145號</p>
-                            <button onclick="selectStore('勤美公益店', 11, 19)" class="w-full mt-2 btn-yellow font-bold py-3 rounded-xl text-sm active:scale-95 transition-transform">選擇此門市</button>
+                            <button onclick="selectStore('勤美公益店', 11, 19)" class="w-full mt-2 btn-yellow font-bold py-3.5 rounded-xl text-sm active:scale-95 transition-transform">選擇此門市</button>
                         </div>
                     </div>
-                    <div class="store-card">
-                        <img src="https://placehold.co/600x300?text=BlackBox+Shalu" alt="沙鹿店">
-                        <div class="p-3 shrink-0">
+                    <div class="store-card shadow-sm">
+                        <img src="https://placehold.co/600x400?text=BlackBox+Shalu" alt="沙鹿店">
+                        <div class="p-3 bg-white shrink-0 z-10">
                             <h3 class="font-bold text-base">黑盒子 (沙鹿站前店)</h3>
                             <p class="text-gray-500 text-xs">12:00-21:00 | 台中市沙鹿區沙田路149號</p>
-                            <button onclick="selectStore('沙鹿站前店', 12, 20)" class="w-full mt-2 btn-yellow font-bold py-3 rounded-xl text-sm active:scale-95 transition-transform">選擇此門市</button>
+                            <button onclick="selectStore('沙鹿站前店', 12, 20)" class="w-full mt-2 btn-yellow font-bold py-3.5 rounded-xl text-sm active:scale-95 transition-transform">選擇此門市</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div id="step-2" class="hidden flex-col h-full">
-                <h2 class="text-xl font-bold text-gray-800 mb-4 shrink-0">選擇日期與時間</h2>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 shrink-0">選擇日期時間</h2>
                 <div class="mb-4 shrink-0">
-                    <label class="block text-xs font-bold text-gray-400 mb-1 uppercase">1. 選擇預約日期</label>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">1. 選擇預約日期</label>
                     <input type="date" id="bookDate" onchange="handleDateChange()" class="w-full border-2 border-gray-100 p-3 rounded-xl outline-none focus:border-blue-500">
                 </div>
                 <div class="flex-grow flex flex-col min-h-0">
-                    <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">2. 選擇開始時間</label>
-                    <div id="timeSlots" class="grid grid-cols-3 gap-2 overflow-y-auto no-scrollbar pb-4"></div>
+                    <label class="block text-xs font-bold text-gray-400 mb-2">2. 選擇開始時間</label>
+                    <div id="timeSlots" class="grid grid-cols-3 gap-2 overflow-y-auto no-scrollbar pb-2"></div>
                     <p id="no-time-msg" class="text-red-500 text-sm mt-2 hidden text-center font-bold">該日期已無時段可選</p>
                 </div>
-                <button id="nextBtn" onclick="toStep(3)" disabled class="w-full mt-4 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold shrink-0">下一步</button>
+                <button id="nextBtn" onclick="toStep(3)" disabled class="w-full mt-2 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold shrink-0">下一步</button>
             </div>
 
             <div id="step-3" class="hidden flex-col h-full">
                 <h2 class="text-xl font-bold text-gray-800 mb-4 shrink-0">填寫預約資訊</h2>
                 <div class="space-y-4 shrink-0">
-                    <input type="text" id="custName" placeholder="客戶姓名 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500">
-                    <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500">
-                    <input type="text" id="deviceModel" placeholder="設備型號 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500">
+                    <input type="text" id="custName" placeholder="客戶姓名 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500 bg-white">
+                    <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500 bg-white">
+                    <input type="text" id="deviceModel" placeholder="設備型號 (iPhone 15...)" class="w-full border-b-2 p-3 outline-none focus:border-blue-500 bg-white">
                 </div>
                 <div class="mt-4 flex-grow flex flex-col min-h-0">
-                    <label class="text-xs font-bold text-gray-400 mb-1 uppercase">狀況描述</label>
-                    <textarea id="issueDesc" placeholder="請簡單描述維修問題..." class="w-full border-2 p-3 rounded-xl flex-grow outline-none focus:border-blue-500 resize-none"></textarea>
+                    <label class="text-xs font-bold text-gray-400 mb-1">狀況描述</label>
+                    <textarea id="issueDesc" placeholder="請描述您的問題..." class="w-full border-2 p-3 rounded-xl flex-grow outline-none focus:border-blue-500 resize-none bg-white"></textarea>
                 </div>
-                <button onclick="submitBooking()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-lg mt-4 shrink-0 active:scale-95 transition-transform">確認送出預約</button>
+                <button onclick="submitBooking()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-lg mt-4 shrink-0 active:scale-95 transition-transform">確認預約</button>
             </div>
 
         </div>
@@ -131,7 +137,10 @@
 
         function getTodayString() {
             const now = new Date();
-            return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
         }
 
         function initDatePicker() {
@@ -180,9 +189,10 @@
                 ['00', '30'].forEach(m => {
                     if (h === bookingData.endH && m === '30') return;
                     if (isToday && (h < now.getHours() || (h === now.getHours() && parseInt(m) <= now.getMinutes()))) return;
+                    
                     const time = `${h}:${m}`;
                     const btn = document.createElement('button');
-                    btn.className = 'time-slot py-3 rounded-xl font-bold text-xs';
+                    btn.className = 'time-slot py-3.5 rounded-xl font-bold text-xs';
                     btn.innerText = time;
                     btn.onclick = () => setTime(time, btn);
                     container.appendChild(btn);
@@ -199,34 +209,35 @@
             el.classList.add('active');
             const nextBtn = document.getElementById('nextBtn');
             nextBtn.disabled = false;
-            nextBtn.className = "w-full mt-4 bg-blue-600 text-white py-4 rounded-2xl font-bold shrink-0 shadow-md";
+            nextBtn.className = "w-full mt-2 bg-blue-600 text-white py-4 rounded-2xl font-bold shrink-0 shadow-md";
         }
 
         function resetNextBtn() {
             const nextBtn = document.getElementById('nextBtn');
             nextBtn.disabled = true;
-            nextBtn.className = "w-full mt-4 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold shrink-0";
+            nextBtn.className = "w-full mt-2 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold shrink-0";
             bookingData.time = '';
         }
 
         function toStep(step) {
-            const steps = [1, 2, 3];
-            steps.forEach(s => {
+            // 清除現有狀態
+            [1, 2, 3].forEach(s => {
                 const el = document.getElementById('step-' + s);
-                if (s === step) {
-                    el.classList.remove('hidden');
-                    el.classList.add('flex');
-                } else {
-                    el.classList.add('hidden');
-                    el.classList.remove('flex');
-                }
+                el.classList.add('hidden');
+                el.classList.remove('flex');
             });
+
+            // 啟動新狀態
+            const target = document.getElementById('step-' + step);
+            target.classList.remove('hidden');
+            target.classList.add('flex', 'flex-col');
+            
             document.getElementById('nav-bar').classList.toggle('hidden', step === 1);
         }
 
         function goBack() {
-            const curStep = !document.getElementById('step-2').classList.contains('hidden') ? 2 : 3;
-            toStep(curStep - 1);
+            const isStep3 = !document.getElementById('step-3').classList.contains('hidden');
+            toStep(isStep3 ? 2 : 1);
         }
 
         function submitBooking() {
