@@ -12,7 +12,6 @@
         * { 
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
-            /* 修正 1：移除所有元素的觸控手勢預設行為，防止縮放 */
             touch-action: manipulation; 
         }
 
@@ -22,7 +21,6 @@
             padding: 0; 
             font-family: 'Noto Sans TC', sans-serif; 
             background-color: #f3f4f6;
-            /* 修正 2：鎖死視窗防止滾動 */
             overflow: hidden;
             position: fixed;
             width: 100%;
@@ -72,18 +70,18 @@
             color: #374151;
             width: 100%;
             outline: none;
-            transition: border-color 0.2s;
         }
-        input[type="date"]:focus { border-color: #3b82f6; }
     </style>
 </head>
 <body>
     <div class="app-container shadow-2xl">
-        <div id="nav-bar" class="h-14 border-b flex items-center px-4 shrink-0 hidden">
-            <button onclick="goBack()" class="text-blue-500 font-bold flex items-center text-lg">〈 返回</button>
+        <div id="nav-bar" class="h-14 border-b flex items-center shrink-0 hidden bg-white z-50">
+            <button onclick="goBack()" class="h-full px-4 text-blue-500 font-bold flex items-center text-lg active:opacity-50">
+                <span class="text-2xl mr-1">‹</span> 返回
+            </button>
         </div>
 
-        <div class="scroll-content">
+        <div class="scroll-content" id="main-scroll">
             <div id="step-1" class="flex flex-col">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">請選擇維修門市</h2>
                 <div class="store-card">
@@ -113,7 +111,7 @@
                 <div class="mb-6">
                     <label class="block text-xs font-bold text-gray-400 mb-3 uppercase tracking-widest">2. 選擇開始時間</label>
                     <div id="timeSlots" class="grid grid-cols-3 gap-3"></div>
-                    <p id="no-time-msg" class="text-red-500 text-sm mt-4 hidden text-center font-bold italic">該日期已無可預約時段，請更換日期。</p>
+                    <p id="no-time-msg" class="text-red-500 text-sm mt-4 hidden text-center font-bold italic">該日期已無可預約時段。</p>
                 </div>
                 <button id="nextBtn" onclick="toStep(3)" disabled class="w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold transition-all duration-300">下一步</button>
             </div>
@@ -135,24 +133,18 @@
     </div>
 
     <script>
-        // 修正 3：JavaScript 硬性攔截縮放手勢
-        document.addEventListener('touchstart', function(event) {
-            if (event.touches.length > 1) {
-                event.preventDefault(); // 攔截多指觸控
-            }
-        }, { passive: false });
-
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault(); // 攔截連點縮放
-            }
-            lastTouchEnd = now;
+        // 禁止縮放邏輯
+        document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+        let lastTouch = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouch <= 300) e.preventDefault();
+            lastTouch = now;
         }, false);
 
-        // 原有預約邏輯
+        let currentStep = 1;
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
+
         const getToday = () => {
             const now = new Date();
             return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
@@ -171,12 +163,7 @@
         }
 
         function handleDateChange() {
-            const dateInput = document.getElementById('bookDate');
-            if(dateInput.value < getToday()) {
-                alert("不可選過去日期");
-                dateInput.value = getToday();
-            }
-            bookingData.date = dateInput.value;
+            bookingData.date = document.getElementById('bookDate').value;
             bookingData.time = '';
             generateTimeSlots();
             updateNextBtnStatus();
@@ -184,10 +171,7 @@
 
         function generateTimeSlots() {
             const container = document.getElementById('timeSlots');
-            const msg = document.getElementById('no-time-msg');
             container.innerHTML = '';
-            msg.classList.add('hidden');
-            if (!bookingData.date) return;
             const now = new Date();
             const isToday = (bookingData.date === getToday());
             let count = 0;
@@ -196,7 +180,7 @@
                     if (h === bookingData.endH && m === '30') return;
                     if (isToday && (h < now.getHours() || (h === now.getHours() && parseInt(m) <= now.getMinutes()))) return;
                     const btn = document.createElement('button');
-                    btn.className = 'time-slot py-3 rounded-xl font-bold text-sm transition-all';
+                    btn.className = 'time-slot py-3 rounded-xl font-bold text-sm';
                     btn.innerText = `${h}:${m}`;
                     btn.onclick = () => {
                         bookingData.time = btn.innerText;
@@ -208,32 +192,38 @@
                     count++;
                 });
             }
-            if (count === 0) msg.classList.remove('hidden');
+            document.getElementById('no-time-msg').classList.toggle('hidden', count > 0);
         }
 
         function updateNextBtnStatus() {
             const btn = document.getElementById('nextBtn');
-            if (bookingData.date && bookingData.time) {
-                btn.disabled = false;
-                btn.className = "w-full mt-6 bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-md transition-all";
-            } else {
-                btn.disabled = true;
-                btn.className = "w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold transition-all";
-            }
+            const ready = (bookingData.date && bookingData.time);
+            btn.disabled = !ready;
+            btn.className = ready ? "w-full mt-6 bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-md" : "w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold";
         }
 
         function toStep(s) {
-            document.getElementById('step-1').classList.add('hidden');
-            document.getElementById('step-2').classList.add('hidden');
-            document.getElementById('step-3').classList.add('hidden');
-            document.getElementById('step-' + s).classList.remove('hidden');
+            currentStep = s;
+            // 隱藏所有步驟
+            [1, 2, 3].forEach(i => {
+                const el = document.getElementById('step-' + i);
+                el.classList.add('hidden');
+                el.classList.remove('flex');
+            });
+            // 顯示當前步驟
+            const target = document.getElementById('step-' + s);
+            target.classList.remove('hidden');
+            target.classList.add('flex');
+            
+            // 處理導覽列顯示
             document.getElementById('nav-bar').classList.toggle('hidden', s === 1);
-            document.querySelector('.scroll-content').scrollTop = 0;
+            document.getElementById('main-scroll').scrollTop = 0;
         }
 
-        function goBack() { 
-            const cur = document.getElementById('step-2').classList.contains('hidden') ? 1 : 2;
-            if (cur === 1) toStep(1); else toStep(2);
+        function goBack() {
+            if (currentStep > 1) {
+                toStep(currentStep - 1);
+            }
         }
 
         function submitBooking() {
