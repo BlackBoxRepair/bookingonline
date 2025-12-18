@@ -22,7 +22,11 @@
             background-color: white; max-width: 480px; margin: 0 auto; position: relative;
         }
 
-        .scroll-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px; }
+        /* 頂部上移修正：將原本的 padding-top 16px 降為 8px */
+        .scroll-content { 
+            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
+            padding: 8px 16px 16px 16px; 
+        }
 
         .store-card { 
             margin-bottom: 16px; border: 1px solid #e5e7eb; border-radius: 1.25rem; 
@@ -48,6 +52,7 @@
             background: #fff; border: 2px solid #e5e7eb !important;
             padding: 12px 16px !important; border-radius: 12px; font-size: 16px; 
             outline: none; width: 100%; display: block; color: #333; -webkit-appearance: none;
+            line-height: 1.5;
         }
         input:focus, textarea:focus { border-color: #F7D358 !important; }
 
@@ -68,6 +73,15 @@
             text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
         }
         .scroll-content::-webkit-scrollbar { display: none; }
+
+        .holiday-anim {
+            width: 80px !important;
+            height: 80px !important;
+            border-radius: 20px !important;
+            object-fit: cover !important;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -104,15 +118,15 @@
 
         <div class="scroll-content" id="main-scroll">
             <div id="step-1" class="flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+                <div class="flex justify-between items-center mb-1">
                     <h2 class="text-2xl font-bold text-gray-800">請選擇維修門市</h2>
-                    <video class="w-20 h-20 rounded-lg pointer-events-none" autoplay muted playsinline loop>
+                    <video class="holiday-anim pointer-events-none" autoplay muted playsinline loop>
                         <source src="ANIMATION.mov" type="video/quicktime">
                     </video>
                 </div>
                 
                 <div class="store-card">
-                    <div class="store-img-container"><img src="./CHING.png" alt="勤美公益店"></div>
+                    <div class="store-img-container"><img src="./CHING.png" alt="黑盒子勤美公益店"></div>
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子【勤美公益店】</h3>
                         <p class="text-gray-500 text-sm mt-1">每日 11:00-20:00 | 台中市西區公益路145號</p>
@@ -125,7 +139,7 @@
                 </div>
 
                 <div class="store-card">
-                    <div class="store-img-container"><img src="./SALU.png" alt="沙鹿站前店"></div>
+                    <div class="store-img-container"><img src="./SALU.png" alt="黑盒子沙鹿站前店"></div>
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子【沙鹿站前店】</h3>
                         <p class="text-gray-500 text-sm mt-1">每日 12:00-21:00 | 台中市沙鹿區沙田路149號</p>
