@@ -51,14 +51,12 @@
         }
         input:focus, textarea:focus { border-color: #F7D358 !important; }
 
-        /* 載入遮罩優化：使用您的動畫影片 */
         #loading-overlay {
             display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.9);
             z-index: 200; flex-direction: column; align-items: center; justify-content: center;
         }
         #loading-video { width: 240px; height: 240px; border-radius: 20px; }
 
-        /* 成功提示圖卡 */
         #success-modal {
             display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7);
             z-index: 100; flex-direction: column; align-items: center; justify-content: center;
@@ -83,7 +81,6 @@
         <div id="loading-overlay">
             <video id="loading-video" muted playsinline loop>
                 <source src="LOUDING.mov" type="video/quicktime">
-                <source src="LOUDING.mp4" type="video/mp4">
             </video>
             <p class="text-white font-bold mt-4 tracking-widest">正在為您安排預約...</p>
         </div>
@@ -94,14 +91,12 @@
                     <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-6">預約成功</h3>
-                
                 <div class="w-full space-y-3 text-left border-t border-b py-6 mb-6">
                     <div class="flex justify-between"><span class="text-gray-400 font-medium">客戶姓名</span><span id="res-name" class="text-gray-800 font-bold"></span></div>
                     <div class="flex justify-between"><span class="text-gray-400 font-medium">聯絡電話</span><span id="res-phone" class="text-gray-800 font-bold"></span></div>
                     <div class="flex justify-between"><span class="text-gray-400 font-medium">預約時間</span><span id="res-time" class="text-gray-800 font-bold"></span></div>
                     <div class="flex justify-between"><span class="text-gray-400 font-medium">預約門市</span><span id="res-store" class="text-gray-800 font-bold"></span></div>
                 </div>
-
                 <p class="text-sm text-gray-500 mb-6 font-medium">若需變更預約，請與我們聯絡</p>
                 <button onclick="location.reload()" class="w-full btn-yellow py-4 rounded-xl font-bold text-lg shadow-sm active:scale-95 transition-transform">我知道了</button>
             </div>
@@ -109,9 +104,15 @@
 
         <div class="scroll-content" id="main-scroll">
             <div id="step-1" class="flex flex-col">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">請選擇維修門市</h2>
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800">請選擇維修門市</h2>
+                    <video class="w-20 h-20 rounded-lg pointer-events-none" autoplay muted playsinline loop>
+                        <source src="ANIMATION.mov" type="video/quicktime">
+                    </video>
+                </div>
+                
                 <div class="store-card">
-                    <div class="store-img-container"><img src="./CHING.png" alt="黑盒子勤美公益店"></div>
+                    <div class="store-img-container"><img src="./CHING.png" alt="勤美公益店"></div>
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子【勤美公益店】</h3>
                         <p class="text-gray-500 text-sm mt-1">每日 11:00-20:00 | 台中市西區公益路145號</p>
@@ -122,8 +123,9 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="store-card">
-                    <div class="store-img-container"><img src="./SALU.png" alt="黑盒子沙鹿站前店"></div>
+                    <div class="store-img-container"><img src="./SALU.png" alt="沙鹿站前店"></div>
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子【沙鹿站前店】</h3>
                         <p class="text-gray-500 text-sm mt-1">每日 12:00-21:00 | 台中市沙鹿區沙田路149號</p>
@@ -271,29 +273,22 @@
         document.getElementById('bookDate').addEventListener('click', function() { if (this.showPicker) this.showPicker(); });
 
         async function submitBooking() {
-            // 啟動動畫
             const overlay = document.getElementById('loading-overlay');
             const video = document.getElementById('loading-video');
             overlay.style.display = 'flex';
             video.play();
-
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name, phone, model: document.getElementById('deviceModel').value.trim(), desc: document.getElementById('issueDesc').value.trim() };
-            
             try { 
                 await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); 
-                
-                // 停止動畫並顯示成功圖卡
                 video.pause();
                 overlay.style.display = 'none';
-                
                 document.getElementById('res-name').innerText = name;
                 document.getElementById('res-phone').innerText = phone;
                 document.getElementById('res-time').innerText = `${bookingData.date} ${bookingData.time}`;
                 document.getElementById('res-store').innerText = bookingData.store;
                 document.getElementById('success-modal').style.display = 'flex';
-                
                 localStorage.removeItem('blackbox_booking_draft'); 
             } 
             catch (error) { 
