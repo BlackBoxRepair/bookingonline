@@ -37,18 +37,19 @@
         .time-slot { background-color: #fffbeb; color: #92400e; border: 1px solid #fef3c7; }
         .time-slot.active { background-color: #F7D358; color: #333; border-color: #F7D358; }
         
-        /* 圓形按鈕樣式 */
+        /* 圓形按鈕樣式優化 */
         .icon-btn {
-            width: 48px; height: 48px; display: flex; items-center; justify-content: center;
-            border-radius: 999px; transition: transform 0.1s;
+            width: 46px; height: 46px; display: flex; align-items: center; justify-content: center;
+            border-radius: 999px; transition: transform 0.1s; overflow: hidden;
+            border: 1px solid #eee; background: white;
         }
+        .icon-btn img { width: 100%; height: 100%; object-fit: cover; }
         .icon-btn:active { transform: scale(0.9); }
-        .bg-line { background-color: #06C755; }
-        .bg-phone { background-color: #3b82f6; }
 
         input, textarea {
             -webkit-appearance: none; background: #fff; border: 2px solid #f3f4f6;
             padding: 12px; border-radius: 12px; font-size: 16px; outline: none;
+            transition: border-color 0.2s;
         }
         input:focus, textarea:focus { border-color: #F7D358 !important; }
 
@@ -56,6 +57,8 @@
             display: none; position: absolute; inset: 0; background: rgba(255,255,255,0.9);
             z-index: 100; flex-direction: column; align-items: center; justify-content: center;
         }
+        .loader-yellow { border-bottom-color: #F7D358; }
+        .scroll-content::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
@@ -67,7 +70,7 @@
         </div>
 
         <div id="loading-overlay">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-gray-100 border-b-[#F7D358] mb-4"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-b-4 border-gray-100 loader-yellow mb-4"></div>
             <p class="text-gray-800 font-bold">正在為您安排預約</p>
         </div>
 
@@ -76,34 +79,34 @@
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">請選擇維修門市</h2>
                 
                 <div class="store-card">
-                    <div class="store-img-container"><img src="CHING.png" alt="勤美公益店"></div>
+                    <div class="store-img-container"><img src="CHING.jpg" alt="黑盒子勤美公益店"></div>
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子【勤美公益店】</h3>
-                        <p class="text-gray-500 text-sm mt-1">每日 11:00-20:00 | 台中市西區公益路145號</p>
+                        <p class="text-gray-500 text-sm mt-1">每日 11:00-20:00 | 台台中市西區公益路145號</p>
                         <div class="flex items-center gap-3 mt-4">
                             <button onclick="selectStore('勤美公益店', 11, 19)" class="flex-grow btn-yellow font-bold py-3.5 rounded-xl text-sm shadow">選擇此門市</button>
-                            <a href="tel:0423015157" class="icon-btn bg-phone shadow">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3616/3616215.png" class="w-6 h-6 invert" alt="電話">
+                            <a href="tel:0423015157" class="icon-btn shadow-sm">
+                                <img src="PHONE.png" alt="電話諮詢">
                             </a>
-                            <a href="https://line.me/R/ti/p/@blackbox" class="icon-btn bg-line shadow">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3991/3991962.png" class="w-6 h-6 invert" alt="Line">
+                            <a href="https://line.me/R/ti/p/@000irqds" target="_blank" class="icon-btn shadow-sm">
+                                <img src="LINE.png" alt="LINE諮詢">
                             </a>
                         </div>
                     </div>
                 </div>
 
                 <div class="store-card">
-                    <div class="store-img-container"><img src="SALU.png" alt="沙鹿站前店"></div>
+                    <div class="store-img-container"><img src="SALU.jpg" alt="黑盒子沙鹿站前店"></div>
                     <div class="p-4 bg-white">
                         <h3 class="font-bold text-lg text-gray-800">黑盒子【沙鹿站前店】</h3>
                         <p class="text-gray-500 text-sm mt-1">每日 12:00-21:00 | 台中市沙鹿區沙田路149號</p>
                         <div class="flex items-center gap-3 mt-4">
                             <button onclick="selectStore('沙鹿站前店', 12, 20)" class="flex-grow btn-yellow font-bold py-3.5 rounded-xl text-sm shadow">選擇此門市</button>
-                            <a href="tel:0426633009" class="icon-btn bg-phone shadow">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3616/3616215.png" class="w-6 h-6 invert" alt="電話">
+                            <a href="tel:0426633009" class="icon-btn shadow-sm">
+                                <img src="PHONE.png" alt="電話諮詢">
                             </a>
-                            <a href="https://line.me/R/ti/p/@blackbox" class="icon-btn bg-line shadow">
-                                <img src="https://cdn-icons-png.flaticon.com/512/3991/3991962.png" class="w-6 h-6 invert" alt="Line">
+                            <a href="https://line.me/R/ti/p/@nkq9519u" target="_blank" class="icon-btn shadow-sm">
+                                <img src="LINE.png" alt="LINE諮詢">
                             </a>
                         </div>
                     </div>
@@ -131,7 +134,7 @@
     </div>
 
     <script>
-        // 舊有的 JS 邏輯全部保留並微調...
+        // JS 邏輯全部維持您最滿意的狀態
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
         document.addEventListener('touchend', (e) => {
@@ -183,9 +186,10 @@
 
         function selectStore(n, s, e) {
             bookingData = { store: n, startH: s, endH: e, date: '', time: '' };
-            document.getElementById('bookDate').value = '';
+            const dateInput = document.getElementById('bookDate');
+            dateInput.value = '';
             document.getElementById('timeSlots').innerHTML = '';
-            document.getElementById('bookDate').min = getToday();
+            dateInput.min = getToday();
             saveDraft(); toStep(2);
         }
 
@@ -220,6 +224,7 @@
                     container.appendChild(btn); count++;
                 });
             }
+            document.getElementById('no-time-msg').classList.toggle('hidden', count > 0);
         }
 
         function updateNextBtnStatus() {
