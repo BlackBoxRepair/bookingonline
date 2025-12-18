@@ -107,7 +107,7 @@
 
         <div id="loading-overlay">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-            <p class="text-blue-600 font-bold">預約資料同步中...</p>
+            <p class="text-blue-600 font-bold">正在為您安排預約</p>
         </div>
 
         <div class="scroll-content" id="main-scroll">
@@ -193,7 +193,7 @@
             const dateInput = document.getElementById('bookDate');
             dateInput.value = '';
             document.getElementById('timeSlots').innerHTML = '';
-            dateInput.min = getToday();
+            document.getElementById('bookDate').min = getToday();
             updateNextBtnStatus();
             toStep(2);
         }
@@ -283,7 +283,9 @@
                     mode: 'no-cors',
                     body: JSON.stringify(finalData)
                 });
-                alert(`✅ 預約成功！\n\n感謝 ${finalData.name}，資料已同步至黑盒子行事曆。`);
+                
+                // 修改提示內容與標題
+                alert(`✅ 預約成功！\n\n已為您完成預約，若需變更請與我們聯絡。`);
                 location.reload(); 
             } catch (error) {
                 alert("連線失敗，請檢查網路。");
