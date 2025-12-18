@@ -74,7 +74,6 @@
         }
         input[type="date"]:focus { border-color: #3b82f6; }
 
-        /* 讀取中遮罩 */
         #loading-overlay {
             display: none;
             position: absolute;
@@ -152,7 +151,6 @@
     </div>
 
     <script>
-        // 禁止縮放
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
         document.addEventListener('touchend', (e) => {
@@ -165,22 +163,35 @@
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
 
+        // 修正時區問題，取得台灣今日日期
         const getToday = () => {
             const now = new Date();
-            return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            const offset = 8 * 60; // 台灣時區 UTC+8
+            const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
+            return `${localTime.getFullYear()}-${String(localTime.getMonth() + 1).padStart(2, '0')}-${String(localTime.getDate()).padStart(2, '0')}`;
         };
 
         function selectStore(n, s, e) {
             bookingData = { store: n, startH: s, endH: e, date: '', time: '' };
-            document.getElementById('bookDate').value = '';
+            const dateInput = document.getElementById('bookDate');
+            dateInput.value = '';
             document.getElementById('timeSlots').innerHTML = '';
-            document.getElementById('bookDate').min = getToday();
+            dateInput.min = getToday(); // 設定最小日期
             updateNextBtnStatus();
             toStep(2);
         }
 
         function handleDateChange() {
-            bookingData.date = document.getElementById('bookDate').value;
+            const dateInput = document.getElementById('bookDate');
+            const today = getToday();
+            
+            // 強制攔截過去時間
+            if (dateInput.value < today) {
+                alert("不可選擇過去的日期！");
+                dateInput.value = today;
+            }
+            
+            bookingData.date = dateInput.value;
             bookingData.time = '';
             generateTimeSlots();
             updateNextBtnStatus();
@@ -189,13 +200,25 @@
         function generateTimeSlots() {
             const container = document.getElementById('timeSlots');
             container.innerHTML = '';
+            
             const now = new Date();
+            const offset = 8 * 60;
+            const localNow = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
+            const currentH = localNow.getHours();
+            const currentM = localNow.getMinutes();
+            
             const isToday = (bookingData.date === getToday());
             let count = 0;
+
             for (let h = bookingData.startH; h <= bookingData.endH; h++) {
                 ['00', '30'].forEach(m => {
                     if (h === bookingData.endH && m === '30') return;
-                    if (isToday && (h < now.getHours() || (h === now.getHours() && parseInt(m) <= now.getMinutes()))) return;
+                    
+                    // 如果是今天，過濾掉過去的時分
+                    if (isToday) {
+                        if (h < currentH || (h === currentH && parseInt(m) <= currentM)) return;
+                    }
+                    
                     const btn = document.createElement('button');
                     btn.className = 'time-slot py-3 rounded-xl font-bold text-sm';
                     btn.innerText = `${h}:${m}`;
