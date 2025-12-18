@@ -45,7 +45,6 @@
         .icon-btn img { width: 100%; height: 100%; object-fit: cover; }
         .icon-btn:active { transform: scale(0.9); }
 
-        /* 日期欄位寬度與樣式修正 */
         input[type="date"], input[type="text"], input[type="tel"], textarea {
             background: #fff; border: 2px solid #e5e7eb;
             padding: 14px; border-radius: 12px; font-size: 16px; outline: none;
@@ -119,11 +118,11 @@
             <div id="step-3" class="hidden flex-col pb-10">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">填寫預約資訊</h2>
                 <div class="space-y-6">
-                    <input type="text" id="custName" placeholder="客戶姓名 (必填)" oninput="saveDraft()">
-                    <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" oninput="saveDraft()">
-                    <input type="text" id="deviceModel" placeholder="設備型號" oninput="saveDraft()">
-                    <textarea id="issueDesc" placeholder="狀況描述..." class="h-36 resize-none" oninput="saveDraft()"></textarea>
-                    <button id="finalSubmitBtn" onclick="submitBooking()" class="w-full btn-yellow py-5 rounded-2xl font-bold text-xl shadow-lg mt-4">確認送出預約</button>
+                    <input type="text" id="custName" placeholder="客戶姓名 (必填)" oninput="handleInput()">
+                    <input type="tel" id="custPhone" placeholder="聯絡電話 (必填)" oninput="handleInput()">
+                    <input type="text" id="deviceModel" placeholder="設備型號 (必填)" oninput="handleInput()">
+                    <textarea id="issueDesc" placeholder="狀況描述 (必填)..." class="h-36 resize-none" oninput="handleInput()"></textarea>
+                    <button id="finalSubmitBtn" onclick="submitBooking()" disabled class="w-full bg-gray-200 text-gray-400 py-5 rounded-2xl font-bold text-xl shadow-lg mt-4 transition-all">確認送出預約</button>
                 </div>
             </div>
         </div>
@@ -152,13 +151,33 @@
             return `${y}-${m}-${d}`;
         };
 
+        // 監聽所有輸入欄位
+        function handleInput() {
+            updateSubmitBtnStatus();
+            saveDraft();
+        }
+
+        // 記憶草稿
         function saveDraft() {
             const draft = { currentStep, bookingData, custName: document.getElementById('custName').value, custPhone: document.getElementById('custPhone').value, deviceModel: document.getElementById('deviceModel').value, issueDesc: document.getElementById('issueDesc').value };
             localStorage.setItem('blackbox_booking_draft', JSON.stringify(draft));
         }
 
+        // 偵測並更新提交按鈕狀態
+        function updateSubmitBtnStatus() {
+            const btn = document.getElementById('finalSubmitBtn');
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const model = document.getElementById('deviceModel').value.trim();
+            const desc = document.getElementById('issueDesc').value.trim();
+            
+            const isReady = name !== '' && phone !== '' && model !== '' && desc !== '';
+            
+            btn.disabled = !isReady;
+            btn.className = isReady ? "w-full btn-yellow py-5 rounded-2xl font-bold text-xl shadow-lg mt-4 active:scale-95 transition-transform" : "w-full bg-gray-200 text-gray-400 py-5 rounded-2xl font-bold text-xl shadow-lg mt-4 transition-all";
+        }
+
         window.onload = function() {
-            // 檢查是否為頁面重新整理或瀏覽器導向
             if (performance.navigation.type === 1) {
                 const saved = localStorage.getItem('blackbox_booking_draft');
                 if (saved) {
@@ -176,9 +195,9 @@
                     }
                     toStep(draft.currentStep);
                     updateNextBtnStatus();
+                    updateSubmitBtnStatus();
                 }
             } else {
-                // 初次進站，強制清除所有舊資料
                 localStorage.removeItem('blackbox_booking_draft');
             }
         };
@@ -239,15 +258,11 @@
 
         function goBack() { if (currentStep > 1) toStep(currentStep - 1); }
 
-        document.getElementById('bookDate').addEventListener('click', function() {
-            if (this.showPicker) this.showPicker();
-        });
+        document.getElementById('bookDate').addEventListener('click', function() { if (this.showPicker) this.showPicker(); });
 
         async function submitBooking() {
-            const v = (id) => document.getElementById(id).value.trim();
-            if(!v('custName') || !v('custPhone')) { alert("請填寫姓名與電話"); return; }
             document.getElementById('loading-overlay').style.display = 'flex';
-            const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name: v('custName'), phone: v('custPhone'), model: v('deviceModel'), desc: v('issueDesc') };
+            const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name: document.getElementById('custName').value.trim(), phone: document.getElementById('custPhone').value.trim(), model: document.getElementById('deviceModel').value.trim(), desc: document.getElementById('issueDesc').value.trim() };
             try { 
                 await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); 
                 alert(`✅ 預約成功！\n\n已為您完成預約，若需變更請與我們聯絡。`); 
