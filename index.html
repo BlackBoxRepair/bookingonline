@@ -68,14 +68,6 @@
             text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
         }
         .scroll-content::-webkit-scrollbar { display: none; }
-
-        /* 關鍵修正：去除動畫黑底 */
-        .holiday-animation {
-            mix-blend-mode: screen; /* 過濾黑色背景 */
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-        }
     </style>
 </head>
 <body>
@@ -114,7 +106,7 @@
             <div id="step-1" class="flex flex-col">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold text-gray-800">請選擇維修門市</h2>
-                    <video class="holiday-animation rounded-lg pointer-events-none" autoplay muted playsinline loop>
+                    <video class="w-20 h-20 rounded-lg pointer-events-none" autoplay muted playsinline loop>
                         <source src="ANIMATION.mov" type="video/quicktime">
                     </video>
                 </div>
