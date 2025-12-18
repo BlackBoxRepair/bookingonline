@@ -45,10 +45,11 @@
         .icon-btn img { width: 100%; height: 100%; object-fit: cover; }
         .icon-btn:active { transform: scale(0.9); }
 
+        /* 日期欄位寬度與樣式修正 */
         input[type="date"], input[type="text"], input[type="tel"], textarea {
             background: #fff; border: 2px solid #e5e7eb;
             padding: 14px; border-radius: 12px; font-size: 16px; outline: none;
-            width: 100%; display: block; color: #333; -webkit-appearance: listbox;
+            width: 100%; display: block; color: #333; -webkit-appearance: none;
         }
         input:focus, textarea:focus { border-color: #F7D358 !important; }
 
@@ -76,7 +77,6 @@
         <div class="scroll-content" id="main-scroll">
             <div id="step-1" class="flex flex-col">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">請選擇維修門市</h2>
-                
                 <div class="store-card">
                     <div class="store-img-container"><img src="./CHING.png" alt="黑盒子勤美公益店"></div>
                     <div class="p-4 bg-white">
@@ -89,7 +89,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="store-card">
                     <div class="store-img-container"><img src="./SALU.png" alt="黑盒子沙鹿站前店"></div>
                     <div class="p-4 bg-white">
@@ -113,7 +112,6 @@
                 <div class="mb-6">
                     <label class="block text-xs font-bold text-gray-400 mb-3 uppercase tracking-widest">2. 選擇開始時間</label>
                     <div id="timeSlots" class="grid grid-cols-3 gap-3"></div>
-                    <p id="no-time-msg" class="text-red-500 text-sm mt-4 hidden text-center font-bold">該日期已無可選時段。</p>
                 </div>
                 <button id="nextBtn" onclick="toStep(3)" disabled class="w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold transition-all">下一步</button>
             </div>
@@ -160,22 +158,28 @@
         }
 
         window.onload = function() {
-            const saved = localStorage.getItem('blackbox_booking_draft');
-            if (saved) {
-                const draft = JSON.parse(saved);
-                bookingData = draft.bookingData;
-                document.getElementById('custName').value = draft.custName || '';
-                document.getElementById('custPhone').value = draft.custPhone || '';
-                document.getElementById('deviceModel').value = draft.deviceModel || '';
-                document.getElementById('issueDesc').value = draft.issueDesc || '';
-                if (bookingData.store) {
-                    const dateInput = document.getElementById('bookDate');
-                    dateInput.min = getToday();
-                    dateInput.value = bookingData.date;
-                    generateTimeSlots();
+            // 檢查是否為頁面重新整理或瀏覽器導向
+            if (performance.navigation.type === 1) {
+                const saved = localStorage.getItem('blackbox_booking_draft');
+                if (saved) {
+                    const draft = JSON.parse(saved);
+                    bookingData = draft.bookingData;
+                    document.getElementById('custName').value = draft.custName || '';
+                    document.getElementById('custPhone').value = draft.custPhone || '';
+                    document.getElementById('deviceModel').value = draft.deviceModel || '';
+                    document.getElementById('issueDesc').value = draft.issueDesc || '';
+                    if (bookingData.store) {
+                        const dateInput = document.getElementById('bookDate');
+                        dateInput.min = getToday();
+                        dateInput.value = bookingData.date;
+                        generateTimeSlots();
+                    }
+                    toStep(draft.currentStep);
+                    updateNextBtnStatus();
                 }
-                toStep(draft.currentStep);
-                updateNextBtnStatus();
+            } else {
+                // 初次進站，強制清除所有舊資料
+                localStorage.removeItem('blackbox_booking_draft');
             }
         };
 
@@ -215,7 +219,6 @@
                     container.appendChild(btn); count++;
                 });
             }
-            document.getElementById('no-time-msg').classList.toggle('hidden', count > 0);
         }
 
         function updateNextBtnStatus() {
@@ -245,8 +248,16 @@
             if(!v('custName') || !v('custPhone')) { alert("請填寫姓名與電話"); return; }
             document.getElementById('loading-overlay').style.display = 'flex';
             const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name: v('custName'), phone: v('custPhone'), model: v('deviceModel'), desc: v('issueDesc') };
-            try { await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); alert(`✅ 預約成功！\n\n已為您完成預約，若需變更請與我們聯絡。`); localStorage.removeItem('blackbox_booking_draft'); location.reload(); } 
-            catch (error) { alert("連線失敗，請檢查網路。"); document.getElementById('loading-overlay').style.display = 'none'; }
+            try { 
+                await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); 
+                alert(`✅ 預約成功！\n\n已為您完成預約，若需變更請與我們聯絡。`); 
+                localStorage.removeItem('blackbox_booking_draft'); 
+                location.reload(); 
+            } 
+            catch (error) { 
+                alert("連線失敗，請檢查網路。"); 
+                document.getElementById('loading-overlay').style.display = 'none'; 
+            }
         }
     </script>
 </body>
