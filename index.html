@@ -22,7 +22,7 @@
             background-color: white; max-width: 480px; margin: 0 auto; position: relative;
         }
 
-        /* 關鍵修正 1：將頂部內距 padding-top 從 16px 縮減至 4px，縮小上方紅色區塊 */
+        /* 縮小頂部間距 */
         .scroll-content { 
             flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
             padding: 4px 16px 16px 16px; 
@@ -74,13 +74,12 @@
         }
         .scroll-content::-webkit-scrollbar { display: none; }
 
+        /* 關鍵修正：鎖定高度，寬度隨比例自動調整，防止方形變形 */
         .holiday-anim {
-            width: 70px !important; /* 稍微縮小動畫，更貼合緊湊版面 */
-            height: 70px !important;
-            border-radius: 16px !important;
-            object-fit: cover !important;
+            height: 80px !important; 
+            width: auto !important; 
+            border-radius: 12px !important;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -176,7 +175,7 @@
     </div>
 
     <script>
-        // ... (省略腳本邏輯，維持原樣)
+        // ... (腳本邏輯維持原樣)
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
         document.addEventListener('touchend', (e) => {
