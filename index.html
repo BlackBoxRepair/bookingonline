@@ -22,7 +22,7 @@
             background-color: white; max-width: 480px; margin: 0 auto; position: relative;
         }
 
-        /* 縮小頂部間距 */
+        /* 頂部間距緊湊化 */
         .scroll-content { 
             flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
             padding: 4px 16px 16px 16px; 
@@ -74,7 +74,7 @@
         }
         .scroll-content::-webkit-scrollbar { display: none; }
 
-        /* 關鍵修正：鎖定高度，寬度隨比例自動調整，防止方形變形 */
+        /* 動畫比例鎖定：高度固定，寬度自適應 */
         .holiday-anim {
             height: 80px !important; 
             width: auto !important; 
@@ -118,7 +118,7 @@
         <div class="scroll-content" id="main-scroll">
             <div id="step-1" class="flex flex-col">
                 <div class="flex justify-between items-center mb-1">
-                    <h2 class="text-2xl font-bold text-gray-800">維修門市</h2>
+                    <h2 class="text-2xl font-bold text-gray-800">請選擇維修門市</h2>
                     <video class="holiday-anim pointer-events-none" autoplay muted playsinline loop>
                         <source src="ANIMATION.mov" type="video/quicktime">
                     </video>
@@ -175,7 +175,6 @@
     </div>
 
     <script>
-        // ... (腳本邏輯維持原樣)
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
         document.addEventListener('touchend', (e) => {
@@ -186,6 +185,8 @@
 
         let currentStep = 1;
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
+        
+        // 您的專屬部署網址 (已自動更新)
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
 
         const getToday = () => {
