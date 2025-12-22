@@ -22,8 +22,11 @@
             background-color: white; max-width: 480px; margin: 0 auto; position: relative;
         }
 
-        /* 修改重點 1：縮小頂部內距，讓內容往上移 */
-        .scroll-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 4px 16px 16px 16px; }
+        /* 關鍵修正 1：將頂部內距 padding-top 從 16px 縮減至 4px，縮小上方紅色區塊 */
+        .scroll-content { 
+            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
+            padding: 4px 16px 16px 16px; 
+        }
 
         .store-card { 
             margin-bottom: 16px; border: 1px solid #e5e7eb; border-radius: 1.25rem; 
@@ -49,6 +52,7 @@
             background: #fff; border: 2px solid #e5e7eb !important;
             padding: 12px 16px !important; border-radius: 12px; font-size: 16px; 
             outline: none; width: 100%; display: block; color: #333; -webkit-appearance: none;
+            line-height: 1.5;
         }
         input:focus, textarea:focus { border-color: #F7D358 !important; }
 
@@ -69,6 +73,15 @@
             text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
         }
         .scroll-content::-webkit-scrollbar { display: none; }
+
+        .holiday-anim {
+            width: 70px !important; /* 稍微縮小動畫，更貼合緊湊版面 */
+            height: 70px !important;
+            border-radius: 16px !important;
+            object-fit: cover !important;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -105,9 +118,9 @@
 
         <div class="scroll-content" id="main-scroll">
             <div id="step-1" class="flex flex-col">
-                <div class="flex justify-between items-center mb-2">
+                <div class="flex justify-between items-center mb-1">
                     <h2 class="text-2xl font-bold text-gray-800">請選擇維修門市</h2>
-                    <video class="w-20 h-20 rounded-lg pointer-events-none" autoplay muted playsinline loop>
+                    <video class="holiday-anim pointer-events-none" autoplay muted playsinline loop>
                         <source src="ANIMATION.mov" type="video/quicktime">
                     </video>
                 </div>
@@ -163,6 +176,7 @@
     </div>
 
     <script>
+        // ... (省略腳本邏輯，維持原樣)
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
         document.addEventListener('touchend', (e) => {
