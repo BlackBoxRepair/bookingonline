@@ -82,6 +82,7 @@
             overflow: hidden;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="app-container shadow-2xl">
@@ -175,6 +176,11 @@
     </div>
 
     <script>
+        // Supabase 連線設定
+        const SUPABASE_URL = 'https://nszwpwimwxvjguoalzwt.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zendwd2ltd3h2amd1b2Fsend0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMzY1NzYsImV4cCI6MjA4MTcxMjU3Nn0.TaAt4aqEhDsONWtDCagD5rlTMknEWfhq8fMVL1Rt4lg';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
         document.addEventListener('touchend', (e) => {
@@ -186,7 +192,7 @@
         let currentStep = 1;
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
         
-        // 您的專屬部署網址 (已自動更新)
+        // Google Apps Script 部署網址
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
 
         const getToday = () => {
@@ -292,11 +298,45 @@
             const video = document.getElementById('loading-video');
             overlay.style.display = 'flex';
             video.play();
+            
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
-            const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name, phone, model: document.getElementById('deviceModel').value.trim(), desc: document.getElementById('issueDesc').value.trim() };
+            const model = document.getElementById('deviceModel').value.trim();
+            const desc = document.getElementById('issueDesc').value.trim();
+
+            const finalData = { 
+                store: bookingData.store, 
+                date: bookingData.date, 
+                time: bookingData.time, 
+                name, 
+                phone, 
+                model, 
+                desc 
+            };
+            
             try { 
+                // 1. 同步寫入 Supabase booking 資料表 (將設備型號與狀況描述分開寫入)
+                const { error: supabaseError } = await _supabase
+                    .from('booking')
+                    .insert([
+                        {
+                            name: name,
+                            phone: phone,
+                            store: bookingData.store,
+                            device: model,       // 獨立寫入設備型號
+                            issue: desc,         // 獨立寫入狀況描述
+                            booking_date: bookingData.date,
+                            booking_time: bookingData.time
+                        }
+                    ]);
+
+                if (supabaseError) {
+                    console.error('Supabase 寫入失敗:', supabaseError);
+                }
+
+                // 2. 寫入 Google 行事曆 (維持您原本的設定不變)
                 await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); 
+                
                 video.pause();
                 overlay.style.display = 'none';
                 document.getElementById('res-name').innerText = name;
