@@ -5,82 +5,45 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>黑盒子手機維修預約系統</title>
+    
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1560517927786546');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1560517927786546&ev=PageView&noscript=1"
+    /></noscript>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
-        
         * { box-sizing: border-box !important; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-
-        html, body { 
-            height: 100dvh; margin: 0; padding: 0; 
-            font-family: 'Noto Sans TC', sans-serif; 
-            background-color: #f3f4f6; overflow: hidden; position: fixed; width: 100%;
-        }
-
-        .app-container { 
-            height: 100dvh; display: flex; flex-direction: column; 
-            background-color: white; max-width: 480px; margin: 0 auto; position: relative;
-        }
-
-        /* 頂部間距緊湊化 */
-        .scroll-content { 
-            flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; 
-            padding: 4px 16px 16px 16px; 
-        }
-
-        .store-card { 
-            margin-bottom: 16px; border: 1px solid #e5e7eb; border-radius: 1.25rem; 
-            overflow: hidden; background: white; display: flex; flex-direction: column;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
+        html, body { height: 100dvh; margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; overflow: hidden; position: fixed; width: 100%; }
+        .app-container { height: 100dvh; display: flex; flex-direction: column; background-color: white; max-width: 480px; margin: 0 auto; position: relative; }
+        .scroll-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 4px 16px 16px 16px; }
+        .store-card { margin-bottom: 16px; border: 1px solid #e5e7eb; border-radius: 1.25rem; overflow: hidden; background: white; display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .store-img-container { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background-color: #eee; }
         .store-card img { width: 100%; height: 100%; object-fit: cover; }
-
         .btn-yellow { background-color: #F7D358; color: #333; }
         .time-slot { background-color: #fffbeb; color: #92400e; border: 1px solid #fef3c7; }
         .time-slot.active { background-color: #F7D358; color: #333; border-color: #F7D358; }
-        
-        .icon-btn {
-            width: 46px; height: 46px; display: flex; align-items: center; justify-content: center;
-            border-radius: 999px; transition: transform 0.1s; overflow: hidden;
-            border: 1px solid #eee; background: white;
-        }
+        .icon-btn { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 999px; transition: transform 0.1s; overflow: hidden; border: 1px solid #eee; background: white; }
         .icon-btn img { width: 100%; height: 100%; object-fit: cover; }
-
-        input[type="date"], input[type="text"], input[type="tel"], textarea {
-            background: #fff; border: 2px solid #e5e7eb !important;
-            padding: 12px 16px !important; border-radius: 12px; font-size: 16px; 
-            outline: none; width: 100%; display: block; color: #333; -webkit-appearance: none;
-            line-height: 1.5;
-        }
+        input[type="date"], input[type="text"], input[type="tel"], textarea { background: #fff; border: 2px solid #e5e7eb !important; padding: 12px 16px !important; border-radius: 12px; font-size: 16px; outline: none; width: 100%; display: block; color: #333; -webkit-appearance: none; line-height: 1.5; }
         input:focus, textarea:focus { border-color: #F7D358 !important; }
-
-        #loading-overlay {
-            display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.9);
-            z-index: 200; flex-direction: column; align-items: center; justify-content: center;
-        }
+        #loading-overlay { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; flex-direction: column; align-items: center; justify-content: center; }
         #loading-video { width: 240px; height: 240px; border-radius: 20px; }
-
-        #success-modal {
-            display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7);
-            z-index: 100; flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px;
-        }
-        #success-card {
-            background: white; width: 100%; max-width: 340px; border-radius: 24px;
-            padding: 32px 24px; display: flex; flex-direction: column; align-items: center;
-            text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
-        }
+        #success-modal { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        #success-card { background: white; width: 100%; max-width: 340px; border-radius: 24px; padding: 32px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
         .scroll-content::-webkit-scrollbar { display: none; }
-
-        /* 動畫比例鎖定：高度固定，寬度自適應 */
-        .holiday-anim {
-            height: 80px !important; 
-            width: auto !important; 
-            border-radius: 12px !important;
-            overflow: hidden;
-        }
+        .holiday-anim { height: 80px !important; width: auto !important; border-radius: 12px !important; overflow: hidden; }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -124,7 +87,6 @@
                         <source src="ANIMATION.mov" type="video/quicktime">
                     </video>
                 </div>
-                
                 <div class="store-card">
                     <div class="store-img-container"><img src="./CHING.png" alt="黑盒子勤美公益店"></div>
                     <div class="p-4 bg-white">
@@ -137,7 +99,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="store-card">
                     <div class="store-img-container"><img src="./SALU.png" alt="黑盒子沙鹿站前店"></div>
                     <div class="p-4 bg-white">
@@ -176,45 +137,22 @@
     </div>
 
     <script>
-        // Supabase 連線設定
         const SUPABASE_URL = 'https://nszwpwimwxvjguoalzwt.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zendwd2ltd3h2amd1b2Fsend0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMzY1NzYsImV4cCI6MjA4MTcxMjU3Nn0.TaAt4aqEhDsONWtDCagD5rlTMknEWfhq8fMVL1Rt4lg';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
 
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
-        document.addEventListener('touchend', (e) => {
-            const now = Date.now();
-            if (now - lastTouch <= 300) e.preventDefault();
-            lastTouch = now;
-        }, false);
+        document.addEventListener('touchend', (e) => { const now = Date.now(); if (now - lastTouch <= 300) e.preventDefault(); lastTouch = now; }, false);
 
         let currentStep = 1;
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
-        
-        // Google Apps Script 部署網址
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
-
-        const getToday = () => {
-            const now = new Date();
-            const offset = 8 * 60; 
-            const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
-            return `${localTime.getFullYear()}-${String(localTime.getMonth() + 1).padStart(2, '0')}-${String(localTime.getDate()).padStart(2, '0')}`;
-        };
+        const getToday = () => { const now = new Date(); const offset = 8 * 60; const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000); return `${localTime.getFullYear()}-${String(localTime.getMonth() + 1).padStart(2, '0')}-${String(localTime.getDate()).padStart(2, '0')}`; };
 
         function handleInput() { updateSubmitBtnStatus(); saveDraft(); }
-
-        function saveDraft() {
-            const draft = { currentStep, bookingData, custName: document.getElementById('custName').value, custPhone: document.getElementById('custPhone').value, deviceModel: document.getElementById('deviceModel').value, issueDesc: document.getElementById('issueDesc').value };
-            localStorage.setItem('blackbox_booking_draft', JSON.stringify(draft));
-        }
-
-        function updateSubmitBtnStatus() {
-            const btn = document.getElementById('finalSubmitBtn');
-            const isReady = ['custName','custPhone','deviceModel','issueDesc'].every(id => document.getElementById(id).value.trim() !== '');
-            btn.disabled = !isReady;
-            btn.className = isReady ? "w-full btn-yellow py-5 rounded-2xl font-bold text-xl shadow-lg mt-2 active:scale-95 transition-all" : "w-full bg-gray-200 text-gray-400 py-5 rounded-2xl font-bold text-xl mt-2 transition-all";
-        }
+        function saveDraft() { const draft = { currentStep, bookingData, custName: document.getElementById('custName').value, custPhone: document.getElementById('custPhone').value, deviceModel: document.getElementById('deviceModel').value, issueDesc: document.getElementById('issueDesc').value }; localStorage.setItem('blackbox_booking_draft', JSON.stringify(draft)); }
+        function updateSubmitBtnStatus() { const btn = document.getElementById('finalSubmitBtn'); const isReady = ['custName','custPhone','deviceModel','issueDesc'].every(id => document.getElementById(id).value.trim() !== ''); btn.disabled = !isReady; btn.className = isReady ? "w-full btn-yellow py-5 rounded-2xl font-bold text-xl shadow-lg mt-2 active:scale-95 transition-all" : "w-full bg-gray-200 text-gray-400 py-5 rounded-2xl font-bold text-xl mt-2 transition-all"; }
 
         window.onload = function() {
             if (performance.navigation.type === 1) {
@@ -223,27 +161,17 @@
                     const draft = JSON.parse(saved);
                     bookingData = draft.bookingData;
                     ['custName','custPhone','deviceModel','issueDesc'].forEach(id => document.getElementById(id).value = draft[id] || '');
-                    if (bookingData.store) {
-                        const dateInput = document.getElementById('bookDate');
-                        dateInput.min = getToday();
-                        dateInput.value = bookingData.date;
-                        generateTimeSlots();
-                    }
-                    toStep(draft.currentStep);
-                    updateNextBtnStatus();
-                    updateSubmitBtnStatus();
+                    if (bookingData.store) { const dateInput = document.getElementById('bookDate'); dateInput.min = getToday(); dateInput.value = bookingData.date; generateTimeSlots(); }
+                    toStep(draft.currentStep); updateNextBtnStatus(); updateSubmitBtnStatus();
                 }
-            } else {
-                localStorage.removeItem('blackbox_booking_draft');
-            }
+            } else { localStorage.removeItem('blackbox_booking_draft'); }
         };
 
         function selectStore(n, s, e) {
             bookingData = { store: n, startH: s, endH: e, date: '', time: '' };
-            const dateInput = document.getElementById('bookDate');
-            dateInput.value = '';
+            document.getElementById('bookDate').value = '';
             document.getElementById('timeSlots').innerHTML = '';
-            dateInput.setAttribute('min', getToday());
+            document.getElementById('bookDate').setAttribute('min', getToday());
             updateNextBtnStatus(); saveDraft(); toStep(2);
         }
 
@@ -256,8 +184,7 @@
 
         function generateTimeSlots() {
             const container = document.getElementById('timeSlots'); container.innerHTML = '';
-            const now = new Date(); const offset = 8 * 60;
-            const localNow = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
+            const now = new Date(); const offset = 8 * 60; const localNow = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
             const isToday = (bookingData.date === getToday());
             for (let h = bookingData.startH; h <= bookingData.endH; h++) {
                 ['00', '30'].forEach(m => {
@@ -273,72 +200,40 @@
             }
         }
 
-        function updateNextBtnStatus() {
-            const btn = document.getElementById('nextBtn');
-            const ready = (bookingData.date && bookingData.time);
-            btn.disabled = !ready;
-            btn.className = ready ? "w-full mt-6 btn-yellow py-4 rounded-2xl font-bold shadow-md transition-all" : "w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold";
-        }
-
-        function toStep(s) {
-            currentStep = s;
-            [1, 2, 3].forEach(i => document.getElementById('step-' + i).classList.replace('flex', 'hidden'));
-            document.getElementById('step-' + s).classList.replace('hidden', 'flex');
-            document.getElementById('nav-bar').classList.toggle('hidden', s === 1);
-            document.getElementById('main-scroll').scrollTop = 0;
-            saveDraft();
-        }
-
+        function updateNextBtnStatus() { const btn = document.getElementById('nextBtn'); const ready = (bookingData.date && bookingData.time); btn.disabled = !ready; btn.className = ready ? "w-full mt-6 btn-yellow py-4 rounded-2xl font-bold shadow-md transition-all" : "w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold"; }
+        function toStep(s) { currentStep = s; [1, 2, 3].forEach(i => document.getElementById('step-' + i).classList.replace('flex', 'hidden')); document.getElementById('step-' + s).classList.replace('hidden', 'flex'); document.getElementById('nav-bar').classList.toggle('hidden', s === 1); document.getElementById('main-scroll').scrollTop = 0; saveDraft(); }
         function goBack() { if (currentStep > 1) toStep(currentStep - 1); }
-
         document.getElementById('bookDate').addEventListener('click', function() { if (this.showPicker) this.showPicker(); });
 
         async function submitBooking() {
             const overlay = document.getElementById('loading-overlay');
             const video = document.getElementById('loading-video');
-            overlay.style.display = 'flex';
-            video.play();
+            overlay.style.display = 'flex'; video.play();
             
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const model = document.getElementById('deviceModel').value.trim();
             const desc = document.getElementById('issueDesc').value.trim();
-
-            const finalData = { 
-                store: bookingData.store, 
-                date: bookingData.date, 
-                time: bookingData.time, 
-                name, 
-                phone, 
-                model, 
-                desc 
-            };
+            const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name, phone, model, desc };
             
             try { 
-                // 1. 同步寫入 Supabase booking 資料表 (將設備型號與狀況描述分開寫入)
-                const { error: supabaseError } = await _supabase
-                    .from('booking')
-                    .insert([
-                        {
-                            name: name,
-                            phone: phone,
-                            store: bookingData.store,
-                            device: model,       // 獨立寫入設備型號
-                            issue: desc,         // 獨立寫入狀況描述
-                            booking_date: bookingData.date,
-                            booking_time: bookingData.time
-                        }
-                    ]);
+                // 1. Supabase 寫入
+                await _supabase.from('booking').insert([{ name, phone, store: bookingData.store, device: model, issue: desc, booking_date: bookingData.date, booking_time: bookingData.time }]);
 
-                if (supabaseError) {
-                    console.error('Supabase 寫入失敗:', supabaseError);
-                }
-
-                // 2. 寫入 Google 行事曆 (維持您原本的設定不變)
+                // 2. Google 行事曆寫入
                 await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); 
                 
-                video.pause();
-                overlay.style.display = 'none';
+                // 3. Meta 預約成功追蹤 (Lead 事件)
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead', {
+                        content_name: bookingData.store,
+                        content_category: '3C維修預約',
+                        currency: 'TWD',
+                        value: 0
+                    });
+                }
+
+                video.pause(); overlay.style.display = 'none';
                 document.getElementById('res-name').innerText = name;
                 document.getElementById('res-phone').innerText = phone;
                 document.getElementById('res-time').innerText = `${bookingData.date} ${bookingData.time}`;
@@ -346,11 +241,7 @@
                 document.getElementById('success-modal').style.display = 'flex';
                 localStorage.removeItem('blackbox_booking_draft'); 
             } 
-            catch (error) { 
-                video.pause();
-                overlay.style.display = 'none';
-                alert("連線失敗，請檢查網路。"); 
-            }
+            catch (error) { video.pause(); overlay.style.display = 'none'; alert("連線失敗，請檢查網路。"); }
         }
     </script>
 </body>
