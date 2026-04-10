@@ -5,7 +5,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>黑盒子手機維修預約系統</title>
-    
+
+    <link rel="icon" type="image/jpeg" href="./icon.jpg">
+    <link rel="apple-touch-icon" href="./icon.jpg">
+    <meta property="og:title" content="黑盒子手機維修預約系統">
+    <meta property="og:description" content="專業手機、筆電、3C設備維修預約">
+    <meta property="og:image" content="https://blackboxrepair.github.io/bookingonline/icon.jpg">
+    <meta property="og:type" content="website">
+
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -217,13 +224,9 @@
             const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name, phone, model, desc };
             
             try { 
-                // 1. Supabase 寫入
                 await _supabase.from('booking').insert([{ name, phone, store: bookingData.store, device: model, issue: desc, booking_date: bookingData.date, booking_time: bookingData.time }]);
-
-                // 2. Google 行事曆寫入
                 await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); 
                 
-                // 3. Meta 預約成功追蹤 (Lead 事件)
                 if (typeof fbq === 'function') {
                     fbq('track', 'Lead', {
                         content_name: bookingData.store,
