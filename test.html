@@ -550,10 +550,10 @@
             overflow: hidden;
         }
 
-        /* 門市照片再加高版：只加高門市照片區域，其餘卡片間距與按鈕設定維持不變 */
+        /* 門市圖卡上移版：縮短 LOGO 與第一張門市圖卡之間的距離 */
         .store-step {
             min-height: 100%;
-            gap: 15px;
+            gap: 8px;
             padding-bottom: 12px;
         }
 
@@ -561,7 +561,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2px;
+            margin-bottom: -2px;
             flex-shrink: 0;
         }
 
@@ -617,6 +617,14 @@
         }
 
         @media (max-height: 700px) {
+            .store-step {
+                gap: 6px;
+            }
+
+            .store-top-row {
+                margin-bottom: -4px;
+            }
+
             .store-logo {
                 height: 50px !important;
             }
