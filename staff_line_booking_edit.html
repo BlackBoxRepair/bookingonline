@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>修改預約資料｜黑盒子維修中心</title>
+  <link rel="icon" type="image/jpeg" href="./icon.jpg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@400;500;600;700;800&display=swap');
+    :root {
+      --brand: #f7c600;
+      --bg: #f3f4f6;
+      --text: #202531;
+      --muted: #8d95a3;
+      --line: #e5e7eb;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { margin:0; min-height:100dvh; background:var(--bg); font-family:'TASA Explorer', sans-serif; color:var(--text); }
+    .app { max-width:480px; min-height:100dvh; margin:0 auto; background:#fff; }
+    .header { padding: calc(env(safe-area-inset-top,0px) + 18px) 20px 18px; border-bottom:1px solid rgba(31,41,55,.06); text-align:center; }
+    .logo { height:52px; width:auto; object-fit:contain; margin:0 auto 12px; }
+    .title { font-size:24px; font-weight:800; letter-spacing:.02em; }
+    .subtitle { margin-top:6px; font-size:14px; color:var(--muted); font-weight:600; }
+    .content { padding:18px 16px 28px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:18px; box-shadow:0 6px 18px rgba(31,41,55,.04); }
+    label { display:block; font-size:13px; font-weight:800; color:#6b7280; margin:0 0 8px; letter-spacing:.03em; }
+    input, select, textarea { width:100%; border:2px solid var(--line); border-radius:14px; padding:13px 14px; font-size:16px; outline:none; background:#fff; color:#1f2937; font-family:'TASA Explorer', sans-serif; }
+    textarea { min-height:120px; resize:vertical; }
+    input:focus, select:focus, textarea:focus { border-color:var(--brand); }
+    .field { margin-bottom:16px; }
+    .time-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
+    .time-btn { min-height:48px; border:1px solid var(--line); background:#fff; border-radius:12px; font-weight:800; color:#2f3338; }
+    .time-btn.active { border:2px solid var(--brand); color:#111827; }
+    .submit { width:100%; border:0; border-radius:14px; min-height:56px; background:var(--brand); color:#222; font-size:18px; font-weight:800; margin-top:6px; }
+    .submit:disabled { background:#d6d8dd; color:#fff; }
+    .notice { border-radius:16px; padding:14px; font-size:14px; font-weight:700; margin-bottom:16px; }
+    .notice.info { background:#fff8dc; color:#6b5600; }
+    .notice.error { background:#fee2e2; color:#991b1b; }
+    .notice.success { background:#dcfce7; color:#166534; }
+    .hidden { display:none !important; }
+    .small { font-size:12px; color:#9ca3af; margin-top:6px; line-height:1.5; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <img src="./site logo.png" class="logo" alt="黑盒子維修中心">
+      <div class="title">修改預約資料</div>
+      <div class="subtitle">僅限持有 LINE 通知連結的門市人員使用</div>
+    </header>
+
+    <main class="content">
+      <div id="message" class="notice info">正在讀取預約資料...</div>
+
+      <form id="editForm" class="card hidden">
+        <div class="field">
+          <label for="store">預約門市</label>
+          <select id="store" onchange="handleStoreChange()">
+            <option value="勤美公益店">勤美公益店</option>
+            <option value="沙鹿站前店">沙鹿站前店</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="bookingDate">預約日期</label>
+          <input type="date" id="bookingDate" onchange="generateTimeSlots()">
+        </div>
+
+        <div class="field">
+          <label>預約時間</label>
+          <div id="timeSlots" class="time-grid"></div>
+          <div class="small">時間依照門市營業時間產生，每 30 分鐘一格。</div>
+        </div>
+
+        <div class="field">
+          <label for="custName">預約姓名</label>
+          <input type="text" id="custName" placeholder="請輸入姓名">
+        </div>
+
+        <div class="field">
+          <label for="custPhone">聯絡電話</label>
+          <input type="tel" id="custPhone" placeholder="請輸入電話">
+        </div>
+
+        <div class="field">
+          <label for="deviceModel">設備型號</label>
+          <input type="text" id="deviceModel" placeholder="例如 iPhone 15 Pro">
+        </div>
+
+        <div class="field">
+          <label for="issueDesc">狀況描述</label>
+          <textarea id="issueDesc" placeholder="請輸入狀況描述"></textarea>
+        </div>
+
+        <button type="submit" id="saveBtn" class="submit">儲存修改</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://nszwpwimwxvjguoalzwt.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zendwd2ltd3h2amd1b2Fsend0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMzY1NzYsImV4cCI6MjA4MTcxMjU3Nn0.TaAt4aqEhDsONWtDCagD5rlTMknEWfhq8fMVL1Rt4lg';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwIGSpTVHn321OfTXlzHR-hG0zUXPlkMQjZbfBL9T_03BSvj2eybsfbp-YcuodaxgxP/exec';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    const params = new URLSearchParams(location.search);
+    const editRef = params.get('ref');
+    const editToken = params.get('token');
+
+    let selectedTime = '';
+    let originalData = null;
+
+    const pad2 = (n) => String(n).padStart(2, '0');
+
+    function showMessage(text, type = 'info') {
+      const el = document.getElementById('message');
+      el.textContent = text;
+      el.className = `notice ${type}`;
+    }
+
+    function normalizeDate(value) {
+      if (!value) return '';
+      return String(value).slice(0, 10);
+    }
+
+    function normalizeTime(value) {
+      if (!value) return '';
+      const text = String(value);
+      const match = text.match(/(\d{1,2}):(\d{2})/);
+      if (!match) return text;
+      return `${Number(match[1])}:${match[2]}`;
+    }
+
+    function displayTime(value) {
+      const normalized = normalizeTime(value);
+      const match = normalized.match(/(\d{1,2}):(\d{2})/);
+      if (!match) return normalized;
+      return `${pad2(Number(match[1]))}:${match[2]}`;
+    }
+
+    function getStoreHours(store) {
+      return store && store.includes('沙鹿') ? { start: 12, end: 20 } : { start: 11, end: 19 };
+    }
+
+    function generateTimeSlots() {
+      const container = document.getElementById('timeSlots');
+      const store = document.getElementById('store').value;
+      const hours = getStoreHours(store);
+      container.innerHTML = '';
+
+      for (let h = hours.start; h <= hours.end; h++) {
+        ['00', '30'].forEach(m => {
+          if (h === hours.end && m === '30') return;
+          const value = `${h}:${m}`;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'time-btn';
+          if (normalizeTime(selectedTime) === value) btn.classList.add('active');
+          btn.textContent = `${pad2(h)}:${m}`;
+          btn.onclick = () => {
+            selectedTime = value;
+            document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+          };
+          container.appendChild(btn);
+        });
+      }
+    }
+
+    function handleStoreChange() {
+      const store = document.getElementById('store').value;
+      const hours = getStoreHours(store);
+      const currentHour = Number(normalizeTime(selectedTime).split(':')[0]);
+      if (!selectedTime || currentHour < hours.start || currentHour > hours.end) {
+        selectedTime = `${hours.start}:00`;
+      }
+      generateTimeSlots();
+    }
+
+    function fillForm(data) {
+      originalData = { ...data };
+      document.getElementById('store').value = data.store || '勤美公益店';
+      document.getElementById('bookingDate').value = normalizeDate(data.booking_date);
+      selectedTime = normalizeTime(data.booking_time);
+      document.getElementById('custName').value = data.name || '';
+      document.getElementById('custPhone').value = data.phone || '';
+      document.getElementById('deviceModel').value = data.device || '';
+      document.getElementById('issueDesc').value = data.issue || '';
+      generateTimeSlots();
+      document.getElementById('editForm').classList.remove('hidden');
+      showMessage('已讀取預約資料，可以進行修改。', 'info');
+    }
+
+    async function loadBooking() {
+      if (!editRef || !editToken) {
+        showMessage('缺少修改連結參數，無法讀取預約資料。', 'error');
+        return;
+      }
+
+      const { data, error } = await _supabase.rpc('get_booking_for_edit', {
+        p_ref: editRef,
+        p_token: editToken
+      });
+
+      if (error) {
+        console.error(error);
+        showMessage('讀取失敗，請確認 Supabase SQL 是否已設定完成。', 'error');
+        return;
+      }
+
+      const booking = Array.isArray(data) ? data[0] : data;
+      if (!booking) {
+        showMessage('找不到這筆預約，或修改連結已失效。', 'error');
+        return;
+      }
+
+      fillForm(booking);
+    }
+
+    function collectFormData() {
+      return {
+        store: document.getElementById('store').value.trim(),
+        date: document.getElementById('bookingDate').value,
+        time: normalizeTime(selectedTime),
+        name: document.getElementById('custName').value.trim(),
+        phone: document.getElementById('custPhone').value.trim(),
+        model: document.getElementById('deviceModel').value.trim(),
+        desc: document.getElementById('issueDesc').value.trim(),
+        edit_ref: editRef,
+        edit_token: editToken,
+        edit_url: location.href
+      };
+    }
+
+    function validateData(data) {
+      return data.store && data.date && data.time && data.name && data.phone && data.model && data.desc;
+    }
+
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const saveBtn = document.getElementById('saveBtn');
+      const next = collectFormData();
+
+      if (!validateData(next)) {
+        showMessage('請確認所有欄位都已填寫。', 'error');
+        return;
+      }
+
+      saveBtn.disabled = true;
+      saveBtn.textContent = '儲存中...';
+
+      const { data, error } = await _supabase.rpc('update_booking_for_edit', {
+        p_ref: editRef,
+        p_token: editToken,
+        p_store: next.store,
+        p_booking_date: next.date,
+        p_booking_time: next.time,
+        p_name: next.name,
+        p_phone: next.phone,
+        p_device: next.model,
+        p_issue: next.desc
+      });
+
+      if (error) {
+        console.error(error);
+        showMessage('儲存失敗，請稍後再試。', 'error');
+        saveBtn.disabled = false;
+        saveBtn.textContent = '儲存修改';
+        return;
+      }
+
+      const updated = Array.isArray(data) ? data[0] : data;
+      if (!updated) {
+        showMessage('儲存失敗：找不到這筆預約，或修改連結已失效。', 'error');
+        saveBtn.disabled = false;
+        saveBtn.textContent = '儲存修改';
+        return;
+      }
+
+      await fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({
+          action: 'booking_updated',
+          old: {
+            store: originalData.store,
+            date: normalizeDate(originalData.booking_date),
+            time: normalizeTime(originalData.booking_time),
+            name: originalData.name,
+            phone: originalData.phone,
+            model: originalData.device,
+            desc: originalData.issue
+          },
+          ...next
+        })
+      });
+
+      originalData = {
+        store: next.store,
+        booking_date: next.date,
+        booking_time: next.time,
+        name: next.name,
+        phone: next.phone,
+        device: next.model,
+        issue: next.desc
+      };
+
+      showMessage('預約資料已更新，並已發送 LINE 更新通知。', 'success');
+      saveBtn.disabled = false;
+      saveBtn.textContent = '儲存修改';
+    });
+
+    loadBooking();
+  </script>
+</body>
+</html>
