@@ -1117,7 +1117,25 @@
         }
 
 
-        async function submitBooking() {
+        
+        function generateSecureToken() {
+            if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                return window.crypto.randomUUID();
+            }
+            if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+                const bytes = new Uint8Array(16);
+                window.crypto.getRandomValues(bytes);
+                return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+            return `${Date.now()}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`;
+        }
+
+        function buildEditUrl(editRef, editToken) {
+            const basePath = location.pathname.replace(/\/[^\/]*$/, '/');
+            return `${location.origin}${basePath}edit.html?ref=${encodeURIComponent(editRef)}&token=${encodeURIComponent(editToken)}`;
+        }
+
+async function submitBooking() {
             const overlay = document.getElementById('loading-overlay');
             const video = document.getElementById('loading-video');
             overlay.style.display = 'flex';
@@ -1127,10 +1145,38 @@
             const phone = document.getElementById('custPhone').value.trim();
             const model = document.getElementById('deviceModel').value.trim();
             const desc = document.getElementById('issueDesc').value.trim();
-            const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name, phone, model, desc };
+            const editRef = generateSecureToken();
+            const editToken = generateSecureToken();
+            const editUrl = buildEditUrl(editRef, editToken);
+
+            const finalData = {
+                store: bookingData.store,
+                date: bookingData.date,
+                time: bookingData.time,
+                name,
+                phone,
+                model,
+                desc,
+                edit_ref: editRef,
+                edit_token: editToken,
+                edit_url: editUrl
+            };
 
             try {
-                await _supabase.from('booking').insert([{ name, phone, store: bookingData.store, device: model, issue: desc, booking_date: bookingData.date, booking_time: bookingData.time }]);
+                const { error } = await _supabase.from('booking').insert([{
+                    name,
+                    phone,
+                    store: bookingData.store,
+                    device: model,
+                    issue: desc,
+                    booking_date: bookingData.date,
+                    booking_time: bookingData.time,
+                    edit_ref: editRef,
+                    edit_token: editToken
+                }]);
+
+                if (error) throw error;
+
                 await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) });
 
                 if (typeof fbq === 'function') {
@@ -1152,9 +1198,10 @@
                 localStorage.removeItem('blackbox_booking_draft');
             }
             catch (error) {
+                console.error('submitBooking error:', error);
                 video.pause();
                 overlay.style.display = 'none';
-                alert("連線失敗，請檢查網路。");
+                alert("連線失敗，請檢查網路或資料庫設定。");
             }
         }
     </script>
