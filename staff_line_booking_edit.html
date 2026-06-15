@@ -362,7 +362,13 @@
           <button type="button" class="edit-toggle" data-edit-target="issueDesc" onclick="unlockField('issueDesc')">編輯</button>
         </div>
 
-        <div class="lock-note">為避免誤觸，欄位預設鎖定。請先點該欄位右側「編輯」再修改；預約時間只有點擊「編輯」後才會展開時段選項。</div>
+        <div class="field-row">
+          <label class="field-label" for="staffNote">員工備註</label>
+          <textarea id="staffNote" class="content-box" placeholder="僅供內部人員記錄，可留空" disabled></textarea>
+          <button type="button" class="edit-toggle" data-edit-target="staffNote" onclick="unlockField('staffNote')">編輯</button>
+        </div>
+
+        <div class="lock-note">為避免誤觸，欄位預設鎖定。請先點該欄位右側「編輯」再修改；預約時間只有點擊「編輯」後才會展開時段選項。員工備註可留空，儲存後會一起寫入 Supabase。</div>
         <button type="submit" id="saveBtn" class="submit">儲存修改</button>
       </form>
     </main>
@@ -381,7 +387,7 @@
     let selectedTime = '';
     let originalData = null;
     const editableFields = new Set();
-    const editTargets = ['store', 'bookingDate', 'timeSlots', 'custName', 'custPhone', 'deviceModel', 'issueDesc'];
+    const editTargets = ['store', 'bookingDate', 'timeSlots', 'custName', 'custPhone', 'deviceModel', 'issueDesc', 'staffNote'];
 
     const pad2 = (n) => String(n).padStart(2, '0');
 
@@ -518,6 +524,7 @@
       document.getElementById('custPhone').value = data.phone || '';
       document.getElementById('deviceModel').value = data.device || '';
       document.getElementById('issueDesc').value = data.issue || '';
+      document.getElementById('staffNote').value = data.staff_note || '';
       document.getElementById('editForm').classList.remove('hidden');
       updateTimeDisplay();
       generateTimeSlots();
@@ -560,6 +567,7 @@
         phone: document.getElementById('custPhone').value.trim(),
         model: document.getElementById('deviceModel').value.trim(),
         desc: document.getElementById('issueDesc').value.trim(),
+        staff_note: document.getElementById('staffNote').value.trim(),
         edit_ref: editRef,
         edit_token: editToken,
         edit_url: location.href
@@ -592,7 +600,8 @@
         p_name: next.name,
         p_phone: next.phone,
         p_device: next.model,
-        p_issue: next.desc
+        p_issue: next.desc,
+        p_staff_note: next.staff_note
       });
 
       if (error) {
@@ -623,7 +632,8 @@
             name: originalData.name,
             phone: originalData.phone,
             model: originalData.device,
-            desc: originalData.issue
+            desc: originalData.issue,
+            staff_note: originalData.staff_note || ''
           },
           ...next
         })
@@ -636,12 +646,13 @@
         name: next.name,
         phone: next.phone,
         device: next.model,
-        issue: next.desc
+        issue: next.desc,
+        staff_note: next.staff_note
       };
 
       lockAllFields();
       updateTimeDisplay();
-      showMessage('預約資料已更新，並已發送 LINE 更新通知。欄位已重新鎖定。', 'success');
+      showMessage('預約資料與員工備註已更新，欄位已重新鎖定。', 'success');
       saveBtn.disabled = false;
       saveBtn.textContent = '儲存修改';
     });
