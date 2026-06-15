@@ -201,9 +201,9 @@
 
     .time-panel {
       display: none;
-      grid-column: 2 / 3;
+      grid-column: 1 / -1;
       width: 100%;
-      padding: 8px 0 4px;
+      padding: 14px 0 4px;
     }
 
     .time-panel.open {
@@ -213,15 +213,16 @@
     .time-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
+      gap: 10px;
+      width: 100%;
     }
 
     .time-btn {
-      min-height: 44px;
+      min-height: 50px;
       border: 1px solid var(--line);
       background: #fff;
-      border-radius: 12px;
-      font-size: 14px;
+      border-radius: 14px;
+      font-size: 16px;
       font-weight: 800;
       color: #2f3338;
       transition: .15s ease;
@@ -296,7 +297,8 @@
       select.content-box,
       textarea.content-box { font-size: 14px; padding: 10px 10px; }
       .edit-toggle { width: 58px; font-size: 11px; }
-      .time-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .time-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+      .time-btn { min-height: 46px; font-size: 14px; border-radius: 12px; }
     }
   </style>
 </head>
