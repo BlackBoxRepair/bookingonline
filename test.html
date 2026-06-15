@@ -800,7 +800,11 @@
         const SUPABASE_URL = 'https://nszwpwimwxvjguoalzwt.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zendwd2ltd3h2amd1b2Fsend0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMzY1NzYsImV4cCI6MjA4MTcxMjU3Nn0.TaAt4aqEhDsONWtDCagD5rlTMknEWfhq8fMVL1Rt4lg';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwIGSpTVHn321OfTXlzHR-hG0zUXPlkMQjZbfBL9T_03BSvj2eybsfbp-YcuodaxgxP/exec';
+        // LINE Flex 卡片通知 Apps Script
+        const LINE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwIGSpTVHn321OfTXlzHR-hG0zUXPlkMQjZbfBL9T_03BSvj2eybsfbp-YcuodaxgxP/exec';
+
+        // 舊版 Google 行事曆寫入 Apps Script
+        const CALENDAR_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
 
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
@@ -1159,7 +1163,10 @@ async function submitBooking() {
                 desc,
                 edit_ref: editRef,
                 edit_token: editToken,
-                edit_url: editUrl
+                edit_url: editUrl,
+                // 同步保留兩種欄位名稱，避免不同 Apps Script 吃不同格式
+                device: model,
+                issue: desc
             };
 
             try {
@@ -1177,7 +1184,26 @@ async function submitBooking() {
 
                 if (error) throw error;
 
-                await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) });
+                // 同時送給 LINE Flex 通知 Apps Script 與 Google 行事曆 Apps Script
+                // 使用 allSettled：其中一支暫時失敗時，不會阻止預約完成畫面顯示。
+                const appScriptResults = await Promise.allSettled([
+                    fetch(LINE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(finalData)
+                    }),
+                    fetch(CALENDAR_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(finalData)
+                    })
+                ]);
+
+                appScriptResults.forEach((result, index) => {
+                    if (result.status === 'rejected') {
+                        console.error(index === 0 ? 'LINE Apps Script failed:' : 'Calendar Apps Script failed:', result.reason);
+                    }
+                });
 
                 if (typeof fbq === 'function') {
                     fbq('track', 'Lead', {
