@@ -83,8 +83,8 @@
 
     .field-row {
       display: grid;
-      grid-template-columns: 86px minmax(0, 1fr) 56px;
-      gap: 9px;
+      grid-template-columns: 88px minmax(0, 1fr) 64px;
+      gap: 10px;
       align-items: center;
       padding: 10px 0;
       border-bottom: 1px solid #f0f1f4;
@@ -107,8 +107,10 @@
     select.content-box,
     textarea.content-box {
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
       min-height: 44px;
-      border: 1.5px solid var(--blue) !important;
+      border: 1px solid #e6e9ef !important;
       background: var(--content-bg) !important;
       color: #1f2937;
       border-radius: 12px;
@@ -137,6 +139,13 @@
       padding-right: 28px;
     }
 
+
+    input[type="date"].content-box {
+      -webkit-appearance: none;
+      appearance: none;
+      min-width: 0;
+    }
+
     .content-box:disabled,
     input.content-box:disabled,
     select.content-box:disabled,
@@ -153,11 +162,11 @@
     textarea.content-box.editing {
       background: #fff !important;
       border-color: var(--brand) !important;
-      box-shadow: 0 0 0 3px rgba(247, 198, 0, .18);
+      box-shadow: none;
     }
 
     .edit-toggle {
-      width: 56px;
+      width: 64px;
       min-height: 34px;
       border: 1px solid #d6dae1;
       background: #fff;
@@ -192,7 +201,8 @@
 
     .time-panel {
       display: none;
-      grid-column: 2 / 4;
+      grid-column: 2 / 3;
+      width: 100%;
       padding: 8px 0 4px;
     }
 
@@ -277,15 +287,15 @@
       .content { padding-left: 12px; padding-right: 12px; }
       .card { padding: 12px; }
       .field-row {
-        grid-template-columns: 74px minmax(0, 1fr) 52px;
-        gap: 7px;
+        grid-template-columns: 76px minmax(0, 1fr) 58px;
+        gap: 8px;
       }
       .field-label { font-size: 12px; }
       .content-box,
       input.content-box,
       select.content-box,
       textarea.content-box { font-size: 14px; padding: 10px 10px; }
-      .edit-toggle { width: 52px; font-size: 11px; }
+      .edit-toggle { width: 58px; font-size: 11px; }
       .time-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
   </style>
@@ -377,6 +387,13 @@
       const el = document.getElementById('message');
       el.textContent = text;
       el.className = `notice ${type}`;
+      el.classList.remove('hidden');
+    }
+
+    function hideMessage() {
+      const el = document.getElementById('message');
+      el.classList.add('hidden');
+      el.textContent = '';
     }
 
     function normalizeDate(value) {
@@ -503,7 +520,7 @@
       updateTimeDisplay();
       generateTimeSlots();
       lockAllFields();
-      showMessage('已讀取預約資料。欄位目前已鎖定，請點選欄位右側「編輯」後再修改。', 'info');
+      hideMessage();
     }
 
     async function loadBooking() {
