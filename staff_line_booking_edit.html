@@ -662,6 +662,37 @@
       return data.store && data.date && data.time && data.name && data.phone && data.model && data.desc;
     }
 
+    function hasBookingFieldChanges(next) {
+      if (!originalData) return true;
+
+      const oldBooking = {
+        store: originalData.store || '',
+        date: normalizeDate(originalData.booking_date),
+        time: normalizeTime(originalData.booking_time),
+        name: originalData.name || '',
+        phone: originalData.phone || '',
+        model: originalData.device || '',
+        desc: originalData.issue || ''
+      };
+
+      const newBooking = {
+        store: next.store || '',
+        date: next.date || '',
+        time: normalizeTime(next.time),
+        name: next.name || '',
+        phone: next.phone || '',
+        model: next.model || '',
+        desc: next.desc || ''
+      };
+
+      return Object.keys(oldBooking).some(key => String(oldBooking[key]).trim() !== String(newBooking[key]).trim());
+    }
+
+    function hasStaffNoteChange(next) {
+      if (!originalData) return true;
+      return String(originalData.staff_note || '').trim() !== String(next.staff_note || '').trim();
+    }
+
     document.getElementById('editForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const saveBtn = document.getElementById('saveBtn');
@@ -704,24 +735,29 @@
         return;
       }
 
-      await fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify({
-          action: 'booking_updated',
-          old: {
-            store: originalData.store,
-            date: normalizeDate(originalData.booking_date),
-            time: normalizeTime(originalData.booking_time),
-            name: originalData.name,
-            phone: originalData.phone,
-            model: originalData.device,
-            desc: originalData.issue,
-            staff_note: originalData.staff_note || ''
-          },
-          ...next
-        })
-      });
+      const bookingChanged = hasBookingFieldChanges(next);
+      const noteChanged = hasStaffNoteChange(next);
+
+      if (bookingChanged) {
+        await fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify({
+            action: 'booking_updated',
+            old: {
+              store: originalData.store,
+              date: normalizeDate(originalData.booking_date),
+              time: normalizeTime(originalData.booking_time),
+              name: originalData.name,
+              phone: originalData.phone,
+              model: originalData.device,
+              desc: originalData.issue,
+              staff_note: originalData.staff_note || ''
+            },
+            ...next
+          })
+        });
+      }
 
       originalData = {
         store: next.store,
@@ -736,7 +772,15 @@
 
       lockAllFields();
       updateTimeDisplay();
-      showMessage('預約資料與員工備註已更新，欄位已重新鎖定。', 'success');
+
+      if (bookingChanged) {
+        showMessage('預約資料已更新，LINE 已發送更新通知，欄位已重新鎖定。', 'success');
+      } else if (noteChanged) {
+        showMessage('員工註記已更新，未發送 LINE 通知，欄位已重新鎖定。', 'success');
+      } else {
+        showMessage('沒有資料變更，欄位已重新鎖定。', 'success');
+      }
+
       saveBtn.disabled = false;
       saveBtn.textContent = '儲存修改';
     });
