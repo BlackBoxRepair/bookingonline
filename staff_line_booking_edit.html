@@ -15,6 +15,7 @@
       --text: #202531;
       --muted: #8d95a3;
       --line: #e5e7eb;
+      --soft: #fff8dc;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html, body { margin:0; min-height:100dvh; background:var(--bg); font-family:'TASA Explorer', sans-serif; color:var(--text); }
@@ -25,22 +26,30 @@
     .subtitle { margin-top:6px; font-size:14px; color:var(--muted); font-weight:600; }
     .content { padding:18px 16px 28px; }
     .card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:18px; box-shadow:0 6px 18px rgba(31,41,55,.04); }
-    label { display:block; font-size:13px; font-weight:800; color:#6b7280; margin:0 0 8px; letter-spacing:.03em; }
-    input, select, textarea { width:100%; border:2px solid var(--line); border-radius:14px; padding:13px 14px; font-size:16px; outline:none; background:#fff; color:#1f2937; font-family:'TASA Explorer', sans-serif; }
+    .field { margin-bottom:16px; }
+    .field-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 8px; }
+    label { display:block; font-size:13px; font-weight:800; color:#6b7280; margin:0; letter-spacing:.03em; }
+    .edit-toggle { flex-shrink:0; border:1px solid #e5e7eb; background:#fff; color:#6b7280; border-radius:999px; padding:6px 12px; font-size:12px; font-weight:800; line-height:1; transition:.15s ease; }
+    .edit-toggle.active { border-color:rgba(247,198,0,.55); background:var(--soft); color:#6b5600; }
+    input, select, textarea { width:100%; border:2px solid var(--line); border-radius:14px; padding:13px 14px; font-size:16px; outline:none; background:#fff; color:#1f2937; font-family:'TASA Explorer', sans-serif; transition:.15s ease; }
     textarea { min-height:120px; resize:vertical; }
     input:focus, select:focus, textarea:focus { border-color:var(--brand); }
-    .field { margin-bottom:16px; }
+    input:disabled, select:disabled, textarea:disabled { background:#f8fafc; color:#374151; opacity:1; border-color:#eef0f3 !important; }
+    select:disabled { -webkit-text-fill-color:#374151; }
     .time-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
-    .time-btn { min-height:48px; border:1px solid var(--line); background:#fff; border-radius:12px; font-weight:800; color:#2f3338; }
+    .time-btn { min-height:48px; border:1px solid var(--line); background:#fff; border-radius:12px; font-weight:800; color:#2f3338; transition:.15s ease; }
     .time-btn.active { border:2px solid var(--brand); color:#111827; }
+    .time-btn:disabled { opacity:.52; background:#f8fafc; color:#9ca3af; }
+    .time-btn.active:disabled { opacity:1; background:#fff; color:#111827; border:2px solid var(--brand); }
     .submit { width:100%; border:0; border-radius:14px; min-height:56px; background:var(--brand); color:#222; font-size:18px; font-weight:800; margin-top:6px; }
     .submit:disabled { background:#d6d8dd; color:#fff; }
-    .notice { border-radius:16px; padding:14px; font-size:14px; font-weight:700; margin-bottom:16px; }
-    .notice.info { background:#fff8dc; color:#6b5600; }
+    .notice { border-radius:16px; padding:14px; font-size:14px; font-weight:700; margin-bottom:16px; line-height:1.55; }
+    .notice.info { background:var(--soft); color:#6b5600; }
     .notice.error { background:#fee2e2; color:#991b1b; }
     .notice.success { background:#dcfce7; color:#166534; }
     .hidden { display:none !important; }
     .small { font-size:12px; color:#9ca3af; margin-top:6px; line-height:1.5; }
+    .lock-note { margin-top:8px; padding:10px 12px; border-radius:14px; background:#f8fafc; color:#6b7280; font-size:12px; font-weight:700; line-height:1.45; }
   </style>
 </head>
 <body>
@@ -56,44 +65,66 @@
 
       <form id="editForm" class="card hidden">
         <div class="field">
-          <label for="store">預約門市</label>
-          <select id="store" onchange="handleStoreChange()">
+          <div class="field-head">
+            <label for="store">預約門市</label>
+            <button type="button" class="edit-toggle" data-edit-target="store" onclick="unlockField('store')">編輯</button>
+          </div>
+          <select id="store" onchange="handleStoreChange()" disabled>
             <option value="勤美公益店">勤美公益店</option>
             <option value="沙鹿站前店">沙鹿站前店</option>
           </select>
         </div>
 
         <div class="field">
-          <label for="bookingDate">預約日期</label>
-          <input type="date" id="bookingDate" onchange="generateTimeSlots()">
+          <div class="field-head">
+            <label for="bookingDate">預約日期</label>
+            <button type="button" class="edit-toggle" data-edit-target="bookingDate" onclick="unlockField('bookingDate')">編輯</button>
+          </div>
+          <input type="date" id="bookingDate" onchange="generateTimeSlots()" disabled>
         </div>
 
         <div class="field">
-          <label>預約時間</label>
+          <div class="field-head">
+            <label>預約時間</label>
+            <button type="button" class="edit-toggle" data-edit-target="timeSlots" onclick="unlockField('timeSlots')">編輯</button>
+          </div>
           <div id="timeSlots" class="time-grid"></div>
           <div class="small">時間依照門市營業時間產生，每 30 分鐘一格。</div>
         </div>
 
         <div class="field">
-          <label for="custName">預約姓名</label>
-          <input type="text" id="custName" placeholder="請輸入姓名">
+          <div class="field-head">
+            <label for="custName">預約姓名</label>
+            <button type="button" class="edit-toggle" data-edit-target="custName" onclick="unlockField('custName')">編輯</button>
+          </div>
+          <input type="text" id="custName" placeholder="請輸入姓名" disabled>
         </div>
 
         <div class="field">
-          <label for="custPhone">聯絡電話</label>
-          <input type="tel" id="custPhone" placeholder="請輸入電話">
+          <div class="field-head">
+            <label for="custPhone">聯絡電話</label>
+            <button type="button" class="edit-toggle" data-edit-target="custPhone" onclick="unlockField('custPhone')">編輯</button>
+          </div>
+          <input type="tel" id="custPhone" placeholder="請輸入電話" disabled>
         </div>
 
         <div class="field">
-          <label for="deviceModel">設備型號</label>
-          <input type="text" id="deviceModel" placeholder="例如 iPhone 15 Pro">
+          <div class="field-head">
+            <label for="deviceModel">設備型號</label>
+            <button type="button" class="edit-toggle" data-edit-target="deviceModel" onclick="unlockField('deviceModel')">編輯</button>
+          </div>
+          <input type="text" id="deviceModel" placeholder="例如 iPhone 15 Pro" disabled>
         </div>
 
         <div class="field">
-          <label for="issueDesc">狀況描述</label>
-          <textarea id="issueDesc" placeholder="請輸入狀況描述"></textarea>
+          <div class="field-head">
+            <label for="issueDesc">狀況描述</label>
+            <button type="button" class="edit-toggle" data-edit-target="issueDesc" onclick="unlockField('issueDesc')">編輯</button>
+          </div>
+          <textarea id="issueDesc" placeholder="請輸入狀況描述" disabled></textarea>
         </div>
 
+        <div class="lock-note">為避免誤觸，欄位預設鎖定。請先點欄位右側「編輯」再修改，所有欄位調整完成後按「儲存修改」。</div>
         <button type="submit" id="saveBtn" class="submit">儲存修改</button>
       </form>
     </main>
@@ -111,6 +142,8 @@
 
     let selectedTime = '';
     let originalData = null;
+    const editableFields = new Set();
+    const editTargets = ['store', 'bookingDate', 'timeSlots', 'custName', 'custPhone', 'deviceModel', 'issueDesc'];
 
     const pad2 = (n) => String(n).padStart(2, '0');
 
@@ -144,10 +177,44 @@
       return store && store.includes('沙鹿') ? { start: 12, end: 20 } : { start: 11, end: 19 };
     }
 
+    function setFieldEditable(target, isEditable) {
+      const btn = document.querySelector(`[data-edit-target="${target}"]`);
+
+      if (target === 'timeSlots') {
+        document.querySelectorAll('.time-btn').forEach(timeBtn => {
+          timeBtn.disabled = !isEditable;
+        });
+      } else {
+        const el = document.getElementById(target);
+        if (el) el.disabled = !isEditable;
+      }
+
+      if (btn) {
+        btn.classList.toggle('active', isEditable);
+        btn.textContent = isEditable ? '編輯中' : '編輯';
+      }
+    }
+
+    function unlockField(target) {
+      editableFields.add(target);
+      setFieldEditable(target, true);
+
+      if (target !== 'timeSlots') {
+        const el = document.getElementById(target);
+        if (el) setTimeout(() => el.focus(), 80);
+      }
+    }
+
+    function lockAllFields() {
+      editableFields.clear();
+      editTargets.forEach(target => setFieldEditable(target, false));
+    }
+
     function generateTimeSlots() {
       const container = document.getElementById('timeSlots');
       const store = document.getElementById('store').value;
       const hours = getStoreHours(store);
+      const canEditTime = editableFields.has('timeSlots');
       container.innerHTML = '';
 
       for (let h = hours.start; h <= hours.end; h++) {
@@ -157,6 +224,7 @@
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'time-btn';
+          btn.disabled = !canEditTime;
           if (normalizeTime(selectedTime) === value) btn.classList.add('active');
           btn.textContent = `${pad2(h)}:${m}`;
           btn.onclick = () => {
@@ -188,9 +256,10 @@
       document.getElementById('custPhone').value = data.phone || '';
       document.getElementById('deviceModel').value = data.device || '';
       document.getElementById('issueDesc').value = data.issue || '';
-      generateTimeSlots();
       document.getElementById('editForm').classList.remove('hidden');
-      showMessage('已讀取預約資料，可以進行修改。', 'info');
+      generateTimeSlots();
+      lockAllFields();
+      showMessage('已讀取預約資料。欄位目前已鎖定，請點選欄位右側「編輯」後再修改。', 'info');
     }
 
     async function loadBooking() {
@@ -307,7 +376,8 @@
         issue: next.desc
       };
 
-      showMessage('預約資料已更新，並已發送 LINE 更新通知。', 'success');
+      lockAllFields();
+      showMessage('預約資料已更新，並已發送 LINE 更新通知。欄位已重新鎖定。', 'success');
       saveBtn.disabled = false;
       saveBtn.textContent = '儲存修改';
     });
