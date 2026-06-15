@@ -28,38 +28,667 @@
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1560517927786546&ev=PageView&noscript=1"
     /></noscript>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
-        * { box-sizing: border-box !important; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-        html, body { height: 100dvh; margin: 0; padding: 0; font-family: 'Noto Sans TC', sans-serif; background-color: #f3f4f6; overflow: hidden; position: fixed; width: 100%; }
-        .app-container { height: 100dvh; display: flex; flex-direction: column; background-color: white; max-width: 480px; margin: 0 auto; position: relative; }
-        .scroll-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 4px 16px 16px 16px; }
-        .store-card { margin-bottom: 16px; border: 1px solid #e5e7eb; border-radius: 1.25rem; overflow: hidden; background: white; display: flex; flex-direction: column; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .store-img-container { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background-color: #eee; }
-        .store-card img { width: 100%; height: 100%; object-fit: cover; }
-        .btn-yellow { background-color: #F7D358; color: #333; }
-        .time-slot { background-color: #fffbeb; color: #92400e; border: 1px solid #fef3c7; }
-        .time-slot.active { background-color: #F7D358; color: #333; border-color: #F7D358; }
-        .icon-btn { width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; border-radius: 999px; transition: transform 0.1s; overflow: hidden; border: 1px solid #eee; background: white; }
-        .icon-btn img { width: 100%; height: 100%; object-fit: cover; }
-        input[type="date"], input[type="text"], input[type="tel"], textarea { background: #fff; border: 2px solid #e5e7eb !important; padding: 12px 16px !important; border-radius: 12px; font-size: 16px; outline: none; width: 100%; display: block; color: #333; -webkit-appearance: none; line-height: 1.5; }
-        input:focus, textarea:focus { border-color: #F7D358 !important; }
-        #loading-overlay { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.9); z-index: 200; flex-direction: column; align-items: center; justify-content: center; }
-        #loading-video { width: 240px; height: 240px; border-radius: 20px; }
-        #success-modal { display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        #success-card { background: white; width: 100%; max-width: 340px; border-radius: 24px; padding: 32px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-        .scroll-content::-webkit-scrollbar { display: none; }
-        .holiday-anim { height: 80px !important; width: auto !important; border-radius: 12px !important; overflow: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=TASA+Explorer:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --brand: #f7c600;
+            --brand-dark: #f7c600;
+            --brand-soft: rgba(247, 198, 0, 0.16);
+            --app-bg: #f3f4f6;
+            --line: #e7e8ec;
+            --text: #202531;
+            --muted: #8d95a3;
+        }
+
+        * {
+            box-sizing: border-box !important;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        html,
+        body {
+            height: 100dvh;
+            margin: 0;
+            padding: 0;
+            font-family: 'TASA Explorer', sans-serif;
+            background-color: #f3f4f6;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+
+        .app-container {
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-container.calendar-mode {
+            background: var(--app-bg);
+        }
+
+        .scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 4px 16px 16px 16px;
+        }
+
+        .app-container.calendar-mode .scroll-content {
+            padding: 18px 14px 0 14px;
+        }
+
+        .scroll-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .app-header {
+            min-height: 94px;
+            padding: calc(env(safe-area-inset-top, 0px) + 14px) 18px 12px;
+            background: #fff;
+            border-bottom: 1px solid rgba(31, 41, 55, 0.06);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            flex-shrink: 0;
+            z-index: 60;
+            box-shadow: 0 1px 8px rgba(31, 41, 55, 0.03);
+        }
+
+        .app-header.hidden {
+            display: none !important;
+        }
+
+        .header-back,
+        .header-spacer {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+        }
+
+        .header-back {
+            border: none;
+            background: transparent;
+            color: #55606f;
+            font-size: 42px;
+            line-height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0;
+        }
+
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding-top: 4px;
+        }
+
+        .header-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: #2c3440;
+            letter-spacing: 0.02em;
+        }
+
+        .step-pills {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .step-pills span {
+            width: 40px;
+            height: 8px;
+            border-radius: 999px;
+            background: #d8dbe1;
+            display: block;
+        }
+
+        .step-pills span.active {
+            background: var(--brand);
+        }
+
+        .store-card {
+            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .store-img-container {
+            width: 100%;
+            aspect-ratio: 2 / 1;
+            overflow: hidden;
+            background-color: #eee;
+        }
+
+        .store-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-yellow {
+            background-color: #f7c600;
+            color: #333;
+        }
+
+        .icon-btn {
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            transition: transform 0.1s;
+            overflow: hidden;
+            border: 1px solid #eee;
+            background: white;
+        }
+
+        .icon-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="tel"],
+        textarea {
+            background: #fff;
+            border: 2px solid #e5e7eb !important;
+            padding: 12px 16px !important;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            width: 100%;
+            display: block;
+            color: #333;
+            -webkit-appearance: none;
+            line-height: 1.5;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #f7c600 !important;
+        }
+
+        .sr-only-date {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        .time-step {
+            min-height: 100%;
+            padding-bottom: 110px;
+        }
+
+        .quick-date-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 8px 18px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        .quick-date-row::-webkit-scrollbar {
+            display: none;
+        }
+
+        .quick-date-chip {
+            min-width: fit-content;
+            border: 1px solid #e2e4e8;
+            background: rgba(255,255,255,0.88);
+            color: #606a78;
+            border-radius: 999px;
+            padding: 10px 22px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(31,41,55,0.04);
+            transition: 0.18s ease;
+        }
+
+        .quick-date-chip.active {
+            color: var(--brand-dark);
+            border-color: var(--brand-soft);
+            background: #fff;
+            box-shadow: none;
+        }
+
+        .calendar-card {
+            background: #fff;
+            border-radius: 22px;
+            padding: 22px 16px 24px;
+            box-shadow: 0 6px 18px rgba(31,41,55,0.04);
+            margin: 0 0 22px;
+        }
+
+        .calendar-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .calendar-top h2 {
+            margin: 0;
+            color: #374151;
+            font-size: 21px;
+            line-height: 1;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .calendar-nav button {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: #677181;
+            font-size: 42px;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            transition: 0.16s ease;
+        }
+
+        .calendar-nav button:disabled {
+            color: #d1d5db;
+        }
+
+        .calendar-weekdays,
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            align-items: center;
+        }
+
+        .calendar-weekdays {
+            margin-bottom: 10px;
+            color: #a0a6b2;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .calendar-weekdays div {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendar-grid {
+            row-gap: 7px;
+        }
+
+        .calendar-day {
+            position: relative;
+            border: none;
+            background: transparent;
+            height: 43px;
+            color: #171b26;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s ease, background 0.15s ease;
+        }
+
+        .calendar-day:not(.empty):not(.disabled):active {
+            transform: scale(0.93);
+        }
+
+        .calendar-day.empty {
+            pointer-events: none;
+        }
+
+        .calendar-day.disabled {
+            color: #c7ccd4;
+            pointer-events: none;
+        }
+
+        .calendar-day.today:not(.selected)::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: #9aa2ae;
+        }
+
+        .calendar-day.selected {
+            width: 43px;
+            height: 43px;
+            justify-self: center;
+            color: #fff;
+            background: #f7c600;
+            box-shadow: none;
+        }
+
+        .slots-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2px 12px;
+        }
+
+        .slots-title {
+            font-size: 18px;
+            color: #3f4652;
+            font-weight: 700;
+        }
+
+        .selected-date-text {
+            font-size: 15px;
+            color: #a0a7b2;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            padding-bottom: 6px;
+        }
+
+        .time-slot {
+            min-height: 54px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
+            color: #2f3338;
+            font-size: 18px;
+            font-weight: 700;
+            box-shadow: 0 2px 4px rgba(31,41,55,0.02);
+            transition: 0.15s ease;
+        }
+
+        .time-slot.active {
+            background: #ffffff;
+            color: #1f1f1f;
+            border-color: var(--brand);
+            border-width: 2px;
+            box-shadow: none;
+        }
+
+        .empty-time {
+            margin: 18px 0 0;
+            padding: 18px;
+            border-radius: 18px;
+            background: #fff;
+            border: 1px dashed #d9dde5;
+            color: #8d95a3;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .empty-time.hidden {
+            display: none;
+        }
+
+        .step-bottom-space {
+            height: 112px;
+        }
+
+        .fixed-submit-area {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 14px 18px calc(14px + env(safe-area-inset-bottom, 0px));
+            background: linear-gradient(to top, rgba(243,244,246,1) 72%, rgba(243,244,246,0));
+            z-index: 42;
+        }
+
+        .next-cta {
+            width: 100%;
+            min-height: 56px;
+            border: none;
+            border-radius: 8px;
+            background: #d6d8dd;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            transition: 0.15s ease;
+        }
+
+        .next-cta.is-ready {
+            background: var(--brand);
+            box-shadow: none;
+        }
+
+        #loading-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 200;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #loading-video {
+            width: 240px;
+            height: 240px;
+            border-radius: 20px;
+        }
+
+        #success-modal {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #success-card {
+            background: white;
+            width: 100%;
+            max-width: 340px;
+            border-radius: 24px;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .holiday-anim {
+            height: 80px !important;
+            width: auto !important;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+
+        /* 門市圖卡上移版：縮短 LOGO 與第一張門市圖卡之間的距離 */
+        .store-step {
+            min-height: 100%;
+            gap: 8px;
+            padding-bottom: 12px;
+        }
+
+        .store-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: -2px;
+            flex-shrink: 0;
+        }
+
+        .store-logo {
+            height: 58px !important;
+        }
+
+        #step-1 .holiday-anim {
+            height: 70px !important;
+        }
+
+        #step-1 .store-card {
+            margin-bottom: 0;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(31, 41, 55, 0.07);
+            flex-shrink: 0;
+        }
+
+        #step-1 .store-img-container {
+            height: 210px;
+            aspect-ratio: auto;
+        }
+
+        #step-1 .store-card .p-4 {
+            padding: 16px 16px !important;
+        }
+
+        #step-1 .store-card h3 {
+            font-size: 17px;
+            line-height: 1.25;
+        }
+
+        #step-1 .store-card p {
+            font-size: 13px;
+            line-height: 1.4;
+            margin-top: 5px !important;
+        }
+
+        #step-1 .store-card .flex.items-center.gap-3.mt-4 {
+            margin-top: 13px !important;
+            gap: 9px !important;
+        }
+
+        #step-1 .store-card button {
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
+            border-radius: 11px !important;
+        }
+
+        #step-1 .icon-btn {
+            width: 44px;
+            height: 44px;
+        }
+
+        @media (max-height: 700px) {
+            .store-step {
+                gap: 6px;
+            }
+
+            .store-top-row {
+                margin-bottom: -4px;
+            }
+
+            .store-logo {
+                height: 50px !important;
+            }
+
+            #step-1 .holiday-anim {
+                height: 58px !important;
+            }
+
+            #step-1 .store-img-container {
+                height: 164px;
+            }
+
+            #step-1 .store-card .p-4 {
+                padding: 13px 14px !important;
+            }
+
+            #step-1 .store-card p {
+                font-size: 12.5px;
+            }
+
+            #step-1 .store-card button {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            #step-1 .icon-btn {
+                width: 39px;
+                height: 39px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .time-grid {
+                gap: 8px;
+            }
+
+            .time-slot {
+                min-height: 50px;
+                font-size: 16px;
+            }
+
+            .calendar-card {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .quick-date-chip {
+                padding: 9px 18px;
+            }
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <div class="app-container shadow-2xl">
-        <div id="nav-bar" class="h-14 border-b flex items-center px-4 shrink-0 hidden bg-white z-50">
-            <button onclick="goBack()" class="h-full px-4 text-gray-700 font-bold flex items-center text-lg active:opacity-50">
-                <span class="text-2xl mr-1">‹</span> 返回
-            </button>
+    <div class="app-container shadow-2xl" id="appContainer">
+        <div id="nav-bar" class="app-header hidden">
+            <button onclick="goBack()" class="header-back" aria-label="返回">‹</button>
+            <div class="header-center">
+                <div id="nav-title" class="header-title">選擇預約時間</div>
+                <div class="step-pills" id="stepPills" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+            <div class="header-spacer"></div>
         </div>
 
         <div id="loading-overlay">
@@ -71,7 +700,7 @@
 
         <div id="success-modal">
             <div id="success-card">
-                <div class="w-16 h-16 bg-[#F7D358] rounded-full flex items-center justify-center mb-4">
+                <div class="w-16 h-16 bg-[#f7c600] rounded-full flex items-center justify-center mb-4">
                     <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-6">預約成功</h3>
@@ -87,9 +716,9 @@
         </div>
 
         <div class="scroll-content" id="main-scroll">
-            <div id="step-1" class="flex flex-col">
-                <div class="flex justify-between items-center mb-1">
-                    <img src="./site logo.png" alt="黑盒子維修中心" class="h-14 w-auto object-contain">
+            <div id="step-1" class="store-step flex flex-col">
+                <div class="store-top-row">
+                    <img src="./site logo.png" alt="黑盒子維修中心" class="store-logo w-auto object-contain">
                     <video class="holiday-anim pointer-events-none" autoplay muted playsinline loop>
                         <source src="ANIMATION.mov" type="video/quicktime">
                     </video>
@@ -120,14 +749,38 @@
                 </div>
             </div>
 
-            <div id="step-2" class="hidden flex-col">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">選擇預約日期時間</h2>
-                <div class="mb-8">
-                    <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">1. 選擇預約日期</label>
-                    <input type="date" id="bookDate" onchange="handleDateChange()">
+            <div id="step-2" class="hidden flex-col time-step">
+                <input type="date" id="bookDate" class="sr-only-date" onchange="handleDateChange()">
+
+
+                <section class="calendar-card">
+                    <div class="calendar-top">
+                        <h2 id="calendarTitle">月 年</h2>
+                        <div class="calendar-nav">
+                            <button type="button" id="prevMonthBtn" onclick="changeCalendarMonth(-1)" aria-label="上一個月">‹</button>
+                            <button type="button" onclick="changeCalendarMonth(1)" aria-label="下一個月">›</button>
+                        </div>
+                    </div>
+                    <div class="calendar-weekdays" aria-hidden="true">
+                        <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+                    </div>
+                    <div id="calendarGrid" class="calendar-grid"></div>
+                </section>
+
+                <div class="slots-title-row">
+                    <div>
+                        <span class="slots-title">可預約時段</span>
+                        <span id="selectedDateText" class="selected-date-text">（尚未選擇）</span>
+                    </div>
                 </div>
-                <div id="timeSlots" class="grid grid-cols-3 gap-3 mb-6"></div>
-                <button id="nextBtn" onclick="toStep(3)" disabled class="w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold transition-all">下一步</button>
+
+                <div id="timeSlots" class="time-grid"></div>
+                <div id="emptyTimeNotice" class="empty-time hidden">目前沒有可選時段，請選擇其他日期。</div>
+                <div class="step-bottom-space"></div>
+
+                <div class="fixed-submit-area">
+                    <button id="nextBtn" onclick="toStep(3)" disabled class="next-cta">下一步，填寫顧客資訊</button>
+                </div>
             </div>
 
             <div id="step-3" class="hidden flex-col pb-10">
@@ -147,7 +800,11 @@
         const SUPABASE_URL = 'https://nszwpwimwxvjguoalzwt.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zendwd2ltd3h2amd1b2Fsend0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMzY1NzYsImV4cCI6MjA4MTcxMjU3Nn0.TaAt4aqEhDsONWtDCagD5rlTMknEWfhq8fMVL1Rt4lg';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
+        // LINE Flex 卡片通知 Apps Script
+        const LINE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwIGSpTVHn321OfTXlzHR-hG0zUXPlkMQjZbfBL9T_03BSvj2eybsfbp-YcuodaxgxP/exec';
+
+        // 舊版 Google 行事曆寫入 Apps Script
+        const CALENDAR_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkOuc70p0TG_UycHjm_2dKQFFHLMGJjCvmVmvOYMll_Kbz6QYijSLnferYPCEi5MbS/exec';
 
         document.addEventListener('touchstart', (e) => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
         let lastTouch = 0;
@@ -155,78 +812,399 @@
 
         let currentStep = 1;
         let bookingData = { store: '', date: '', time: '', startH: 0, endH: 0 };
-        const getToday = () => { const now = new Date(); const offset = 8 * 60; const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000); return `${localTime.getFullYear()}-${String(localTime.getMonth() + 1).padStart(2, '0')}-${String(localTime.getDate()).padStart(2, '0')}`; };
+        let calendarCursor = null;
 
-        function handleInput() { updateSubmitBtnStatus(); saveDraft(); }
-        function saveDraft() { const draft = { currentStep, bookingData, custName: document.getElementById('custName').value, custPhone: document.getElementById('custPhone').value, deviceModel: document.getElementById('deviceModel').value, issueDesc: document.getElementById('issueDesc').value }; localStorage.setItem('blackbox_booking_draft', JSON.stringify(draft)); }
-        function updateSubmitBtnStatus() { const btn = document.getElementById('finalSubmitBtn'); const isReady = ['custName','custPhone','deviceModel','issueDesc'].every(id => document.getElementById(id).value.trim() !== ''); btn.disabled = !isReady; btn.className = isReady ? "w-full btn-yellow py-5 rounded-2xl font-bold text-xl shadow-lg mt-2 active:scale-95 transition-all" : "w-full bg-gray-200 text-gray-400 py-5 rounded-2xl font-bold text-xl mt-2 transition-all"; }
+        const pad2 = (num) => String(num).padStart(2, '0');
+        const getToday = () => {
+            const now = new Date();
+            const offset = 8 * 60;
+            const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
+            return `${localTime.getFullYear()}-${String(localTime.getMonth() + 1).padStart(2, '0')}-${String(localTime.getDate()).padStart(2, '0')}`;
+        };
+
+        function parseDateString(value) {
+            const [y, m, d] = value.split('-').map(Number);
+            return new Date(y, m - 1, d);
+        }
+
+        function formatDateObj(date) {
+            return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`;
+        }
+
+        function getTodayObj() {
+            return parseDateString(getToday());
+        }
+
+        function setCalendarCursorFromDate(dateValue) {
+            const base = dateValue ? parseDateString(dateValue) : getTodayObj();
+            calendarCursor = new Date(base.getFullYear(), base.getMonth(), 1);
+        }
+
+        function handleInput() {
+            updateSubmitBtnStatus();
+            saveDraft();
+        }
+
+        function saveDraft() {
+            const draft = {
+                currentStep,
+                bookingData,
+                custName: document.getElementById('custName').value,
+                custPhone: document.getElementById('custPhone').value,
+                deviceModel: document.getElementById('deviceModel').value,
+                issueDesc: document.getElementById('issueDesc').value
+            };
+            localStorage.setItem('blackbox_booking_draft', JSON.stringify(draft));
+        }
+
+        function updateSubmitBtnStatus() {
+            const btn = document.getElementById('finalSubmitBtn');
+            const isReady = ['custName','custPhone','deviceModel','issueDesc'].every(id => document.getElementById(id).value.trim() !== '');
+            btn.disabled = !isReady;
+            btn.className = isReady ? "w-full btn-yellow py-5 rounded-2xl font-bold text-xl shadow-lg mt-2 active:scale-95 transition-all" : "w-full bg-gray-200 text-gray-400 py-5 rounded-2xl font-bold text-xl mt-2 transition-all";
+        }
 
         window.onload = function() {
+            updateQuickDateChips();
+            setCalendarCursorFromDate(getToday());
+            renderCalendar();
+            updateSelectedDateText();
+
             if (performance.navigation.type === 1) {
                 const saved = localStorage.getItem('blackbox_booking_draft');
                 if (saved) {
                     const draft = JSON.parse(saved);
                     bookingData = draft.bookingData;
                     ['custName','custPhone','deviceModel','issueDesc'].forEach(id => document.getElementById(id).value = draft[id] || '');
-                    if (bookingData.store) { const dateInput = document.getElementById('bookDate'); dateInput.min = getToday(); dateInput.value = bookingData.date; generateTimeSlots(); }
-                    toStep(draft.currentStep); updateNextBtnStatus(); updateSubmitBtnStatus();
+                    if (bookingData.store) {
+                        const dateInput = document.getElementById('bookDate');
+                        dateInput.min = getToday();
+                        dateInput.value = bookingData.date || '';
+                        setCalendarCursorFromDate(bookingData.date || getToday());
+                        generateTimeSlots();
+                    }
+                    toStep(draft.currentStep);
+                    updateNextBtnStatus();
+                    updateSubmitBtnStatus();
                 }
-            } else { localStorage.removeItem('blackbox_booking_draft'); }
+            } else {
+                localStorage.removeItem('blackbox_booking_draft');
+            }
         };
 
         function selectStore(n, s, e) {
-            bookingData = { store: n, startH: s, endH: e, date: '', time: '' };
-            document.getElementById('bookDate').value = '';
-            document.getElementById('timeSlots').innerHTML = '';
-            document.getElementById('bookDate').setAttribute('min', getToday());
-            updateNextBtnStatus(); saveDraft(); toStep(2);
+            bookingData = { store: n, startH: s, endH: e, date: getToday(), time: '' };
+            const dateInput = document.getElementById('bookDate');
+            dateInput.value = bookingData.date;
+            dateInput.setAttribute('min', getToday());
+            setCalendarCursorFromDate(bookingData.date);
+            generateTimeSlots();
+            updateNextBtnStatus();
+            saveDraft();
+            toStep(2);
         }
 
         function handleDateChange() {
             const dateInput = document.getElementById('bookDate');
-            if (dateInput.value < getToday()) { alert("不可選擇過去的日期！"); dateInput.value = getToday(); }
-            bookingData.date = dateInput.value; bookingData.time = '';
-            generateTimeSlots(); updateNextBtnStatus(); saveDraft();
+            if (!dateInput.value) return;
+            if (dateInput.value < getToday()) {
+                alert("不可選擇過去的日期！");
+                dateInput.value = getToday();
+            }
+            bookingData.date = dateInput.value;
+            bookingData.time = '';
+            generateTimeSlots();
+            updateSelectedDateText();
+            updateQuickDateChips();
+            renderCalendar();
+            updateNextBtnStatus();
+            saveDraft();
         }
 
         function generateTimeSlots() {
-            const container = document.getElementById('timeSlots'); container.innerHTML = '';
-            const now = new Date(); const offset = 8 * 60; const localNow = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
+            const container = document.getElementById('timeSlots');
+            const emptyNotice = document.getElementById('emptyTimeNotice');
+            container.innerHTML = '';
+            if (emptyNotice) emptyNotice.classList.add('hidden');
+
+            if (!bookingData.date || !bookingData.startH || !bookingData.endH) {
+                return;
+            }
+
+            const now = new Date();
+            const offset = 8 * 60;
+            const localNow = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
             const isToday = (bookingData.date === getToday());
+
             for (let h = bookingData.startH; h <= bookingData.endH; h++) {
                 ['00', '30'].forEach(m => {
                     if (h === bookingData.endH && m === '30') return;
                     if (isToday && (h < localNow.getHours() || (h === localNow.getHours() && parseInt(m) <= localNow.getMinutes()))) return;
+
+                    const value = `${h}:${m}`;
+                    const label = `${pad2(h)}:${m}`;
                     const btn = document.createElement('button');
-                    btn.className = 'time-slot py-3 rounded-xl font-bold text-sm transition-all';
-                    if (bookingData.time === `${h}:${m}`) btn.classList.add('active');
-                    btn.innerText = `${h}:${m}`;
-                    btn.onclick = () => { bookingData.time = btn.innerText; document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active')); btn.classList.add('active'); updateNextBtnStatus(); saveDraft(); };
+                    btn.type = 'button';
+                    btn.className = 'time-slot';
+                    if (bookingData.time === value) btn.classList.add('active');
+                    btn.innerText = label;
+                    btn.onclick = () => {
+                        bookingData.time = value;
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active'));
+                        btn.classList.add('active');
+                        updateNextBtnStatus();
+                        saveDraft();
+                    };
                     container.appendChild(btn);
                 });
             }
+
+            if (container.children.length === 0 && emptyNotice) {
+                emptyNotice.classList.remove('hidden');
+            }
         }
 
-        function updateNextBtnStatus() { const btn = document.getElementById('nextBtn'); const ready = (bookingData.date && bookingData.time); btn.disabled = !ready; btn.className = ready ? "w-full mt-6 btn-yellow py-4 rounded-2xl font-bold shadow-md transition-all" : "w-full mt-6 bg-gray-200 text-gray-400 py-4 rounded-2xl font-bold"; }
-        function toStep(s) { currentStep = s; [1, 2, 3].forEach(i => document.getElementById('step-' + i).classList.replace('flex', 'hidden')); document.getElementById('step-' + s).classList.replace('hidden', 'flex'); document.getElementById('nav-bar').classList.toggle('hidden', s === 1); document.getElementById('main-scroll').scrollTop = 0; saveDraft(); }
-        function goBack() { if (currentStep > 1) toStep(currentStep - 1); }
-        document.getElementById('bookDate').addEventListener('click', function() { if (this.showPicker) this.showPicker(); });
+        function renderCalendar() {
+            const title = document.getElementById('calendarTitle');
+            const grid = document.getElementById('calendarGrid');
+            const prevBtn = document.getElementById('prevMonthBtn');
+            if (!title || !grid) return;
+            if (!calendarCursor) setCalendarCursorFromDate(bookingData.date || getToday());
 
-        async function submitBooking() {
+            const year = calendarCursor.getFullYear();
+            const month = calendarCursor.getMonth();
+            const today = getTodayObj();
+            const todayStr = getToday();
+            const minMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+            title.textContent = `${month + 1}月 ${year}`;
+            if (prevBtn) prevBtn.disabled = calendarCursor <= minMonth;
+
+            grid.innerHTML = '';
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 0; i < firstDay; i++) {
+                const blank = document.createElement('div');
+                blank.className = 'calendar-day empty';
+                grid.appendChild(blank);
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const date = new Date(year, month, d);
+                const dateStr = formatDateObj(date);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'calendar-day';
+                btn.innerHTML = `<span>${d}</span>`;
+
+                if (dateStr < todayStr) {
+                    btn.classList.add('disabled');
+                    btn.disabled = true;
+                }
+
+                if (dateStr === todayStr) btn.classList.add('today');
+                if (bookingData.date === dateStr) btn.classList.add('selected');
+
+                btn.onclick = () => selectDateString(dateStr);
+                grid.appendChild(btn);
+            }
+        }
+
+        function selectDateString(dateStr) {
+            if (!dateStr || dateStr < getToday()) return;
+            const dateInput = document.getElementById('bookDate');
+            dateInput.value = dateStr;
+            setCalendarCursorFromDate(dateStr);
+            handleDateChange();
+        }
+
+        function changeCalendarMonth(delta) {
+            if (!calendarCursor) setCalendarCursorFromDate(bookingData.date || getToday());
+            calendarCursor.setMonth(calendarCursor.getMonth() + delta);
+            renderCalendar();
+        }
+
+        function selectQuickDate(offset) {
+            const target = getTodayObj();
+            target.setDate(target.getDate() + offset);
+            selectDateString(formatDateObj(target));
+        }
+
+        function selectShortcutDate(button) {
+            if (button && button.dataset.date) selectDateString(button.dataset.date);
+        }
+
+        function updateQuickDateChips() {
+            const row = document.getElementById('quickDateRow');
+            if (!row) return;
+            const today = getTodayObj();
+            const chips = row.querySelectorAll('.quick-date-chip');
+
+            chips.forEach(chip => {
+                if (chip.dataset.offset !== undefined) {
+                    const d = getTodayObj();
+                    d.setDate(d.getDate() + Number(chip.dataset.offset));
+                    chip.dataset.date = formatDateObj(d);
+                }
+            });
+
+            const sundayChip = document.getElementById('weekendQuickChip');
+            if (sundayChip) {
+                const sunday = getTodayObj();
+                const diff = (7 - sunday.getDay()) % 7 || 7;
+                sunday.setDate(today.getDate() + diff);
+                sundayChip.dataset.date = formatDateObj(sunday);
+                sundayChip.textContent = `週日 ${sunday.getMonth() + 1}/${sunday.getDate()}`;
+            }
+
+            chips.forEach(chip => {
+                chip.classList.toggle('active', chip.dataset.date === bookingData.date);
+            });
+        }
+
+        function updateSelectedDateText() {
+            const el = document.getElementById('selectedDateText');
+            if (!el) return;
+            el.textContent = bookingData.date ? `（${bookingData.date}）` : '（尚未選擇）';
+        }
+
+        function updateNextBtnStatus() {
+            const btn = document.getElementById('nextBtn');
+            if (!btn) return;
+            const ready = (bookingData.date && bookingData.time);
+            btn.disabled = !ready;
+            btn.className = ready ? 'next-cta is-ready' : 'next-cta';
+        }
+
+        function updateHeaderForStep(step) {
+            const title = document.getElementById('nav-title');
+            const pills = document.querySelectorAll('#stepPills span');
+            if (title) title.textContent = step === 3 ? '填寫顧客資訊' : '選擇預約時間';
+            const activeIndex = step === 3 ? 4 : 3;
+            pills.forEach((pill, index) => {
+                pill.classList.toggle('active', index + 1 === activeIndex);
+            });
+        }
+
+        function toStep(s) {
+            currentStep = s;
+            [1, 2, 3].forEach(i => {
+                const step = document.getElementById('step-' + i);
+                step.classList.add('hidden');
+                step.classList.remove('flex');
+            });
+
+            const targetStep = document.getElementById('step-' + s);
+            targetStep.classList.remove('hidden');
+            targetStep.classList.add('flex');
+
+            document.getElementById('nav-bar').classList.toggle('hidden', s === 1);
+            document.getElementById('appContainer').classList.toggle('calendar-mode', s === 2);
+            updateHeaderForStep(s);
+
+            if (s === 2) {
+                setCalendarCursorFromDate(bookingData.date || getToday());
+                renderCalendar();
+                updateQuickDateChips();
+                updateSelectedDateText();
+                generateTimeSlots();
+                updateNextBtnStatus();
+            }
+
+            document.getElementById('main-scroll').scrollTop = 0;
+            saveDraft();
+        }
+
+        function goBack() {
+            if (currentStep > 1) toStep(currentStep - 1);
+        }
+
+
+        
+        function generateSecureToken() {
+            if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+                return window.crypto.randomUUID();
+            }
+            if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+                const bytes = new Uint8Array(16);
+                window.crypto.getRandomValues(bytes);
+                return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+            return `${Date.now()}-${Math.random().toString(16).slice(2)}-${Math.random().toString(16).slice(2)}`;
+        }
+
+        function buildEditUrl(editRef, editToken) {
+            const basePath = location.pathname.replace(/\/[^\/]*$/, '/');
+            return `${location.origin}${basePath}staff_line_booking_edit.html?ref=${encodeURIComponent(editRef)}&token=${encodeURIComponent(editToken)}`;
+        }
+
+async function submitBooking() {
             const overlay = document.getElementById('loading-overlay');
             const video = document.getElementById('loading-video');
-            overlay.style.display = 'flex'; video.play();
-            
+            overlay.style.display = 'flex';
+            video.play();
+
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
             const model = document.getElementById('deviceModel').value.trim();
             const desc = document.getElementById('issueDesc').value.trim();
-            const finalData = { store: bookingData.store, date: bookingData.date, time: bookingData.time, name, phone, model, desc };
-            
-            try { 
-                await _supabase.from('booking').insert([{ name, phone, store: bookingData.store, device: model, issue: desc, booking_date: bookingData.date, booking_time: bookingData.time }]);
-                await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(finalData) }); 
-                
+            const editRef = generateSecureToken();
+            const editToken = generateSecureToken();
+            const editUrl = buildEditUrl(editRef, editToken);
+
+            const finalData = {
+                store: bookingData.store,
+                date: bookingData.date,
+                time: bookingData.time,
+                name,
+                phone,
+                model,
+                desc,
+                edit_ref: editRef,
+                edit_token: editToken,
+                edit_url: editUrl,
+                // 同步保留兩種欄位名稱，避免不同 Apps Script 吃不同格式
+                device: model,
+                issue: desc
+            };
+
+            try {
+                const { error } = await _supabase.from('booking').insert([{
+                    name,
+                    phone,
+                    store: bookingData.store,
+                    device: model,
+                    issue: desc,
+                    booking_date: bookingData.date,
+                    booking_time: bookingData.time,
+                    edit_ref: editRef,
+                    edit_token: editToken
+                }]);
+
+                if (error) throw error;
+
+                // 同時送給 LINE Flex 通知 Apps Script 與 Google 行事曆 Apps Script
+                // 使用 allSettled：其中一支暫時失敗時，不會阻止預約完成畫面顯示。
+                const appScriptResults = await Promise.allSettled([
+                    fetch(LINE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(finalData)
+                    }),
+                    fetch(CALENDAR_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: JSON.stringify(finalData)
+                    })
+                ]);
+
+                appScriptResults.forEach((result, index) => {
+                    if (result.status === 'rejected') {
+                        console.error(index === 0 ? 'LINE Apps Script failed:' : 'Calendar Apps Script failed:', result.reason);
+                    }
+                });
+
                 if (typeof fbq === 'function') {
                     fbq('track', 'Lead', {
                         content_name: bookingData.store,
@@ -236,15 +1214,21 @@
                     });
                 }
 
-                video.pause(); overlay.style.display = 'none';
+                video.pause();
+                overlay.style.display = 'none';
                 document.getElementById('res-name').innerText = name;
                 document.getElementById('res-phone').innerText = phone;
                 document.getElementById('res-time').innerText = `${bookingData.date} ${bookingData.time}`;
                 document.getElementById('res-store').innerText = bookingData.store;
                 document.getElementById('success-modal').style.display = 'flex';
-                localStorage.removeItem('blackbox_booking_draft'); 
-            } 
-            catch (error) { video.pause(); overlay.style.display = 'none'; alert("連線失敗，請檢查網路。"); }
+                localStorage.removeItem('blackbox_booking_draft');
+            }
+            catch (error) {
+                console.error('submitBooking error:', error);
+                video.pause();
+                overlay.style.display = 'none';
+                alert("連線失敗，請檢查網路或資料庫設定。");
+            }
         }
     </script>
 </body>
