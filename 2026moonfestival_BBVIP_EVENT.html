@@ -16,12 +16,16 @@
       --white: #ffffff;
 
       --text-soft: rgba(255,255,255,.68);
-      --text-soft-2: rgba(255,255,255,.52);
       --line: rgba(255,255,255,.10);
 
       --radius: 22px;
       --shadow: 0 12px 32px rgba(0,0,0,.18);
     }
+
+
+    /* ==================================================
+       基本設定
+    ================================================== */
 
     * {
       box-sizing: border-box;
@@ -60,8 +64,7 @@
 
     button,
     input,
-    select,
-    textarea {
+    select {
       font: inherit;
     }
 
@@ -104,7 +107,7 @@
 
 
     /* ==================================================
-       頂端 LOGO 區
+       頂端 LOGO
     ================================================== */
 
     .site-header {
@@ -176,10 +179,7 @@
       border-radius: 0;
 
       background: transparent;
-
       box-shadow: none;
-
-      overflow: visible;
     }
 
     .campaign-image img {
@@ -195,22 +195,23 @@
       border-radius: 0;
 
       background: transparent;
-
       box-shadow: none;
     }
 
 
     /* ==================================================
-       預約
+       預約區
     ================================================== */
 
     .booking-section {
       padding-top: 28px;
-
       background: var(--navy);
     }
 
     .booking-card {
+      width: 100%;
+      min-width: 0;
+
       padding: 24px;
 
       border:
@@ -229,11 +230,17 @@
     }
 
     .form {
+      width: 100%;
+      min-width: 0;
+
       display: grid;
-      gap: 17px;
+      gap: 18px;
     }
 
     .field {
+      width: 100%;
+      min-width: 0;
+
       display: grid;
       gap: 8px;
     }
@@ -247,14 +254,22 @@
 
     .required::after {
       content: " *";
-
       color: var(--gold);
     }
 
+
+    /* ==================================================
+       輸入欄位
+    ================================================== */
+
     input,
-    select,
-    textarea {
+    select {
+      display: block;
+
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
+
       min-height: 52px;
 
       padding: 0 15px;
@@ -277,24 +292,13 @@
         background .2s ease;
     }
 
-    textarea {
-      min-height: 105px;
-
-      padding-top: 14px;
-      padding-bottom: 14px;
-
-      resize: vertical;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
+    input::placeholder {
       color:
         rgba(255,255,255,.36);
     }
 
     input:focus,
-    select:focus,
-    textarea:focus {
+    select:focus {
       border-color: var(--gold);
 
       background:
@@ -315,23 +319,251 @@
     }
 
     select optgroup {
-      color: #8d8d8d;
+      color: #777777;
       background: #ffffff;
       font-weight: 700;
     }
 
+
+    /* ==================================================
+       日期欄位
+       防止 iPhone / Safari 超出表單
+    ================================================== */
+
+    .date-field {
+      width: 100%;
+      min-width: 0;
+      overflow: hidden;
+    }
+
     input[type="date"] {
+      display: block;
+
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+
+      box-sizing: border-box;
+
       color-scheme: dark;
     }
 
 
-    /* 送出按鈕 */
+    /* ==================================================
+       門市選擇按鈕
+    ================================================== */
+
+    .store-options {
+      width: 100%;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+      gap: 10px;
+    }
+
+    .store-button {
+      position: relative;
+
+      width: 100%;
+      min-width: 0;
+      min-height: 58px;
+
+      padding: 10px 8px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border:
+        1px solid rgba(255,255,255,.15);
+
+      border-radius: 15px;
+
+      background:
+        rgba(255,255,255,.065);
+
+      color:
+        rgba(255,255,255,.82);
+
+      font-size: 14px;
+      font-weight: 750;
+
+      text-align: center;
+
+      cursor: pointer;
+
+      transition:
+        background .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        transform .15s ease,
+        box-shadow .18s ease;
+    }
+
+    .store-button:hover {
+      background:
+        rgba(255,255,255,.09);
+    }
+
+    .store-button:active {
+      transform: scale(.98);
+    }
+
+    .store-button.selected {
+      color: var(--navy);
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--gold-light),
+          var(--gold)
+        );
+
+      border-color: var(--gold);
+
+      box-shadow:
+        0 8px 22px
+        rgba(247,181,0,.18);
+    }
+
+    .store-button.selected::before {
+      content: "✓";
+
+      margin-right: 6px;
+
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+
+    /* ==================================================
+       尚未選擇門市的時段
+    ================================================== */
+
+    select:disabled {
+      cursor: not-allowed;
+
+      color:
+        rgba(255,255,255,.35);
+
+      background:
+        rgba(255,255,255,.04);
+
+      border-color:
+        rgba(255,255,255,.08);
+
+      opacity: 1;
+    }
+
+
+    /* ==================================================
+       確認核選框
+    ================================================== */
+
+    .agreement {
+      width: 100%;
+
+      display: flex;
+      align-items: flex-start;
+
+      gap: 11px;
+
+      padding: 15px 16px;
+
+      border:
+        1px solid rgba(247,181,0,.24);
+
+      border-radius: 15px;
+
+      background:
+        rgba(247,181,0,.065);
+
+      cursor: pointer;
+    }
+
+    .agreement input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+
+      flex: 0 0 21px;
+
+      width: 21px;
+      height: 21px;
+      min-width: 21px;
+      min-height: 21px;
+
+      margin: 1px 0 0 0;
+      padding: 0;
+
+      border:
+        1.5px solid rgba(255,255,255,.45);
+
+      border-radius: 6px;
+
+      background:
+        rgba(255,255,255,.06);
+
+      display: grid;
+      place-content: center;
+
+      cursor: pointer;
+    }
+
+    .agreement input[type="checkbox"]::before {
+      content: "";
+
+      width: 10px;
+      height: 6px;
+
+      border-left:
+        2px solid var(--navy);
+
+      border-bottom:
+        2px solid var(--navy);
+
+      transform:
+        rotate(-45deg)
+        scale(0);
+
+      transition:
+        transform .12s ease;
+    }
+
+    .agreement input[type="checkbox"]:checked {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+
+    .agreement input[type="checkbox"]:checked::before {
+      transform:
+        rotate(-45deg)
+        scale(1);
+    }
+
+    .agreement-text {
+      color:
+        rgba(255,255,255,.88);
+
+      font-size: 13px;
+      line-height: 1.65;
+
+      font-weight: 650;
+    }
+
+
+    /* ==================================================
+       送出按鈕
+    ================================================== */
 
     .submit-button {
       width: 100%;
       min-height: 56px;
 
-      margin-top: 5px;
+      margin-top: 2px;
 
       border: 0;
       border-radius: 16px;
@@ -390,6 +622,7 @@
     .activity-item {
       display: flex;
       align-items: flex-start;
+
       gap: 15px;
 
       padding: 19px 20px;
@@ -425,7 +658,6 @@
 
     .activity-content {
       min-width: 0;
-
       padding-top: 2px;
     }
 
@@ -467,8 +699,6 @@
     }
 
     .info-link {
-      position: relative;
-
       min-height: 66px;
 
       display: flex;
@@ -483,8 +713,7 @@
         1px solid var(--line);
 
       transition:
-        background .18s ease,
-        transform .18s ease;
+        background .18s ease;
     }
 
     .info-link:last-child {
@@ -520,7 +749,7 @@
 
 
     /* ==================================================
-       預約送出提示
+       提示訊息
     ================================================== */
 
     .toast {
@@ -536,8 +765,7 @@
 
       max-width: 420px;
 
-      padding:
-        16px 18px;
+      padding: 16px 18px;
 
       border:
         1px solid
@@ -581,7 +809,7 @@
 
 
     /* ==================================================
-       手機
+       手機版
     ================================================== */
 
     @media (max-width: 600px) {
@@ -630,6 +858,9 @@
       }
 
       .booking-card {
+        width: 100%;
+        min-width: 0;
+
         padding:
           20px 17px;
 
@@ -641,9 +872,26 @@
       }
 
       input,
-      select,
-      textarea {
+      select {
         min-height: 50px;
+      }
+
+      .store-button {
+        min-height: 56px;
+
+        padding:
+          8px 5px;
+
+        font-size: 13px;
+      }
+
+      .agreement {
+        padding:
+          14px;
+      }
+
+      .agreement-text {
+        font-size: 12.5px;
       }
 
       .submit-button {
@@ -775,7 +1023,7 @@
 
 
 
-          <!-- 電話 -->
+          <!-- 聯絡電話 -->
 
           <div class="field">
 
@@ -802,7 +1050,6 @@
 
           <!-- ==================================================
                手機型號
-               已改為下拉式選單
           =================================================== -->
 
           <div class="field">
@@ -824,8 +1071,6 @@
                 請選擇手機型號
               </option>
 
-
-              <!-- iPhone 17 系列 -->
 
               <optgroup label="iPhone 17 系列">
 
@@ -851,8 +1096,6 @@
 
               </optgroup>
 
-
-              <!-- 更多 iPhone 機型 -->
 
               <optgroup label="更多 iPhone 機型">
 
@@ -988,48 +1231,69 @@
 
 
 
-          <!-- 預約門市 -->
+          <!-- ==================================================
+               預約門市
+               左右兩個按鈕
+          =================================================== -->
 
           <div class="field">
 
-            <label
-              for="store"
-              class="required"
-            >
+            <label class="required">
               預約門市
             </label>
 
-            <select
-              id="store"
-              name="store"
-              required
+
+            <div
+              class="store-options"
+              role="radiogroup"
+              aria-label="預約門市"
             >
 
-              <option value="">
-                請選擇門市
-              </option>
-
-              <option
-                value="勤美旗艦門市"
+              <button
+                type="button"
+                class="store-button"
+                data-store="勤美旗艦門市"
+                role="radio"
+                aria-checked="false"
               >
                 勤美旗艦門市
-              </option>
+              </button>
 
-              <option
-                value="沙鹿站前門市"
+
+              <button
+                type="button"
+                class="store-button"
+                data-store="沙鹿站前門市"
+                role="radio"
+                aria-checked="false"
               >
                 沙鹿站前門市
-              </option>
+              </button>
 
-            </select>
+            </div>
+
+
+            <!--
+              真正送出資料時使用，
+              使用者不會看到
+            -->
+
+            <input
+              type="hidden"
+              id="store"
+              name="store"
+              value=""
+            >
 
           </div>
 
 
 
-          <!-- 日期 -->
+          <!-- ==================================================
+               預約日期
+          =================================================== -->
 
-          <div class="field">
+          <div class="field date-field">
 
             <label
               for="date"
@@ -1042,6 +1306,7 @@
               id="date"
               name="date"
               type="date"
+              max="2026-09-30"
               required
             >
 
@@ -1049,7 +1314,10 @@
 
 
 
-          <!-- 時間 -->
+          <!-- ==================================================
+               預約時段
+               依門市動態載入
+          =================================================== -->
 
           <div class="field">
 
@@ -1064,54 +1332,11 @@
               id="time"
               name="time"
               required
+              disabled
             >
 
               <option value="">
-                請選擇時間
-              </option>
-
-              <option value="11:00">
-                11:00
-              </option>
-
-              <option value="12:00">
-                12:00
-              </option>
-
-              <option value="13:00">
-                13:00
-              </option>
-
-              <option value="14:00">
-                14:00
-              </option>
-
-              <option value="15:00">
-                15:00
-              </option>
-
-              <option value="16:00">
-                16:00
-              </option>
-
-              <option value="17:00">
-                17:00
-              </option>
-
-              <option value="18:00">
-                18:00
-              </option>
-
-              <option value="19:00">
-                19:00
-              </option>
-
-              <option value="20:00">
-                20:00
-              </option>
-
-              <option value="21:00">
-                21:00
+                請先選擇預約門市
               </option>
 
             </select>
@@ -1120,25 +1345,33 @@
 
 
 
-          <!-- 備註 -->
+          <!-- ==================================================
+               活動確認
+          =================================================== -->
 
-          <div class="field">
+          <label
+            class="agreement"
+            for="agreement"
+          >
 
-            <label for="note">
-              備註
-            </label>
+            <input
+              id="agreement"
+              name="agreement"
+              type="checkbox"
+              required
+            >
 
-            <textarea
-              id="note"
-              name="note"
-              placeholder="若有其他需求可以在這裡告訴我們"
-            ></textarea>
+            <span class="agreement-text">
+              我已知悉該活動每位會員僅能獲得優惠一次，確認進行預約！
+            </span>
 
-          </div>
+          </label>
 
 
 
-          <!-- 送出 -->
+          <!-- ==================================================
+               送出
+          =================================================== -->
 
           <button
             type="submit"
@@ -1384,7 +1617,7 @@
 
 
   <!-- ==================================================
-       預約成功提示
+       提示
   =================================================== -->
 
   <div
@@ -1399,48 +1632,324 @@
   <script>
 
     /* ==================================================
-       日期限制
+       取得元素
     ================================================== */
+
+    const form =
+      document.getElementById("bookingForm");
+
+    const storeInput =
+      document.getElementById("store");
+
+    const storeButtons =
+      document.querySelectorAll(".store-button");
+
+    const timeSelect =
+      document.getElementById("time");
 
     const dateInput =
       document.getElementById("date");
 
+    const toast =
+      document.getElementById("toast");
+
+
+
+    /* ==================================================
+       預約日期限制
+
+       最早：今天
+       最晚：2026/09/30
+    ================================================== */
+
     const today =
       new Date();
 
-    const localToday =
+    const todayString =
       [
         today.getFullYear(),
-
         String(
           today.getMonth() + 1
         ).padStart(2, "0"),
-
         String(
           today.getDate()
         ).padStart(2, "0")
       ].join("-");
 
+
+    const campaignEndDate =
+      "2026-09-30";
+
+
     dateInput.min =
-      localToday;
+      todayString;
+
+    dateInput.max =
+      campaignEndDate;
 
 
 
     /* ==================================================
-       預約表單
-       目前為前端示意
+       各門市時段設定
     ================================================== */
 
-    const form =
-      document.getElementById(
-        "bookingForm"
+    const storeTimes = {
+
+      "勤美旗艦門市": [
+        "11:00",
+        "12:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00",
+        "18:00",
+        "19:00"
+      ],
+
+      "沙鹿站前門市": [
+        "12:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00",
+        "18:00",
+        "19:00",
+        "20:00"
+      ]
+
+    };
+
+
+
+    /* ==================================================
+       更新預約時段
+    ================================================== */
+
+    function updateTimeOptions(storeName) {
+
+      timeSelect.innerHTML = "";
+
+
+      const placeholder =
+        document.createElement("option");
+
+      placeholder.value = "";
+
+      placeholder.textContent =
+        "請選擇預約時段";
+
+      timeSelect.appendChild(
+        placeholder
       );
 
-    const toast =
-      document.getElementById(
-        "toast"
+
+      if (
+        !storeName ||
+        !storeTimes[storeName]
+      ) {
+
+        timeSelect.disabled =
+          true;
+
+        placeholder.textContent =
+          "請先選擇預約門市";
+
+        return;
+
+      }
+
+
+      storeTimes[
+        storeName
+      ].forEach(
+        function(time) {
+
+          const option =
+            document.createElement("option");
+
+          option.value =
+            time;
+
+          option.textContent =
+            time;
+
+          timeSelect.appendChild(
+            option
+          );
+
+        }
       );
 
+
+      timeSelect.disabled =
+        false;
+
+    }
+
+
+
+    /* ==================================================
+       門市按鈕
+    ================================================== */
+
+    storeButtons.forEach(
+      function(button) {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+            const selectedStore =
+              button.dataset.store;
+
+
+            /* 清除原本選取狀態 */
+
+            storeButtons.forEach(
+              function(item) {
+
+                item.classList.remove(
+                  "selected"
+                );
+
+                item.setAttribute(
+                  "aria-checked",
+                  "false"
+                );
+
+              }
+            );
+
+
+            /* 設定目前選取 */
+
+            button.classList.add(
+              "selected"
+            );
+
+            button.setAttribute(
+              "aria-checked",
+              "true"
+            );
+
+
+            /* 寫入隱藏欄位 */
+
+            storeInput.value =
+              selectedStore;
+
+
+            /* 更新時間 */
+
+            updateTimeOptions(
+              selectedStore
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+
+    /* ==================================================
+       額外檢查日期
+    ================================================== */
+
+    dateInput.addEventListener(
+      "change",
+      function() {
+
+        if (!dateInput.value) {
+          return;
+        }
+
+
+        if (
+          dateInput.value <
+          todayString
+        ) {
+
+          dateInput.value =
+            "";
+
+          showToast(
+            "無法選擇今天以前的日期"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          dateInput.value >
+          campaignEndDate
+        ) {
+
+          dateInput.value =
+            "";
+
+          showToast(
+            "活動預約僅開放至 2026/09/30"
+          );
+
+        }
+
+      }
+    );
+
+
+
+    /* ==================================================
+       Toast
+    ================================================== */
+
+    let toastTimer = null;
+
+
+    function showToast(message) {
+
+      toast.textContent =
+        message;
+
+      toast.classList.add(
+        "show"
+      );
+
+
+      if (toastTimer) {
+
+        clearTimeout(
+          toastTimer
+        );
+
+      }
+
+
+      toastTimer =
+        setTimeout(
+          function() {
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          2300
+        );
+
+    }
+
+
+
+    /* ==================================================
+       表單送出
+       目前仍為前端示意
+    ================================================== */
 
     form.addEventListener(
       "submit",
@@ -1449,30 +1958,96 @@
         event.preventDefault();
 
 
+        /* 必須選擇門市 */
+
+        if (
+          !storeInput.value
+        ) {
+
+          showToast(
+            "請選擇預約門市"
+          );
+
+          return;
+
+        }
+
+
+        /* 必須選擇時段 */
+
+        if (
+          !timeSelect.value
+        ) {
+
+          showToast(
+            "請選擇預約時段"
+          );
+
+          return;
+
+        }
+
+
+        /* 日期確認 */
+
+        if (
+          !dateInput.value
+        ) {
+
+          showToast(
+            "請選擇預約日期"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          dateInput.value <
+          todayString ||
+          dateInput.value >
+          campaignEndDate
+        ) {
+
+          showToast(
+            "請選擇有效的活動日期"
+          );
+
+          return;
+
+        }
+
+
         /*
-          後續串 Supabase 時，
-          預約資料寫入放在這裡。
+          後續正式串接 Supabase 時，
+          可以在這裡讀取：
+
+          name
+          phone
+          device
+          store
+          date
+          time
+
+          並寫入預約資料表。
         */
 
 
-        toast.classList.add(
-          "show"
-        );
-
-
-        setTimeout(
-          () => {
-
-            toast.classList.remove(
-              "show"
-            );
-
-          },
-          2200
+        showToast(
+          "預約資料已送出"
         );
 
       }
     );
+
+
+
+    /* ==================================================
+       初始化
+    ================================================== */
+
+    updateTimeOptions("");
 
   </script>
 
