@@ -20,6 +20,10 @@
 
       --radius: 22px;
       --shadow: 0 12px 32px rgba(0,0,0,.18);
+
+      /* 表單欄位統一尺寸 */
+      --control-height: 54px;
+      --control-radius: 14px;
     }
 
     * {
@@ -109,9 +113,13 @@
     .site-header {
       position: relative;
       z-index: 10;
+
       width: 100%;
+
       background: #ffffff;
-      border-bottom: 1px solid rgba(0,0,0,.055);
+
+      border-bottom:
+        1px solid rgba(0,0,0,.055);
     }
 
     .site-header-inner {
@@ -168,6 +176,7 @@
       border-radius: 0;
 
       background: transparent;
+
       box-shadow: none;
     }
 
@@ -182,12 +191,13 @@
       border-radius: 0;
 
       background: transparent;
+
       box-shadow: none;
     }
 
 
     /* ==================================================
-       預約區
+       預約
     ================================================== */
 
     .booking-section {
@@ -202,7 +212,9 @@
 
       padding: 24px;
 
-      border: 1px solid var(--line);
+      border:
+        1px solid var(--line);
+
       border-radius: var(--radius);
 
       background:
@@ -235,6 +247,7 @@
 
     .field label {
       color: var(--white);
+
       font-size: 14px;
       font-weight: 750;
     }
@@ -246,30 +259,43 @@
 
 
     /* ==================================================
-       一般輸入欄
+       表單欄位
+       input / select 完全統一尺寸
     ================================================== */
 
-    input,
+    input[type="text"],
+    input[type="tel"],
     select {
       display: block;
 
       width: 100%;
       max-width: 100%;
       min-width: 0;
-      min-height: 52px;
+
+      height: var(--control-height);
+      min-height: var(--control-height);
+      max-height: var(--control-height);
 
       box-sizing: border-box;
 
+      margin: 0;
       padding: 0 15px;
 
       color: var(--white);
 
-      border: 1px solid rgba(255,255,255,.13);
-      border-radius: 14px;
+      border:
+        1px solid rgba(255,255,255,.13);
 
-      background: rgba(255,255,255,.075);
+      border-radius:
+        var(--control-radius);
+
+      background-color:
+        rgba(255,255,255,.075);
 
       outline: none;
+
+      font-size: 16px;
+      line-height: normal;
 
       transition:
         border-color .2s ease,
@@ -277,22 +303,49 @@
         background .2s ease;
     }
 
-    input::placeholder {
-      color: rgba(255,255,255,.36);
+    input[type="text"]::placeholder,
+    input[type="tel"]::placeholder {
+      color:
+        rgba(255,255,255,.36);
     }
 
-    input:focus,
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
     select:focus {
       border-color: var(--gold);
 
-      background: rgba(255,255,255,.095);
+      background-color:
+        rgba(255,255,255,.095);
 
       box-shadow:
-        0 0 0 3px rgba(247,181,0,.12);
+        0 0 0 3px
+        rgba(247,181,0,.12);
     }
 
+
+    /* ==================================================
+       下拉選單
+       移除 iPhone 系統原生高度差異
+    ================================================== */
+
     select {
+      -webkit-appearance: none;
+      appearance: none;
+
       cursor: pointer;
+
+      padding-right: 46px;
+
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+      background-repeat: no-repeat;
+
+      background-position:
+        right 15px center;
+
+      background-size:
+        17px 17px;
     }
 
     select option {
@@ -309,17 +362,21 @@
     select:disabled {
       cursor: not-allowed;
 
-      color: rgba(255,255,255,.35);
+      color:
+        rgba(255,255,255,.35);
 
-      background: rgba(255,255,255,.04);
-      border-color: rgba(255,255,255,.08);
+      background-color:
+        rgba(255,255,255,.04);
+
+      border-color:
+        rgba(255,255,255,.08);
 
       opacity: 1;
     }
 
 
     /* ==================================================
-       門市選擇
+       門市
     ================================================== */
 
     .store-options {
@@ -339,18 +396,23 @@
       min-width: 0;
       min-height: 58px;
 
-      padding: 10px 8px;
+      padding:
+        10px 8px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      border: 1px solid rgba(255,255,255,.15);
+      border:
+        1px solid rgba(255,255,255,.15);
+
       border-radius: 15px;
 
-      background: rgba(255,255,255,.065);
+      background:
+        rgba(255,255,255,.065);
 
-      color: rgba(255,255,255,.82);
+      color:
+        rgba(255,255,255,.82);
 
       font-size: 14px;
       font-weight: 750;
@@ -368,7 +430,8 @@
     }
 
     .store-button:hover {
-      background: rgba(255,255,255,.09);
+      background:
+        rgba(255,255,255,.09);
     }
 
     .store-button:active {
@@ -385,22 +448,26 @@
           var(--gold)
         );
 
-      border-color: var(--gold);
+      border-color:
+        var(--gold);
 
       box-shadow:
-        0 8px 22px rgba(247,181,0,.18);
+        0 8px 22px
+        rgba(247,181,0,.18);
     }
 
     .store-button.selected::before {
       content: "✓";
+
       margin-right: 6px;
+
       font-size: 14px;
       font-weight: 900;
     }
 
 
     /* ==================================================
-       2026 年 9 月專屬月曆
+       九月月曆
     ================================================== */
 
     .calendar {
@@ -409,10 +476,13 @@
 
       padding: 16px;
 
-      border: 1px solid rgba(255,255,255,.13);
+      border:
+        1px solid rgba(255,255,255,.13);
+
       border-radius: 16px;
 
-      background: rgba(255,255,255,.055);
+      background:
+        rgba(255,255,255,.055);
 
       overflow: hidden;
     }
@@ -422,7 +492,8 @@
       align-items: center;
       justify-content: center;
 
-      padding: 1px 0 15px;
+      padding:
+        1px 0 15px;
 
       color: var(--white);
 
@@ -451,7 +522,8 @@
 
       height: 28px;
 
-      color: rgba(255,255,255,.48);
+      color:
+        rgba(255,255,255,.48);
 
       font-size: 11px;
       font-weight: 700;
@@ -469,12 +541,15 @@
 
       padding: 0;
 
-      border: 1px solid transparent;
+      border:
+        1px solid transparent;
+
       border-radius: 10px;
 
       background: transparent;
 
-      color: rgba(255,255,255,.88);
+      color:
+        rgba(255,255,255,.88);
 
       font-size: 13px;
       font-weight: 650;
@@ -489,7 +564,8 @@
     }
 
     .calendar-day:hover {
-      background: rgba(255,255,255,.08);
+      background:
+        rgba(255,255,255,.08);
     }
 
     .calendar-day:active {
@@ -497,22 +573,20 @@
     }
 
     .calendar-day.selected {
-      background: var(--gold);
-      color: var(--navy);
+      background:
+        var(--gold);
 
-      border-color: var(--gold);
+      color:
+        var(--navy);
+
+      border-color:
+        var(--gold);
 
       font-weight: 850;
 
       box-shadow:
-        0 5px 14px rgba(247,181,0,.18);
-    }
-
-    .calendar-day.disabled {
-      color: rgba(255,255,255,.18);
-
-      cursor: default;
-      pointer-events: none;
+        0 5px 14px
+        rgba(247,181,0,.18);
     }
 
     .calendar-empty {
@@ -524,7 +598,8 @@
 
       margin-top: 10px;
 
-      color: var(--gold);
+      color:
+        var(--gold);
 
       font-size: 13px;
       font-weight: 750;
@@ -537,7 +612,6 @@
 
     /* ==================================================
        核選框
-       不使用外層框線 / 底色
     ================================================== */
 
     .agreement {
@@ -552,7 +626,6 @@
 
       background: transparent;
       border: 0;
-      border-radius: 0;
 
       cursor: pointer;
     }
@@ -576,7 +649,8 @@
       place-content: center;
 
       border:
-        1.5px solid rgba(255,255,255,.5);
+        1.5px solid
+        rgba(255,255,255,.5);
 
       border-radius: 6px;
 
@@ -607,8 +681,11 @@
     }
 
     .agreement input[type="checkbox"]:checked {
-      border-color: var(--gold);
-      background: var(--gold);
+      border-color:
+        var(--gold);
+
+      background:
+        var(--gold);
     }
 
     .agreement input[type="checkbox"]:checked::before {
@@ -618,7 +695,8 @@
     }
 
     .agreement-text {
-      color: rgba(255,255,255,.88);
+      color:
+        rgba(255,255,255,.88);
 
       font-size: 13px;
       line-height: 1.65;
@@ -653,7 +731,8 @@
       font-weight: 850;
 
       box-shadow:
-        0 10px 26px rgba(247,181,0,.23);
+        0 10px 26px
+        rgba(247,181,0,.23);
 
       cursor: pointer;
 
@@ -662,13 +741,9 @@
         box-shadow .15s ease;
     }
 
-    .submit-button:hover {
-      box-shadow:
-        0 12px 30px rgba(247,181,0,.3);
-    }
-
     .submit-button:active {
-      transform: scale(.985);
+      transform:
+        scale(.985);
     }
 
 
@@ -679,10 +754,14 @@
     .activity-card {
       overflow: hidden;
 
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
+      border:
+        1px solid var(--line);
 
-      background: rgba(255,255,255,.055);
+      border-radius:
+        var(--radius);
+
+      background:
+        rgba(255,255,255,.055);
     }
 
     .activity-item {
@@ -691,7 +770,8 @@
 
       gap: 15px;
 
-      padding: 19px 20px;
+      padding:
+        19px 20px;
 
       border-bottom:
         1px solid var(--line);
@@ -716,7 +796,8 @@
       background:
         rgba(247,181,0,.14);
 
-      color: var(--gold);
+      color:
+        var(--gold);
 
       font-size: 13px;
       font-weight: 850;
@@ -730,14 +811,16 @@
     .activity-title {
       margin-bottom: 5px;
 
-      color: var(--white);
+      color:
+        var(--white);
 
       font-size: 15px;
       font-weight: 800;
     }
 
     .activity-text {
-      color: var(--text-soft);
+      color:
+        var(--text-soft);
 
       font-size: 13px;
       line-height: 1.75;
@@ -755,10 +838,14 @@
     .information-card {
       overflow: hidden;
 
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
+      border:
+        1px solid var(--line);
 
-      background: rgba(255,255,255,.055);
+      border-radius:
+        var(--radius);
+
+      background:
+        rgba(255,255,255,.055);
     }
 
     .info-link {
@@ -770,7 +857,8 @@
 
       gap: 16px;
 
-      padding: 0 20px;
+      padding:
+        0 20px;
 
       border-bottom:
         1px solid var(--line);
@@ -783,31 +871,25 @@
       border-bottom: 0;
     }
 
-    .info-link:hover {
-      background:
-        rgba(255,255,255,.045);
-    }
-
     .info-link:active {
       background:
         rgba(255,255,255,.08);
     }
 
     .info-name {
-      color: var(--white);
+      color:
+        var(--white);
 
       font-size: 15px;
       font-weight: 750;
     }
 
     .info-arrow {
-      color: var(--gold);
+      color:
+        var(--gold);
 
       font-size: 24px;
       line-height: 1;
-
-      transform:
-        translateY(-1px);
     }
 
 
@@ -823,20 +905,25 @@
 
       z-index: 100;
 
-      width: calc(100% - 40px);
+      width:
+        calc(100% - 40px);
+
       max-width: 420px;
 
-      padding: 16px 18px;
+      padding:
+        16px 18px;
 
       border:
-        1px solid rgba(247,181,0,.35);
+        1px solid
+        rgba(247,181,0,.35);
 
       border-radius: 16px;
 
       background:
         rgba(4,39,65,.97);
 
-      color: var(--white);
+      color:
+        var(--white);
 
       text-align: center;
 
@@ -844,9 +931,11 @@
       font-weight: 700;
 
       box-shadow:
-        0 15px 35px rgba(0,0,0,.3);
+        0 15px 35px
+        rgba(0,0,0,.3);
 
       opacity: 0;
+
       pointer-events: none;
 
       transform:
@@ -867,18 +956,21 @@
 
 
     /* ==================================================
-       手機
+       手機版
     ================================================== */
 
     @media (max-width: 600px) {
 
       .container {
-        width: calc(100% - 24px);
+        width:
+          calc(100% - 24px);
       }
 
       .site-header-inner {
         min-height: 70px;
-        padding: 10px 0;
+
+        padding:
+          10px 0;
       }
 
       .logo-area img {
@@ -892,7 +984,8 @@
       }
 
       .section {
-        padding: 29px 0;
+        padding:
+          29px 0;
       }
 
       .booking-section {
@@ -915,7 +1008,8 @@
         width: 100%;
         min-width: 0;
 
-        padding: 20px 17px;
+        padding:
+          20px 17px;
 
         border-radius: 19px;
       }
@@ -924,25 +1018,40 @@
         gap: 17px;
       }
 
-      input,
+
+      /* 手機上也完全維持相同高度 */
+
+      input[type="text"],
+      input[type="tel"],
       select {
-        min-height: 50px;
+        height: 54px;
+        min-height: 54px;
+        max-height: 54px;
+
+        font-size: 16px;
+
+        border-radius: 14px;
       }
+
 
       .store-button {
         min-height: 56px;
 
-        padding: 8px 4px;
+        padding:
+          8px 4px;
 
         font-size: 13px;
       }
 
       .calendar {
-        padding: 13px 10px;
+        padding:
+          13px 10px;
       }
 
       .calendar-header {
-        padding-bottom: 12px;
+        padding-bottom:
+          12px;
+
         font-size: 15px;
       }
 
@@ -974,12 +1083,15 @@
       }
 
       .activity-item {
-        padding: 18px 17px;
+        padding:
+          18px 17px;
       }
 
       .info-link {
         min-height: 64px;
-        padding: 0 17px;
+
+        padding:
+          0 17px;
       }
 
     }
@@ -991,9 +1103,7 @@
 <body>
 
 
-  <!-- ==================================================
-       頂端 Logo
-  =================================================== -->
+  <!-- 頂端 Logo -->
 
   <header class="site-header">
 
@@ -1014,9 +1124,7 @@
 
 
 
-  <!-- ==================================================
-       活動主視覺
-  =================================================== -->
+  <!-- 活動主圖 -->
 
   <section class="campaign-visual">
 
@@ -1033,14 +1141,11 @@
 
 
 
-  <!-- ==================================================
-       預約
-  =================================================== -->
+  <!-- 預約 -->
 
   <section class="section booking-section">
 
     <div class="container">
-
 
       <div class="section-header">
 
@@ -1053,7 +1158,6 @@
         </p>
 
       </div>
-
 
 
       <div class="booking-card">
@@ -1088,7 +1192,7 @@
 
 
 
-          <!-- 電話 -->
+          <!-- 聯絡電話 -->
 
           <div class="field">
 
@@ -1134,149 +1238,56 @@
                 請選擇手機型號
               </option>
 
-
               <optgroup label="iPhone 17 系列">
 
-                <option value="iPhone 17 Pro">
-                  iPhone 17 Pro
-                </option>
-
-                <option value="iPhone 17 Pro Max">
-                  iPhone 17 Pro Max
-                </option>
-
-                <option value="iPhone Air">
-                  iPhone Air
-                </option>
-
-                <option value="iPhone 17">
-                  iPhone 17
-                </option>
-
-                <option value="iPhone 17e">
-                  iPhone 17e
-                </option>
+                <option>iPhone 17 Pro</option>
+                <option>iPhone 17 Pro Max</option>
+                <option>iPhone Air</option>
+                <option>iPhone 17</option>
+                <option>iPhone 17e</option>
 
               </optgroup>
 
 
               <optgroup label="更多 iPhone 機型">
 
-                <option value="iPhone 16 Pro">
-                  iPhone 16 Pro
-                </option>
+                <option>iPhone 16 Pro</option>
+                <option>iPhone 16 Pro Max</option>
+                <option>iPhone 16</option>
+                <option>iPhone 16 Plus</option>
+                <option>iPhone 16e</option>
 
-                <option value="iPhone 16 Pro Max">
-                  iPhone 16 Pro Max
-                </option>
+                <option>iPhone 15 Pro</option>
+                <option>iPhone 15 Pro Max</option>
+                <option>iPhone 15</option>
+                <option>iPhone 15 Plus</option>
 
-                <option value="iPhone 16">
-                  iPhone 16
-                </option>
+                <option>iPhone 14 Pro</option>
+                <option>iPhone 14 Pro Max</option>
+                <option>iPhone 14</option>
+                <option>iPhone 14 Plus</option>
 
-                <option value="iPhone 16 Plus">
-                  iPhone 16 Plus
-                </option>
+                <option>iPhone 13 Pro</option>
+                <option>iPhone 13 Pro Max</option>
+                <option>iPhone 13 mini</option>
+                <option>iPhone 13</option>
 
-                <option value="iPhone 16e">
-                  iPhone 16e
-                </option>
+                <option>iPhone SE（第 3 代）</option>
 
-                <option value="iPhone 15 Pro">
-                  iPhone 15 Pro
-                </option>
+                <option>iPhone 12 Pro</option>
+                <option>iPhone 12 Pro Max</option>
+                <option>iPhone 12 mini</option>
+                <option>iPhone 12</option>
 
-                <option value="iPhone 15 Pro Max">
-                  iPhone 15 Pro Max
-                </option>
+                <option>iPhone 11 Pro</option>
+                <option>iPhone 11 Pro Max</option>
+                <option>iPhone 11</option>
 
-                <option value="iPhone 15">
-                  iPhone 15
-                </option>
+                <option>iPhone SE（第 2 代）</option>
 
-                <option value="iPhone 15 Plus">
-                  iPhone 15 Plus
-                </option>
-
-                <option value="iPhone 14 Pro">
-                  iPhone 14 Pro
-                </option>
-
-                <option value="iPhone 14 Pro Max">
-                  iPhone 14 Pro Max
-                </option>
-
-                <option value="iPhone 14">
-                  iPhone 14
-                </option>
-
-                <option value="iPhone 14 Plus">
-                  iPhone 14 Plus
-                </option>
-
-                <option value="iPhone 13 Pro">
-                  iPhone 13 Pro
-                </option>
-
-                <option value="iPhone 13 Pro Max">
-                  iPhone 13 Pro Max
-                </option>
-
-                <option value="iPhone 13 mini">
-                  iPhone 13 mini
-                </option>
-
-                <option value="iPhone 13">
-                  iPhone 13
-                </option>
-
-                <option value="iPhone SE（第 3 代）">
-                  iPhone SE（第 3 代）
-                </option>
-
-                <option value="iPhone 12 Pro">
-                  iPhone 12 Pro
-                </option>
-
-                <option value="iPhone 12 Pro Max">
-                  iPhone 12 Pro Max
-                </option>
-
-                <option value="iPhone 12 mini">
-                  iPhone 12 mini
-                </option>
-
-                <option value="iPhone 12">
-                  iPhone 12
-                </option>
-
-                <option value="iPhone 11 Pro">
-                  iPhone 11 Pro
-                </option>
-
-                <option value="iPhone 11 Pro Max">
-                  iPhone 11 Pro Max
-                </option>
-
-                <option value="iPhone 11">
-                  iPhone 11
-                </option>
-
-                <option value="iPhone SE（第 2 代）">
-                  iPhone SE（第 2 代）
-                </option>
-
-                <option value="iPhone XS">
-                  iPhone XS
-                </option>
-
-                <option value="iPhone XS Max">
-                  iPhone XS Max
-                </option>
-
-                <option value="iPhone XR">
-                  iPhone XR
-                </option>
+                <option>iPhone XS</option>
+                <option>iPhone XS Max</option>
+                <option>iPhone XR</option>
 
               </optgroup>
 
@@ -1297,15 +1308,12 @@
             <div
               class="store-options"
               role="radiogroup"
-              aria-label="預約門市"
             >
 
               <button
                 type="button"
                 class="store-button"
                 data-store="勤美旗艦門市"
-                role="radio"
-                aria-checked="false"
               >
                 勤美旗艦門市
               </button>
@@ -1314,8 +1322,6 @@
                 type="button"
                 class="store-button"
                 data-store="沙鹿站前門市"
-                role="radio"
-                aria-checked="false"
               >
                 沙鹿站前門市
               </button>
@@ -1326,17 +1332,13 @@
               type="hidden"
               id="store"
               name="store"
-              value=""
             >
 
           </div>
 
 
 
-          <!-- ==================================================
-               預約日期
-               僅顯示 2026 年 9 月
-          =================================================== -->
+          <!-- 預約日期 -->
 
           <div class="field">
 
@@ -1344,16 +1346,11 @@
               預約日期
             </label>
 
-
-            <div
-              class="calendar"
-              id="calendar"
-            >
+            <div class="calendar">
 
               <div class="calendar-header">
                 2026 年 9 月
               </div>
-
 
               <div class="calendar-weekdays">
 
@@ -1367,12 +1364,10 @@
 
               </div>
 
-
               <div
                 class="calendar-days"
                 id="calendarDays"
               ></div>
-
 
               <div
                 class="selected-date-display"
@@ -1381,12 +1376,10 @@
 
             </div>
 
-
             <input
               type="hidden"
               id="date"
               name="date"
-              value=""
             >
 
           </div>
@@ -1430,7 +1423,6 @@
 
             <input
               id="agreement"
-              name="agreement"
               type="checkbox"
               required
             >
@@ -1442,8 +1434,6 @@
           </label>
 
 
-
-          <!-- 送出 -->
 
           <button
             type="submit"
@@ -1463,9 +1453,7 @@
 
 
 
-  <!-- ==================================================
-       活動說明
-  =================================================== -->
+  <!-- 活動說明 -->
 
   <section class="section">
 
@@ -1479,15 +1467,12 @@
 
       </div>
 
-
       <div class="activity-card">
 
 
         <div class="activity-item">
 
-          <div class="activity-number">
-            1
-          </div>
+          <div class="activity-number">1</div>
 
           <div class="activity-content">
 
@@ -1504,12 +1489,9 @@
         </div>
 
 
-
         <div class="activity-item">
 
-          <div class="activity-number">
-            2
-          </div>
+          <div class="activity-number">2</div>
 
           <div class="activity-content">
 
@@ -1526,12 +1508,9 @@
         </div>
 
 
-
         <div class="activity-item">
 
-          <div class="activity-number">
-            3
-          </div>
+          <div class="activity-number">3</div>
 
           <div class="activity-content">
 
@@ -1548,12 +1527,9 @@
         </div>
 
 
-
         <div class="activity-item">
 
-          <div class="activity-number">
-            4
-          </div>
+          <div class="activity-number">4</div>
 
           <div class="activity-content">
 
@@ -1570,12 +1546,9 @@
         </div>
 
 
-
         <div class="activity-item">
 
-          <div class="activity-number">
-            5
-          </div>
+          <div class="activity-number">5</div>
 
           <div class="activity-content">
 
@@ -1600,16 +1573,11 @@
 
 
 
-  <!-- ==================================================
-       資訊
-  =================================================== -->
+  <!-- 資訊 -->
 
-  <section
-    class="section information-section"
-  >
+  <section class="section information-section">
 
     <div class="container">
-
 
       <div class="section-header">
 
@@ -1618,8 +1586,6 @@
         </h2>
 
       </div>
-
-
 
       <div class="information-card">
 
@@ -1642,7 +1608,6 @@
         </a>
 
 
-
         <a
           class="info-link"
           href="https://maps.app.goo.gl/r8dnUK8sEeYLBs6t7?g_st=ic"
@@ -1659,7 +1624,6 @@
           </span>
 
         </a>
-
 
 
         <a
@@ -1686,10 +1650,6 @@
 
 
 
-  <!-- ==================================================
-       Toast
-  =================================================== -->
-
   <div
     id="toast"
     class="toast"
@@ -1700,10 +1660,6 @@
 
 
   <script>
-
-    /* ==================================================
-       元素
-    ================================================== */
 
     const form =
       document.getElementById("bookingForm");
@@ -1735,7 +1691,7 @@
 
 
     /* ==================================================
-       門市時段
+       門市營業時段
     ================================================== */
 
     const storeTimes = {
@@ -1768,14 +1724,9 @@
 
 
 
-    /* ==================================================
-       更新時段
-    ================================================== */
-
     function updateTimeOptions(storeName) {
 
       timeSelect.innerHTML = "";
-
 
       const placeholder =
         document.createElement("option");
@@ -1824,16 +1775,14 @@
         }
       );
 
-
-      timeSelect.disabled =
-        false;
+      timeSelect.disabled = false;
 
     }
 
 
 
     /* ==================================================
-       門市選擇
+       門市按鈕
     ================================================== */
 
     storeButtons.forEach(
@@ -1846,7 +1795,6 @@
             const selectedStore =
               button.dataset.store;
 
-
             storeButtons.forEach(
               function(item) {
 
@@ -1854,28 +1802,15 @@
                   "selected"
                 );
 
-                item.setAttribute(
-                  "aria-checked",
-                  "false"
-                );
-
               }
             );
-
 
             button.classList.add(
               "selected"
             );
 
-            button.setAttribute(
-              "aria-checked",
-              "true"
-            );
-
-
             storeInput.value =
               selectedStore;
-
 
             updateTimeOptions(
               selectedStore
@@ -1890,7 +1825,7 @@
 
 
     /* ==================================================
-       產生 2026 年 9 月月曆
+       2026 年 9 月月曆
     ================================================== */
 
     const calendarYear =
@@ -1898,9 +1833,6 @@
 
     const calendarMonth =
       8;
-      // JS 月份從 0 開始
-      // 8 = 九月
-
 
     const firstDay =
       new Date(
@@ -1909,7 +1841,6 @@
         1
       ).getDay();
 
-
     const daysInMonth =
       new Date(
         calendarYear,
@@ -1917,10 +1848,6 @@
         0
       ).getDate();
 
-
-    /*
-      補上九月一號以前的空格
-    */
 
     for (
       let i = 0;
@@ -1940,11 +1867,6 @@
 
     }
 
-
-
-    /*
-      建立 1 ～ 30 日
-    */
 
     for (
       let day = 1;
@@ -1971,10 +1893,8 @@
           "0"
         );
 
-
       const dateValue =
         `2026-09-${dayText}`;
-
 
       button.dataset.date =
         dateValue;
@@ -2003,14 +1923,11 @@
             "selected"
           );
 
-
           dateInput.value =
             dateValue;
 
-
           selectedDateDisplay.textContent =
             `已選擇：2026 / 09 / ${dayText}`;
-
 
           selectedDateDisplay.classList.add(
             "show"
@@ -2018,7 +1935,6 @@
 
         }
       );
-
 
       calendarDays.appendChild(
         button
@@ -2072,8 +1988,7 @@
 
 
     /* ==================================================
-       表單送出
-       現階段仍為前端示意
+       送出
     ================================================== */
 
     form.addEventListener(
@@ -2135,29 +2050,6 @@
         }
 
 
-        /*
-          下一步接 Supabase 時可取得：
-
-          姓名：
-          document.getElementById("name").value
-
-          電話：
-          document.getElementById("phone").value
-
-          型號：
-          document.getElementById("device").value
-
-          門市：
-          storeInput.value
-
-          日期：
-          dateInput.value
-
-          時段：
-          timeSelect.value
-        */
-
-
         showToast(
           "預約資料已送出"
         );
@@ -2166,15 +2058,9 @@
     );
 
 
-
-    /* ==================================================
-       初始化
-    ================================================== */
-
     updateTimeOptions("");
 
   </script>
-
 
 </body>
 </html>
