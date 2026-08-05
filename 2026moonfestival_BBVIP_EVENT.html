@@ -21,7 +21,6 @@
       --radius: 22px;
       --shadow: 0 12px 32px rgba(0,0,0,.18);
 
-      /* 表單欄位統一尺寸 */
       --control-height: 54px;
       --control-radius: 14px;
     }
@@ -92,7 +91,9 @@
 
     .section-title {
       margin: 0 0 8px;
+
       color: var(--white);
+
       font-size: 26px;
       font-weight: 850;
       letter-spacing: .4px;
@@ -100,7 +101,9 @@
 
     .section-subtitle {
       margin: 0;
+
       color: var(--text-soft);
+
       font-size: 14px;
       line-height: 1.7;
     }
@@ -202,6 +205,7 @@
 
     .booking-section {
       padding-top: 28px;
+
       background: var(--navy);
     }
 
@@ -254,13 +258,13 @@
 
     .required::after {
       content: " *";
+
       color: var(--gold);
     }
 
 
     /* ==================================================
        表單欄位
-       input / select 完全統一尺寸
     ================================================== */
 
     input[type="text"],
@@ -325,7 +329,6 @@
 
     /* ==================================================
        下拉選單
-       移除 iPhone 系統原生高度差異
     ================================================== */
 
     select {
@@ -356,6 +359,7 @@
     select optgroup {
       color: #777777;
       background: #ffffff;
+
       font-weight: 700;
     }
 
@@ -376,7 +380,7 @@
 
 
     /* ==================================================
-       門市
+       門市選擇
     ================================================== */
 
     .store-options {
@@ -396,8 +400,7 @@
       min-width: 0;
       min-height: 58px;
 
-      padding:
-        10px 8px;
+      padding: 10px 8px;
 
       display: flex;
       align-items: center;
@@ -427,11 +430,6 @@
         color .18s ease,
         transform .15s ease,
         box-shadow .18s ease;
-    }
-
-    .store-button:hover {
-      background:
-        rgba(255,255,255,.09);
     }
 
     .store-button:active {
@@ -563,11 +561,6 @@
         transform .12s ease;
     }
 
-    .calendar-day:hover {
-      background:
-        rgba(255,255,255,.08);
-    }
-
     .calendar-day:active {
       transform: scale(.94);
     }
@@ -598,8 +591,7 @@
 
       margin-top: 10px;
 
-      color:
-        var(--gold);
+      color: var(--gold);
 
       font-size: 13px;
       font-weight: 750;
@@ -681,11 +673,8 @@
     }
 
     .agreement input[type="checkbox"]:checked {
-      border-color:
-        var(--gold);
-
-      background:
-        var(--gold);
+      border-color: var(--gold);
+      background: var(--gold);
     }
 
     .agreement input[type="checkbox"]:checked::before {
@@ -742,8 +731,7 @@
     }
 
     .submit-button:active {
-      transform:
-        scale(.985);
+      transform: scale(.985);
     }
 
 
@@ -764,66 +752,103 @@
         rgba(255,255,255,.055);
     }
 
-    .activity-item {
-      display: flex;
-      align-items: flex-start;
-
-      gap: 15px;
-
+    .activity-block {
       padding:
-        19px 20px;
+        20px;
 
       border-bottom:
         1px solid var(--line);
     }
 
-    .activity-item:last-child {
+    .activity-block:last-child {
       border-bottom: 0;
     }
 
-    .activity-number {
-      flex: 0 0 30px;
+    .activity-label {
+      margin-bottom: 7px;
 
-      width: 30px;
-      height: 30px;
+      color: var(--gold);
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 50%;
-
-      background:
-        rgba(247,181,0,.14);
-
-      color:
-        var(--gold);
-
-      font-size: 13px;
-      font-weight: 850;
-    }
-
-    .activity-content {
-      min-width: 0;
-      padding-top: 2px;
-    }
-
-    .activity-title {
-      margin-bottom: 5px;
-
-      color:
-        var(--white);
-
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
     }
 
-    .activity-text {
+    .activity-value {
       color:
-        var(--text-soft);
+        rgba(255,255,255,.88);
+
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+
+    /* 會員權益 */
+
+    .member-benefits {
+      display: grid;
+
+      gap: 10px;
+
+      margin-top: 4px;
+    }
+
+    .benefit-row {
+      padding:
+        12px 14px;
+
+      border-radius: 13px;
+
+      background:
+        rgba(255,255,255,.055);
+
+      border:
+        1px solid rgba(255,255,255,.075);
+    }
+
+    .benefit-level {
+      margin-bottom: 4px;
+
+      color: var(--white);
+
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .benefit-desc {
+      color:
+        rgba(255,255,255,.7);
 
       font-size: 13px;
-      line-height: 1.75;
+      line-height: 1.65;
+    }
+
+    .benefit-highlight {
+      color: var(--gold);
+
+      font-weight: 800;
+    }
+
+
+    /* 注意事項 */
+
+    .notice-list {
+      margin: 0;
+      padding-left: 21px;
+
+      color:
+        rgba(255,255,255,.78);
+
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .notice-list li {
+      padding-left: 3px;
+      margin-bottom: 7px;
+    }
+
+    .notice-list li:last-child {
+      margin-bottom: 0;
     }
 
 
@@ -877,16 +902,14 @@
     }
 
     .info-name {
-      color:
-        var(--white);
+      color: var(--white);
 
       font-size: 15px;
       font-weight: 750;
     }
 
     .info-arrow {
-      color:
-        var(--gold);
+      color: var(--gold);
 
       font-size: 24px;
       line-height: 1;
@@ -956,7 +979,7 @@
 
 
     /* ==================================================
-       手機版
+       手機
     ================================================== */
 
     @media (max-width: 600px) {
@@ -1018,9 +1041,6 @@
         gap: 17px;
       }
 
-
-      /* 手機上也完全維持相同高度 */
-
       input[type="text"],
       input[type="tel"],
       select {
@@ -1032,7 +1052,6 @@
 
         border-radius: 14px;
       }
-
 
       .store-button {
         min-height: 56px;
@@ -1049,8 +1068,7 @@
       }
 
       .calendar-header {
-        padding-bottom:
-          12px;
+        padding-bottom: 12px;
 
         font-size: 15px;
       }
@@ -1062,6 +1080,7 @@
 
       .calendar-day {
         border-radius: 9px;
+
         font-size: 12px;
       }
 
@@ -1082,7 +1101,7 @@
         border-radius: 19px;
       }
 
-      .activity-item {
+      .activity-block {
         padding:
           18px 17px;
       }
@@ -1103,7 +1122,9 @@
 <body>
 
 
-  <!-- 頂端 Logo -->
+  <!-- ==================================================
+       LOGO
+  ================================================== -->
 
   <header class="site-header">
 
@@ -1124,7 +1145,9 @@
 
 
 
-  <!-- 活動主圖 -->
+  <!-- ==================================================
+       活動主圖
+  ================================================== -->
 
   <section class="campaign-visual">
 
@@ -1141,11 +1164,14 @@
 
 
 
-  <!-- 預約 -->
+  <!-- ==================================================
+       預約
+  ================================================== -->
 
   <section class="section booking-section">
 
     <div class="container">
+
 
       <div class="section-header">
 
@@ -1158,6 +1184,7 @@
         </p>
 
       </div>
+
 
 
       <div class="booking-card">
@@ -1192,7 +1219,7 @@
 
 
 
-          <!-- 聯絡電話 -->
+          <!-- 電話 -->
 
           <div class="field">
 
@@ -1237,6 +1264,7 @@
               <option value="">
                 請選擇手機型號
               </option>
+
 
               <optgroup label="iPhone 17 系列">
 
@@ -1414,7 +1442,7 @@
 
 
 
-          <!-- 活動確認 -->
+          <!-- 確認 -->
 
           <label
             class="agreement"
@@ -1453,11 +1481,14 @@
 
 
 
-  <!-- 活動說明 -->
+  <!-- ==================================================
+       活動說明
+  ================================================== -->
 
   <section class="section">
 
     <div class="container">
+
 
       <div class="section-header">
 
@@ -1467,100 +1498,185 @@
 
       </div>
 
+
+
       <div class="activity-card">
 
 
-        <div class="activity-item">
+        <!-- 活動期間 -->
 
-          <div class="activity-number">1</div>
+        <div class="activity-block">
 
-          <div class="activity-content">
+          <div class="activity-label">
+            活動期間
+          </div>
 
-            <div class="activity-title">
-              活動期間
+          <div class="activity-value">
+            2026/08/10 ～ 2026/09/30
+          </div>
+
+        </div>
+
+
+
+        <!-- 可選期間 -->
+
+        <div class="activity-block">
+
+          <div class="activity-label">
+            可選期間
+          </div>
+
+          <div class="activity-value">
+            2026/09/01 ～ 2026/09/30
+          </div>
+
+        </div>
+
+
+
+        <!-- 活動門市 -->
+
+        <div class="activity-block">
+
+          <div class="activity-label">
+            活動門市
+          </div>
+
+          <div class="activity-value">
+            勤美旗艦、沙鹿站前
+          </div>
+
+        </div>
+
+
+
+        <!-- 活動權益 -->
+
+        <div class="activity-block">
+
+          <div class="activity-label">
+            活動權益
+          </div>
+
+
+          <div class="member-benefits">
+
+
+            <div class="benefit-row">
+
+              <div class="benefit-level">
+                白金會員
+              </div>
+
+              <div class="benefit-desc">
+                可
+                <span class="benefit-highlight">
+                  免費
+                </span>
+                取得一次保貼更換服務
+                （原價 890 元）
+              </div>
+
             </div>
 
-            <div class="activity-text">
-              2026/09/01 至 2026/09/30。
+
+
+            <div class="benefit-row">
+
+              <div class="benefit-level">
+                金卡會員
+              </div>
+
+              <div class="benefit-desc">
+                可以
+                <span class="benefit-highlight">
+                  499 元
+                </span>
+                取得一次保貼更換服務
+                （原價 890 元）
+              </div>
+
             </div>
+
+
+
+            <div class="benefit-row">
+
+              <div class="benefit-level">
+                創始會員
+              </div>
+
+              <div class="benefit-desc">
+                可以
+                <span class="benefit-highlight">
+                  599 元
+                </span>
+                取得一次保貼更換服務
+                （原價 890 元）
+              </div>
+
+            </div>
+
 
           </div>
 
         </div>
 
 
-        <div class="activity-item">
 
-          <div class="activity-number">2</div>
+        <!-- 創始會員定義 -->
 
-          <div class="activity-content">
+        <div class="activity-block">
 
-            <div class="activity-title">
-              會員限定
-            </div>
+          <div class="activity-label">
+            創始會員定義
+          </div>
 
-            <div class="activity-text">
-              本活動僅限符合資格之黑盒子會員使用。
-            </div>
-
+          <div class="activity-value">
+            於 2026/01/01～2026/06/30
+            期間加入黑盒子維修中心 BBVIP 盒芯會籍，
+            且在 2026/01/01 後至今，
+            於勤美旗艦、沙鹿站前任一門市
+            進行過設備維修或配件購買的任何貴賓皆屬之。
           </div>
 
         </div>
 
 
-        <div class="activity-item">
 
-          <div class="activity-number">3</div>
+        <!-- 注意事項 -->
 
-          <div class="activity-content">
+        <div class="activity-block">
 
-            <div class="activity-title">
-              每位會員限兌換一次
-            </div>
-
-            <div class="activity-text">
-              活動期間內每位會員僅限使用一次優惠。
-            </div>
-
+          <div class="activity-label">
+            注意事項
           </div>
 
-        </div>
+          <ol class="notice-list">
 
+            <li>
+              每位合格會員在期間內皆可兌換一次福利。
+            </li>
 
-        <div class="activity-item">
+            <li>
+              預約後若需更改服務時間，
+              請聯繫 LINE 官方客服。
+            </li>
 
-          <div class="activity-number">4</div>
+            <li>
+              本次活動僅限 iPhone X～iPhone 17 系列，
+              提供之保護貼為 9H 鋼化亮面玻璃貼，
+              更換後不提供保固。
+            </li>
 
-          <div class="activity-content">
+            <li>
+              預約後於指定時間前往指定門市，
+              須出示票券錢包內的對應憑證供服務人員進行核銷，
+              請提前檢視會員票券錢包內是否持有活動票券。
+            </li>
 
-            <div class="activity-title">
-              會員優惠
-            </div>
-
-            <div class="activity-text">
-              實際優惠內容依會員等級及活動資格認定為準。
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="activity-item">
-
-          <div class="activity-number">5</div>
-
-          <div class="activity-content">
-
-            <div class="activity-title">
-              現場確認
-            </div>
-
-            <div class="activity-text">
-              門市將於服務前確認會員身分及活動資格。
-            </div>
-
-          </div>
+          </ol>
 
         </div>
 
@@ -1573,7 +1689,9 @@
 
 
 
-  <!-- 資訊 -->
+  <!-- ==================================================
+       資訊
+  ================================================== -->
 
   <section class="section information-section">
 
@@ -1586,6 +1704,7 @@
         </h2>
 
       </div>
+
 
       <div class="information-card">
 
@@ -1608,6 +1727,7 @@
         </a>
 
 
+
         <a
           class="info-link"
           href="https://maps.app.goo.gl/r8dnUK8sEeYLBs6t7?g_st=ic"
@@ -1624,6 +1744,7 @@
           </span>
 
         </a>
+
 
 
         <a
@@ -1649,6 +1770,10 @@
   </section>
 
 
+
+  <!-- ==================================================
+       Toast
+  ================================================== -->
 
   <div
     id="toast"
@@ -1691,7 +1816,7 @@
 
 
     /* ==================================================
-       門市營業時段
+       門市時段
     ================================================== */
 
     const storeTimes = {
@@ -1728,6 +1853,7 @@
 
       timeSelect.innerHTML = "";
 
+
       const placeholder =
         document.createElement("option");
 
@@ -1746,7 +1872,8 @@
         !storeTimes[storeName]
       ) {
 
-        timeSelect.disabled = true;
+        timeSelect.disabled =
+          true;
 
         placeholder.textContent =
           "請先選擇預約門市";
@@ -1775,14 +1902,16 @@
         }
       );
 
-      timeSelect.disabled = false;
+
+      timeSelect.disabled =
+        false;
 
     }
 
 
 
     /* ==================================================
-       門市按鈕
+       門市選取
     ================================================== */
 
     storeButtons.forEach(
@@ -1795,6 +1924,7 @@
             const selectedStore =
               button.dataset.store;
 
+
             storeButtons.forEach(
               function(item) {
 
@@ -1805,12 +1935,15 @@
               }
             );
 
+
             button.classList.add(
               "selected"
             );
 
+
             storeInput.value =
               selectedStore;
+
 
             updateTimeOptions(
               selectedStore
@@ -1825,7 +1958,7 @@
 
 
     /* ==================================================
-       2026 年 9 月月曆
+       九月月曆
     ================================================== */
 
     const calendarYear =
@@ -1834,12 +1967,14 @@
     const calendarMonth =
       8;
 
+
     const firstDay =
       new Date(
         calendarYear,
         calendarMonth,
         1
       ).getDay();
+
 
     const daysInMonth =
       new Date(
@@ -1868,6 +2003,7 @@
     }
 
 
+
     for (
       let day = 1;
       day <= daysInMonth;
@@ -1893,8 +2029,10 @@
           "0"
         );
 
+
       const dateValue =
         `2026-09-${dayText}`;
+
 
       button.dataset.date =
         dateValue;
@@ -1923,11 +2061,14 @@
             "selected"
           );
 
+
           dateInput.value =
             dateValue;
 
+
           selectedDateDisplay.textContent =
             `已選擇：2026 / 09 / ${dayText}`;
+
 
           selectedDateDisplay.classList.add(
             "show"
@@ -1935,6 +2076,7 @@
 
         }
       );
+
 
       calendarDays.appendChild(
         button
@@ -1956,6 +2098,7 @@
 
       toast.textContent =
         message;
+
 
       toast.classList.add(
         "show"
@@ -2048,6 +2191,12 @@
           return;
 
         }
+
+
+        /*
+          後續正式接 Supabase
+          在這裡寫入預約資料。
+        */
 
 
         showToast(
