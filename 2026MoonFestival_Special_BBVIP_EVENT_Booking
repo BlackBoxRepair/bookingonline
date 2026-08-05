@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#042741" />
+
+  <title>中秋月禮｜會員限定活動</title>
+
+  <style>
+    :root {
+      --navy: #042741;
+      --navy-deep: #031c30;
+      --navy-light: #0a385b;
+
+      --gold: #f7b500;
+      --gold-soft: #ffd65c;
+
+      --white: #ffffff;
+      --text-soft: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.10);
+
+      --radius: 22px;
+      --shadow: 0 12px 32px rgba(0,0,0,.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "PingFang TC",
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(247,181,0,.08),
+          transparent 24%
+        ),
+        linear-gradient(
+          180deg,
+          #073250 0%,
+          var(--navy) 28%,
+          var(--navy-deep) 100%
+        );
+
+      color: var(--white);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    /* =========================
+       共用
+    ========================= */
+
+    .container {
+      width: min(720px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+
+      font-size: 26px;
+      font-weight: 850;
+      letter-spacing: .4px;
+    }
+
+    .section-subtitle {
+      margin: 0;
+
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .section-header {
+      margin-bottom: 20px;
+    }
+
+
+    /* =========================
+       頂端 LOGO 區
+    ========================= */
+
+    .site-header {
+      background: rgba(4,39,65,.94);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .site-header-inner {
+      height: 76px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 42px;
+    }
+
+    .logo-area img {
+      max-height: 42px;
+      max-width: 200px;
+      object-fit: contain;
+    }
+
+    /*
+      如果 logo.png 還沒有放進去，
+      可以暫時把 img 刪掉，
+      改成下面這行文字：
+
+      <div class="logo-placeholder">BLACKBOX</div>
+    */
+
+    .logo-placeholder {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+
+    /* =========================
+       活動主圖
+    ========================= */
+
+    .campaign-visual {
+      padding: 18px 0 4px;
+    }
+
+    .campaign-image {
+      width: 100%;
+      border-radius: 24px;
+
+      box-shadow:
+        0 20px 45px rgba(0,0,0,.28);
+
+      overflow: hidden;
+    }
+
+    .campaign-image img {
+      width: 100%;
+      height: auto;
+    }
+
+
+    /* =========================
+       預約
+    ========================= */
+
+    .booking-section {
+      padding-top: 24px;
+    }
+
+    .booking-card {
+      padding: 24px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.08),
+          rgba(255,255,255,.035)
+        );
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      box-shadow: var(--shadow);
+    }
+
+    .form {
+      display: grid;
+      gap: 17px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .required::after {
+      content: " *";
+      color: var(--gold);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 52px;
+
+      padding: 0 15px;
+
+      color: var(--white);
+
+      border:
+        1px solid rgba(255,255,255,.13);
+
+      border-radius: 14px;
+
+      background:
+        rgba(255,255,255,.075);
+
+      outline: none;
+
+      transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+    textarea {
+      min-height: 105px;
+      padding-top: 14px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(255,255,255,.36);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--gold);
+
+      background:
+        rgba(255,255,255,.095);
+
+      box-shadow:
+        0 0 0 3px rgba(247,181,0,.12);
+    }
+
+    select option {
+      color: #111;
+      background: #fff;
+    }
+
+    .submit-button {
+      width: 100%;
+      min-height: 56px;
+
+      margin-top: 4px;
+
+      border: 0;
+      border-radius: 16px;
+
+      color: var(--navy);
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffd65c,
+          var(--gold)
+        );
+
+      font-size: 17px;
+      font-weight: 850;
+
+      box-shadow:
+        0 10px 26px rgba(247,181,0,.23);
+
+      cursor: pointer;
+
+      transition:
+        transform .15s ease,
+        opacity .15s ease;
+    }
+
+    .submit-button:active {
+      transform: scale(.985);
+    }
+
+
+    /* =========================
+       活動說明
+    ========================= */
+
+    .activity-card {
+      overflow: hidden;
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      background: rgba(255,255,255,.055);
+    }
+
+    .activity-item {
+      display: flex;
+      gap: 15px;
+
+      padding: 19px 20px;
+
+      border-bottom: 1px solid var(--line);
+    }
+
+    .activity-item:last-child {
+      border-bottom: 0;
+    }
+
+    .activity-number {
+      flex: 0 0 30px;
+
+      width: 30px;
+      height: 30px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: rgba(247,181,0,.14);
+      color: var(--gold);
+
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .activity-content {
+      min-width: 0;
+    }
+
+    .activity-title {
+      margin-bottom: 5px;
+
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .activity-text {
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+
+    /* =========================
+       資訊
+    ========================= */
+
+    .information-section {
+      padding-bottom: 56px;
+    }
+
+    .information-card {
+      overflow: hidden;
+
+      border-radius: var(--radius);
+
+      border: 1px solid var(--line);
+
+      background:
+        rgba(255,255,255,.055);
+    }
+
+    .info-link {
+      min-height: 66px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+
+      padding: 0 20px;
+
+      border-bottom: 1px solid var(--line);
+
+      transition:
+        background .18s ease;
+    }
+
+    .info-link:last-child {
+      border-bottom: 0;
+    }
+
+    .info-link:active {
+      background:
+        rgba(255,255,255,.08);
+    }
+
+    .info-name {
+      font-size: 15px;
+      font-weight: 750;
+    }
+
+    .info-arrow {
+      color: var(--gold);
+
+      font-size: 23px;
+      line-height: 1;
+
+      transform: translateY(-1px);
+    }
+
+
+    /* =========================
+       成功提示
+    ========================= */
+
+    .toast {
+      position: fixed;
+
+      left: 50%;
+      bottom: 30px;
+
+      z-index: 100;
+
+      width: calc(100% - 40px);
+      max-width: 420px;
+
+      padding: 16px 18px;
+
+      border:
+        1px solid rgba(247,181,0,.35);
+
+      border-radius: 16px;
+
+      background:
+        rgba(4,39,65,.96);
+
+      color: var(--white);
+
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+
+      box-shadow:
+        0 15px 35px rgba(0,0,0,.3);
+
+      opacity: 0;
+      pointer-events: none;
+
+      transform:
+        translateX(-50%)
+        translateY(18px);
+
+      transition: .25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+
+      transform:
+        translateX(-50%)
+        translateY(0);
+    }
+
+
+    /* =========================
+       手機
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: calc(100% - 24px);
+      }
+
+      .site-header-inner {
+        height: 68px;
+      }
+
+      .logo-area img {
+        max-height: 36px;
+      }
+
+      .campaign-visual {
+        padding-top: 12px;
+      }
+
+      .campaign-image {
+        border-radius: 18px;
+      }
+
+      .section {
+        padding: 29px 0;
+      }
+
+      .booking-section {
+        padding-top: 20px;
+      }
+
+      .booking-card {
+        padding: 20px 17px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       頂端 LOGO
+  ========================== -->
+
+  <header class="site-header">
+
+    <div class="container site-header-inner">
+
+      <div class="logo-area">
+
+        <!--
+        請把你的 Logo 圖片命名為 logo.png
+        並與此 HTML 放在同一個資料夾
+        -->
+
+        <img
+          src="logo.png"
+          alt="黑盒子維修中心"
+        >
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================
+       活動優惠圖片
+  ========================== -->
+
+  <section class="campaign-visual">
+
+    <div class="container">
+
+      <div class="campaign-image">
+
+        <!--
+        剛剛製作的會籍優惠圖片
+        請命名為 membership_offer.png
+        -->
+
+        <img
+          src="membership_offer.png"
+          alt="中秋月禮會員專屬優惠"
+        >
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       預約
+  ========================== -->
+
+  <section class="section booking-section">
+
+    <div class="container">
+
+      <div class="section-header">
+
+        <h2 class="section-title">
+          預約
+        </h2>
+
+        <p class="section-subtitle">
+          選擇門市與希望到店時間，完成活動預約。
+        </p>
+
+      </div>
+
+
+      <div class="booking-card">
+
+        <form
+          id="bookingForm"
+          class="form"
+        >
+
+
+          <!-- 姓名 -->
+
+          <div class="field">
+
+            <label
+              for="name"
+              class="required"
+            >
+              姓名
+            </label>
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="請輸入姓名"
+              autocomplete="name"
+              required
+            >
+
+          </div>
+
+
+
+          <!-- 電話 -->
+
+          <div class="field">
+
+            <label
+              for="phone"
+              class="required"
+            >
+              聯絡電話
+            </label>
+
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              inputmode="tel"
+              placeholder="例如：0912345678"
+              autocomplete="tel"
+              required
+            >
+
+          </div>
+
+
+
+          <!-- 設備 -->
+
+          <div class="field">
+
+            <label
+              for="device"
+              class="required"
+            >
+              手機型號
+            </label>
+
+            <input
+              id="device"
+              name="device"
+              type="text"
+              placeholder="例如：iPhone 16 Pro"
+              required
+            >
+
+          </div>
+
+
+
+          <!-- 門市 -->
+
+          <div class="field">
+
+            <label
+              for="store"
+              class="required"
+            >
+              預約門市
+            </label>
+
+            <select
+              id="store"
+              name="store"
+              required
+            >
+
+              <option value="">
+                請選擇門市
+              </option>
+
+              <option value="勤美旗艦門市">
+                勤美旗艦門市
+              </option>
+
+              <option value="沙鹿站前門市">
+                沙鹿站前門市
+              </option>
+
+            </select>
+
+          </div>
+
+
+
+          <!-- 日期 -->
+
+          <div class="field">
+
+            <label
+              for="date"
+              class="required"
+            >
+              預約日期
+            </label>
+
+            <input
+              id="date"
+              name="date"
+              type="date"
+              required
+            >
+
+          </div>
+
+
+
+          <!-- 時間 -->
+
+          <div class="field">
+
+            <label
+              for="time"
+              class="required"
+            >
+              預約時段
+            </label>
+
+            <select
+              id="time"
+              name="time"
+              required
+            >
+
+              <option value="">
+                請選擇時間
+              </option>
+
+              <option value="11:00">
+                11:00
+              </option>
+
+              <option value="12:00">
+                12:00
+              </option>
+
+              <option value="13:00">
+                13:00
+              </option>
+
+              <option value="14:00">
+                14:00
+              </option>
+
+              <option value="15:00">
+                15:00
+              </option>
+
+              <option value="16:00">
+                16:00
+              </option>
+
+              <option value="17:00">
+                17:00
+              </option>
+
+              <option value="18:00">
+                18:00
+              </option>
+
+              <option value="19:00">
+                19:00
+              </option>
+
+              <option value="20:00">
+                20:00
+              </option>
+
+              <option value="21:00">
+                21:00
+              </option>
+
+            </select>
+
+          </div>
+
+
+
+          <!-- 備註 -->
+
+          <div class="field">
+
+            <label for="note">
+              備註
+            </label>
+
+            <textarea
+              id="note"
+              name="note"
+              placeholder="若有其他需求可以在這裡告訴我們"
+            ></textarea>
+
+          </div>
+
+
+
+          <button
+            type="submit"
+            class="submit-button"
+          >
+            確認預約
+          </button>
+
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       活動說明
+  ========================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="section-header">
+
+        <h2 class="section-title">
+          活動說明
+        </h2>
+
+      </div>
+
+
+      <div class="activity-card">
+
+
+        <div class="activity-item">
+
+          <div class="activity-number">
+            1
+          </div>
+
+          <div class="activity-content">
+
+            <div class="activity-title">
+              活動期間
+            </div>
+
+            <div class="activity-text">
+              即日起至 9/30 止。
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="activity-item">
+
+          <div class="activity-number">
+            2
+          </div>
+
+          <div class="activity-content">
+
+            <div class="activity-title">
+              會員限定
+            </div>
+
+            <div class="activity-text">
+              本活動僅限符合資格之黑盒子會員使用。
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="activity-item">
+
+          <div class="activity-number">
+            3
+          </div>
+
+          <div class="activity-content">
+
+            <div class="activity-title">
+              每位會員限兌換一次
+            </div>
+
+            <div class="activity-text">
+              活動期間內每位會員僅限使用一次優惠。
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="activity-item">
+
+          <div class="activity-number">
+            4
+          </div>
+
+          <div class="activity-content">
+
+            <div class="activity-title">
+              會員優惠
+            </div>
+
+            <div class="activity-text">
+              實際優惠內容依會員等級及活動資格認定為準。
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="activity-item">
+
+          <div class="activity-number">
+            5
+          </div>
+
+          <div class="activity-content">
+
+            <div class="activity-title">
+              現場確認
+            </div>
+
+            <div class="activity-text">
+              門市將於服務前確認會員身分及活動資格。
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       資訊
+  ========================== -->
+
+  <section class="section information-section">
+
+    <div class="container">
+
+
+      <div class="section-header">
+
+        <h2 class="section-title">
+          資訊
+        </h2>
+
+      </div>
+
+
+
+      <div class="information-card">
+
+
+        <!-- 勤美旗艦 -->
+
+        <a
+          class="info-link"
+          href="https://maps.app.goo.gl/9CEZ1YGNib6hv1HHA?g_st=ic"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          <span class="info-name">
+            勤美旗艦門市
+          </span>
+
+          <span class="info-arrow">
+            ›
+          </span>
+
+        </a>
+
+
+
+        <!-- 沙鹿 -->
+
+        <a
+          class="info-link"
+          href="https://maps.app.goo.gl/r8dnUK8sEeYLBs6t7?g_st=ic"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          <span class="info-name">
+            沙鹿站前門市
+          </span>
+
+          <span class="info-arrow">
+            ›
+          </span>
+
+        </a>
+
+
+
+        <!-- 會員卡 -->
+
+        <a
+          class="info-link"
+          href="https://blackboxrepair.github.io/membership"
+        >
+
+          <span class="info-name">
+            我的會員卡
+          </span>
+
+          <span class="info-arrow">
+            ›
+          </span>
+
+        </a>
+
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- 提示 -->
+
+  <div
+    id="toast"
+    class="toast"
+  >
+    預約資料已送出
+  </div>
+
+
+
+  <script>
+
+    /* =========================
+       日期限制
+    ========================== */
+
+    const dateInput =
+      document.getElementById("date");
+
+    const today =
+      new Date();
+
+    const localToday =
+      [
+        today.getFullYear(),
+        String(
+          today.getMonth() + 1
+        ).padStart(2, "0"),
+        String(
+          today.getDate()
+        ).padStart(2, "0")
+      ].join("-");
+
+    dateInput.min =
+      localToday;
+
+
+
+    /* =========================
+       表單
+       目前先做前端示意
+    ========================== */
+
+    const form =
+      document.getElementById(
+        "bookingForm"
+      );
+
+    const toast =
+      document.getElementById(
+        "toast"
+      );
+
+
+    form.addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        /*
+        下一步正式串 Supabase 時，
+        就把資料寫入程式放在這裡。
+        */
+
+
+        toast.classList.add(
+          "show"
+        );
+
+
+        setTimeout(
+          () => {
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          2200
+        );
+
+      }
+    );
+
+  </script>
+
+
+</body>
+</html>
