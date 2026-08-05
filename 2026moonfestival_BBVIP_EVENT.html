@@ -10,7 +10,7 @@
   <style>
     :root {
       --navy: #042741;
-      --navy-deep: #031c30;
+      --navy-deep: #031d31;
       --gold: #f7b500;
       --gold-light: #ffd65c;
       --white: #ffffff;
@@ -24,6 +24,11 @@
       --control-height: 54px;
       --control-radius: 14px;
     }
+
+
+    /* ==================================================
+       基本設定
+    ================================================== */
 
     * {
       box-sizing: border-box;
@@ -179,7 +184,6 @@
       border-radius: 0;
 
       background: transparent;
-
       box-shadow: none;
     }
 
@@ -194,7 +198,6 @@
       border-radius: 0;
 
       background: transparent;
-
       box-shadow: none;
     }
 
@@ -205,7 +208,6 @@
 
     .booking-section {
       padding-top: 28px;
-
       background: var(--navy);
     }
 
@@ -258,7 +260,6 @@
 
     .required::after {
       content: " *";
-
       color: var(--gold);
     }
 
@@ -343,12 +344,8 @@
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 
       background-repeat: no-repeat;
-
-      background-position:
-        right 15px center;
-
-      background-size:
-        17px 17px;
+      background-position: right 15px center;
+      background-size: 17px 17px;
     }
 
     select option {
@@ -359,7 +356,6 @@
     select optgroup {
       color: #777777;
       background: #ffffff;
-
       font-weight: 700;
     }
 
@@ -380,7 +376,7 @@
 
 
     /* ==================================================
-       門市選擇
+       門市
     ================================================== */
 
     .store-options {
@@ -566,14 +562,10 @@
     }
 
     .calendar-day.selected {
-      background:
-        var(--gold);
+      background: var(--gold);
+      color: var(--navy);
 
-      color:
-        var(--navy);
-
-      border-color:
-        var(--gold);
+      border-color: var(--gold);
 
       font-weight: 850;
 
@@ -753,8 +745,7 @@
     }
 
     .activity-block {
-      padding:
-        20px;
+      padding: 20px;
 
       border-bottom:
         1px solid var(--line);
@@ -782,7 +773,9 @@
     }
 
 
-    /* 會員權益 */
+    /* ==================================================
+       會員權益
+    ================================================== */
 
     .member-benefits {
       display: grid;
@@ -802,7 +795,8 @@
         rgba(255,255,255,.055);
 
       border:
-        1px solid rgba(255,255,255,.075);
+        1px solid
+        rgba(255,255,255,.075);
     }
 
     .benefit-level {
@@ -829,7 +823,9 @@
     }
 
 
-    /* 注意事項 */
+    /* ==================================================
+       注意事項
+    ================================================== */
 
     .notice-list {
       margin: 0;
@@ -853,66 +849,107 @@
 
 
     /* ==================================================
-       資訊
+       資訊 Footer
     ================================================== */
 
     .information-section {
-      padding-bottom: 56px;
-    }
+      width: 100%;
 
-    .information-card {
-      overflow: hidden;
+      margin-top: 30px;
 
-      border:
-        1px solid var(--line);
-
-      border-radius:
-        var(--radius);
+      padding:
+        48px 0
+        calc(54px + env(safe-area-inset-bottom));
 
       background:
-        rgba(255,255,255,.055);
+        var(--navy-deep);
+
+      border-top:
+        1px solid
+        rgba(255,255,255,.045);
+    }
+
+    .information-inner {
+      width:
+        min(720px, calc(100% - 48px));
+
+      margin:
+        0 auto;
+    }
+
+    .information-title {
+      margin:
+        0 0 28px;
+
+      color:
+        rgba(255,255,255,.94);
+
+      font-size: 22px;
+      font-weight: 700;
+
+      letter-spacing:
+        .5px;
+    }
+
+    .information-links {
+      display: flex;
+      flex-direction: column;
+
+      align-items:
+        flex-start;
     }
 
     .info-link {
-      min-height: 66px;
+      position: relative;
 
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
 
-      gap: 16px;
+      min-height: 50px;
 
-      padding:
-        0 20px;
+      padding: 7px 0;
 
-      border-bottom:
-        1px solid var(--line);
+      color:
+        rgba(255,255,255,.78);
+
+      font-size: 16px;
+      font-weight: 450;
+
+      line-height: 1.5;
 
       transition:
-        background .18s ease;
+        color .18s ease,
+        opacity .18s ease;
     }
 
-    .info-link:last-child {
-      border-bottom: 0;
+    .info-link::after {
+      content: "↗";
+
+      margin-left: 9px;
+
+      color:
+        rgba(255,255,255,.5);
+
+      font-size: 15px;
+
+      transition:
+        transform .18s ease,
+        color .18s ease;
+    }
+
+    .info-link:hover {
+      color: var(--white);
+    }
+
+    .info-link:hover::after {
+      color: var(--gold);
+
+      transform:
+        translate(2px,-2px);
     }
 
     .info-link:active {
-      background:
-        rgba(255,255,255,.08);
-    }
-
-    .info-name {
-      color: var(--white);
-
-      font-size: 15px;
-      font-weight: 750;
-    }
-
-    .info-arrow {
-      color: var(--gold);
-
-      font-size: 24px;
-      line-height: 1;
+      opacity: .65;
     }
 
 
@@ -1068,7 +1105,8 @@
       }
 
       .calendar-header {
-        padding-bottom: 12px;
+        padding-bottom:
+          12px;
 
         font-size: 15px;
       }
@@ -1096,8 +1134,7 @@
         min-height: 54px;
       }
 
-      .activity-card,
-      .information-card {
+      .activity-card {
         border-radius: 19px;
       }
 
@@ -1106,11 +1143,36 @@
           18px 17px;
       }
 
-      .info-link {
-        min-height: 64px;
 
-        padding:
-          0 17px;
+      /* Footer */
+
+      .information-section {
+        margin-top: 22px;
+
+        padding-top: 40px;
+
+        padding-bottom:
+          calc(
+            48px +
+            env(safe-area-inset-bottom)
+          );
+      }
+
+      .information-inner {
+        width:
+          calc(100% - 48px);
+      }
+
+      .information-title {
+        margin-bottom: 22px;
+
+        font-size: 21px;
+      }
+
+      .info-link {
+        min-height: 48px;
+
+        font-size: 15px;
       }
 
     }
@@ -1503,8 +1565,6 @@
       <div class="activity-card">
 
 
-        <!-- 活動期間 -->
-
         <div class="activity-block">
 
           <div class="activity-label">
@@ -1518,8 +1578,6 @@
         </div>
 
 
-
-        <!-- 可選期間 -->
 
         <div class="activity-block">
 
@@ -1535,8 +1593,6 @@
 
 
 
-        <!-- 活動門市 -->
-
         <div class="activity-block">
 
           <div class="activity-label">
@@ -1550,8 +1606,6 @@
         </div>
 
 
-
-        <!-- 活動權益 -->
 
         <div class="activity-block">
 
@@ -1625,8 +1679,6 @@
 
 
 
-        <!-- 創始會員定義 -->
-
         <div class="activity-block">
 
           <div class="activity-label">
@@ -1644,8 +1696,6 @@
         </div>
 
 
-
-        <!-- 注意事項 -->
 
         <div class="activity-block">
 
@@ -1690,23 +1740,23 @@
 
 
   <!-- ==================================================
-       資訊
+       資訊 Footer
   ================================================== -->
 
-  <section class="section information-section">
+  <footer class="information-section">
 
-    <div class="container">
-
-      <div class="section-header">
-
-        <h2 class="section-title">
-          資訊
-        </h2>
-
-      </div>
+    <div class="information-inner">
 
 
-      <div class="information-card">
+      <h2 class="information-title">
+        資訊
+      </h2>
+
+
+      <nav
+        class="information-links"
+        aria-label="資訊"
+      >
 
 
         <a
@@ -1715,15 +1765,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-
-          <span class="info-name">
-            勤美旗艦門市
-          </span>
-
-          <span class="info-arrow">
-            ›
-          </span>
-
+          勤美旗艦門市
         </a>
 
 
@@ -1734,15 +1776,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-
-          <span class="info-name">
-            沙鹿站前門市
-          </span>
-
-          <span class="info-arrow">
-            ›
-          </span>
-
+          沙鹿站前門市
         </a>
 
 
@@ -1751,23 +1785,16 @@
           class="info-link"
           href="https://blackboxrepair.github.io/membership"
         >
-
-          <span class="info-name">
-            我的會員卡
-          </span>
-
-          <span class="info-arrow">
-            ›
-          </span>
-
+          我的會員卡
         </a>
 
 
-      </div>
+      </nav>
+
 
     </div>
 
-  </section>
+  </footer>
 
 
 
@@ -1911,7 +1938,7 @@
 
 
     /* ==================================================
-       門市選取
+       門市選擇
     ================================================== */
 
     storeButtons.forEach(
@@ -1958,7 +1985,7 @@
 
 
     /* ==================================================
-       九月月曆
+       2026 年 9 月月曆
     ================================================== */
 
     const calendarYear =
@@ -2131,7 +2158,7 @@
 
 
     /* ==================================================
-       送出
+       表單送出
     ================================================== */
 
     form.addEventListener(
@@ -2194,8 +2221,8 @@
 
 
         /*
-          後續正式接 Supabase
-          在這裡寫入預約資料。
+          後續串接 Supabase
+          預約寫入程式放這裡
         */
 
 
@@ -2210,6 +2237,7 @@
     updateTimeOptions("");
 
   </script>
+
 
 </body>
 </html>
