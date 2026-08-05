@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#042741" />
+  <meta name="theme-color" content="#ffffff" />
 
   <title>中秋月禮｜會員限定活動</title>
 
@@ -12,9 +12,11 @@
       --navy: #042741;
       --navy-deep: #031c30;
       --gold: #f7b500;
+      --gold-light: #ffd65c;
       --white: #ffffff;
 
       --text-soft: rgba(255,255,255,.68);
+      --text-soft-2: rgba(255,255,255,.52);
       --line: rgba(255,255,255,.10);
 
       --radius: 22px;
@@ -42,7 +44,7 @@
         "Microsoft JhengHei",
         sans-serif;
 
-      background: #042741;
+      background: var(--navy);
       color: var(--white);
     }
 
@@ -64,9 +66,9 @@
     }
 
 
-    /* =========================
+    /* ==================================================
        共用
-    ========================= */
+    ================================================== */
 
     .container {
       width: min(720px, calc(100% - 32px));
@@ -84,6 +86,8 @@
     .section-title {
       margin: 0 0 8px;
 
+      color: var(--white);
+
       font-size: 26px;
       font-weight: 850;
       letter-spacing: .4px;
@@ -93,56 +97,76 @@
       margin: 0;
 
       color: var(--text-soft);
+
       font-size: 14px;
       line-height: 1.7;
     }
 
 
-    /* =========================
-       頂端 LOGO
-    ========================= */
+    /* ==================================================
+       頂端 LOGO 區
+    ================================================== */
 
     .site-header {
+      position: relative;
+      z-index: 10;
+
       width: 100%;
-      background: #042741;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+
+      background: #ffffff;
+
+      border-bottom:
+        1px solid rgba(0,0,0,.055);
     }
 
     .site-header-inner {
-      height: 76px;
+      min-height: 78px;
 
       display: flex;
       align-items: center;
       justify-content: center;
+
+      padding: 12px 0;
     }
 
     .logo-area {
+      width: 100%;
+
       display: flex;
       align-items: center;
       justify-content: center;
-
-      width: 100%;
-      min-height: 42px;
     }
 
     .logo-area img {
-      max-height: 42px;
-      max-width: 210px;
+      display: block;
+
+      width: auto;
+      height: auto;
+
+      max-width: 220px;
+      max-height: 48px;
+
       object-fit: contain;
     }
 
 
-    /* =========================
-       活動圖片
-       直接融入網站背景
-    ========================= */
+    /* ==================================================
+       活動主視覺
+       membership_offer.png
+       
+       不做卡片
+       不要圓角
+       不要陰影
+       直接與深藍背景融合
+    ================================================== */
 
     .campaign-visual {
       width: 100%;
+
       margin: 0;
       padding: 0;
 
-      background: #042741;
+      background: var(--navy);
 
       overflow: hidden;
     }
@@ -152,9 +176,13 @@
       max-width: 760px;
 
       margin: 0 auto;
+      padding: 0;
 
       border: 0;
       border-radius: 0;
+
+      background: transparent;
+
       box-shadow: none;
 
       overflow: visible;
@@ -167,24 +195,34 @@
       height: auto;
 
       margin: 0;
+      padding: 0;
 
       border: 0;
       border-radius: 0;
+
+      background: transparent;
+
       box-shadow: none;
     }
 
 
-    /* =========================
+    /* ==================================================
        預約
-    ========================= */
+    ================================================== */
 
     .booking-section {
-      padding-top: 26px;
-      background: #042741;
+      padding-top: 28px;
+
+      background: var(--navy);
     }
 
     .booking-card {
       padding: 24px;
+
+      border:
+        1px solid var(--line);
+
+      border-radius: var(--radius);
 
       background:
         linear-gradient(
@@ -192,9 +230,6 @@
           rgba(255,255,255,.075),
           rgba(255,255,255,.035)
         );
-
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
 
       box-shadow: var(--shadow);
     }
@@ -210,12 +245,15 @@
     }
 
     .field label {
+      color: var(--white);
+
       font-size: 14px;
       font-weight: 750;
     }
 
     .required::after {
       content: " *";
+
       color: var(--gold);
     }
 
@@ -247,13 +285,17 @@
 
     textarea {
       min-height: 105px;
+
       padding-top: 14px;
+      padding-bottom: 14px;
+
       resize: vertical;
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: rgba(255,255,255,.36);
+      color:
+        rgba(255,255,255,.36);
     }
 
     input:focus,
@@ -265,19 +307,34 @@
         rgba(255,255,255,.095);
 
       box-shadow:
-        0 0 0 3px rgba(247,181,0,.12);
+        0 0 0 3px
+        rgba(247,181,0,.12);
+    }
+
+    select {
+      cursor: pointer;
     }
 
     select option {
-      color: #111;
-      background: #fff;
+      color: #111111;
+      background: #ffffff;
     }
+
+
+    /* 日期欄位 */
+
+    input[type="date"] {
+      color-scheme: dark;
+    }
+
+
+    /* 送出按鈕 */
 
     .submit-button {
       width: 100%;
       min-height: 56px;
 
-      margin-top: 4px;
+      margin-top: 5px;
 
       border: 0;
       border-radius: 16px;
@@ -287,7 +344,7 @@
       background:
         linear-gradient(
           135deg,
-          #ffd65c,
+          var(--gold-light),
           var(--gold)
         );
 
@@ -295,13 +352,21 @@
       font-weight: 850;
 
       box-shadow:
-        0 10px 26px rgba(247,181,0,.23);
+        0 10px 26px
+        rgba(247,181,0,.23);
 
       cursor: pointer;
 
       transition:
         transform .15s ease,
-        opacity .15s ease;
+        opacity .15s ease,
+        box-shadow .15s ease;
+    }
+
+    .submit-button:hover {
+      box-shadow:
+        0 12px 30px
+        rgba(247,181,0,.3);
     }
 
     .submit-button:active {
@@ -309,26 +374,31 @@
     }
 
 
-    /* =========================
+    /* ==================================================
        活動說明
-    ========================= */
+    ================================================== */
 
     .activity-card {
       overflow: hidden;
 
-      border: 1px solid var(--line);
+      border:
+        1px solid var(--line);
+
       border-radius: var(--radius);
 
-      background: rgba(255,255,255,.055);
+      background:
+        rgba(255,255,255,.055);
     }
 
     .activity-item {
       display: flex;
+      align-items: flex-start;
       gap: 15px;
 
       padding: 19px 20px;
 
-      border-bottom: 1px solid var(--line);
+      border-bottom:
+        1px solid var(--line);
     }
 
     .activity-item:last-child {
@@ -336,7 +406,8 @@
     }
 
     .activity-number {
-      flex: 0 0 30px;
+      flex:
+        0 0 30px;
 
       width: 30px;
       height: 30px;
@@ -347,7 +418,9 @@
 
       border-radius: 50%;
 
-      background: rgba(247,181,0,.14);
+      background:
+        rgba(247,181,0,.14);
+
       color: var(--gold);
 
       font-size: 13px;
@@ -356,10 +429,14 @@
 
     .activity-content {
       min-width: 0;
+
+      padding-top: 2px;
     }
 
     .activity-title {
       margin-bottom: 5px;
+
+      color: var(--white);
 
       font-size: 15px;
       font-weight: 800;
@@ -367,14 +444,15 @@
 
     .activity-text {
       color: var(--text-soft);
+
       font-size: 13px;
       line-height: 1.75;
     }
 
 
-    /* =========================
+    /* ==================================================
        資訊
-    ========================= */
+    ================================================== */
 
     .information-section {
       padding-bottom: 56px;
@@ -383,32 +461,43 @@
     .information-card {
       overflow: hidden;
 
-      border-radius: var(--radius);
+      border:
+        1px solid var(--line);
 
-      border: 1px solid var(--line);
+      border-radius: var(--radius);
 
       background:
         rgba(255,255,255,.055);
     }
 
     .info-link {
+      position: relative;
+
       min-height: 66px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 16px;
 
       padding: 0 20px;
 
-      border-bottom: 1px solid var(--line);
+      border-bottom:
+        1px solid var(--line);
 
       transition:
-        background .18s ease;
+        background .18s ease,
+        transform .18s ease;
     }
 
     .info-link:last-child {
       border-bottom: 0;
+    }
+
+    .info-link:hover {
+      background:
+        rgba(255,255,255,.045);
     }
 
     .info-link:active {
@@ -417,6 +506,8 @@
     }
 
     .info-name {
+      color: var(--white);
+
       font-size: 15px;
       font-weight: 750;
     }
@@ -424,16 +515,17 @@
     .info-arrow {
       color: var(--gold);
 
-      font-size: 23px;
+      font-size: 24px;
       line-height: 1;
 
-      transform: translateY(-1px);
+      transform:
+        translateY(-1px);
     }
 
 
-    /* =========================
-       成功提示
-    ========================= */
+    /* ==================================================
+       預約送出提示
+    ================================================== */
 
     .toast {
       position: fixed;
@@ -443,36 +535,44 @@
 
       z-index: 100;
 
-      width: calc(100% - 40px);
+      width:
+        calc(100% - 40px);
+
       max-width: 420px;
 
-      padding: 16px 18px;
+      padding:
+        16px 18px;
 
       border:
-        1px solid rgba(247,181,0,.35);
+        1px solid
+        rgba(247,181,0,.35);
 
       border-radius: 16px;
 
       background:
-        rgba(4,39,65,.96);
+        rgba(4,39,65,.97);
 
       color: var(--white);
 
       text-align: center;
+
       font-size: 14px;
       font-weight: 700;
 
       box-shadow:
-        0 15px 35px rgba(0,0,0,.3);
+        0 15px 35px
+        rgba(0,0,0,.3);
 
       opacity: 0;
+
       pointer-events: none;
 
       transform:
         translateX(-50%)
         translateY(18px);
 
-      transition: .25s ease;
+      transition:
+        .25s ease;
     }
 
     .toast.show {
@@ -484,43 +584,106 @@
     }
 
 
-    /* =========================
+    /* ==================================================
        手機
-    ========================= */
+    ================================================== */
 
     @media (max-width: 600px) {
 
       .container {
-        width: calc(100% - 24px);
+        width:
+          calc(100% - 24px);
       }
 
+
+      /* Logo */
+
       .site-header-inner {
-        height: 68px;
+        min-height: 70px;
+
+        padding:
+          10px 0;
       }
 
       .logo-area img {
-        max-height: 36px;
         max-width: 190px;
+        max-height: 40px;
       }
 
+
+      /* 活動圖 */
+
       .campaign-image {
+        width: 100%;
         max-width: 100%;
       }
 
+
+      /* 區塊 */
+
       .section {
-        padding: 29px 0;
+        padding:
+          29px 0;
       }
 
       .booking-section {
         padding-top: 22px;
       }
 
-      .booking-card {
-        padding: 20px 17px;
+      .section-header {
+        margin-bottom: 17px;
       }
 
       .section-title {
         font-size: 24px;
+      }
+
+      .section-subtitle {
+        font-size: 13px;
+      }
+
+
+      /* 表單 */
+
+      .booking-card {
+        padding:
+          20px 17px;
+
+        border-radius: 19px;
+      }
+
+      .form {
+        gap: 16px;
+      }
+
+      input,
+      select,
+      textarea {
+        min-height: 50px;
+      }
+
+      .submit-button {
+        min-height: 54px;
+      }
+
+
+      /* 活動說明 */
+
+      .activity-card,
+      .information-card {
+        border-radius: 19px;
+      }
+
+      .activity-item {
+        padding:
+          18px 17px;
+      }
+
+      .info-link {
+        min-height: 64px;
+
+        padding:
+          0 17px;
       }
 
     }
@@ -532,9 +695,9 @@
 <body>
 
 
-  <!-- =========================
-       頂端 LOGO
-  ========================== -->
+  <!-- ==================================================
+       頂端 Logo 區塊
+  =================================================== -->
 
   <header class="site-header">
 
@@ -543,7 +706,7 @@
       <div class="logo-area">
 
         <img
-          src="logo.png"
+          src="site logo.png"
           alt="黑盒子維修中心"
         >
 
@@ -555,9 +718,10 @@
 
 
 
-  <!-- =========================
-       活動優惠圖片
-  ========================== -->
+  <!-- ==================================================
+       活動主視覺
+       圖片直接融合進深藍背景
+  =================================================== -->
 
   <section class="campaign-visual">
 
@@ -574,13 +738,16 @@
 
 
 
-  <!-- =========================
+  <!-- ==================================================
        預約
-  ========================== -->
+  =================================================== -->
 
-  <section class="section booking-section">
+  <section
+    class="section booking-section"
+  >
 
     <div class="container">
+
 
       <div class="section-header">
 
@@ -593,6 +760,7 @@
         </p>
 
       </div>
+
 
 
       <div class="booking-card">
@@ -675,7 +843,7 @@
 
 
 
-          <!-- 門市 -->
+          <!-- 預約門市 -->
 
           <div class="field">
 
@@ -696,11 +864,15 @@
                 請選擇門市
               </option>
 
-              <option value="勤美旗艦門市">
+              <option
+                value="勤美旗艦門市"
+              >
                 勤美旗艦門市
               </option>
 
-              <option value="沙鹿站前門市">
+              <option
+                value="沙鹿站前門市"
+              >
                 沙鹿站前門市
               </option>
 
@@ -753,17 +925,49 @@
                 請選擇時間
               </option>
 
-              <option value="11:00">11:00</option>
-              <option value="12:00">12:00</option>
-              <option value="13:00">13:00</option>
-              <option value="14:00">14:00</option>
-              <option value="15:00">15:00</option>
-              <option value="16:00">16:00</option>
-              <option value="17:00">17:00</option>
-              <option value="18:00">18:00</option>
-              <option value="19:00">19:00</option>
-              <option value="20:00">20:00</option>
-              <option value="21:00">21:00</option>
+              <option value="11:00">
+                11:00
+              </option>
+
+              <option value="12:00">
+                12:00
+              </option>
+
+              <option value="13:00">
+                13:00
+              </option>
+
+              <option value="14:00">
+                14:00
+              </option>
+
+              <option value="15:00">
+                15:00
+              </option>
+
+              <option value="16:00">
+                16:00
+              </option>
+
+              <option value="17:00">
+                17:00
+              </option>
+
+              <option value="18:00">
+                18:00
+              </option>
+
+              <option value="19:00">
+                19:00
+              </option>
+
+              <option value="20:00">
+                20:00
+              </option>
+
+              <option value="21:00">
+                21:00
+              </option>
 
             </select>
 
@@ -789,6 +993,8 @@
 
 
 
+          <!-- 送出 -->
+
           <button
             type="submit"
             class="submit-button"
@@ -807,13 +1013,14 @@
 
 
 
-  <!-- =========================
+  <!-- ==================================================
        活動說明
-  ========================== -->
+  =================================================== -->
 
   <section class="section">
 
     <div class="container">
+
 
       <div class="section-header">
 
@@ -824,8 +1031,11 @@
       </div>
 
 
+
       <div class="activity-card">
 
+
+        <!-- 1 -->
 
         <div class="activity-item">
 
@@ -849,6 +1059,8 @@
 
 
 
+        <!-- 2 -->
+
         <div class="activity-item">
 
           <div class="activity-number">
@@ -870,6 +1082,8 @@
         </div>
 
 
+
+        <!-- 3 -->
 
         <div class="activity-item">
 
@@ -893,6 +1107,8 @@
 
 
 
+        <!-- 4 -->
+
         <div class="activity-item">
 
           <div class="activity-number">
@@ -914,6 +1130,8 @@
         </div>
 
 
+
+        <!-- 5 -->
 
         <div class="activity-item">
 
@@ -944,11 +1162,13 @@
 
 
 
-  <!-- =========================
+  <!-- ==================================================
        資訊
-  ========================== -->
+  =================================================== -->
 
-  <section class="section information-section">
+  <section
+    class="section information-section"
+  >
 
     <div class="container">
 
@@ -965,6 +1185,8 @@
 
       <div class="information-card">
 
+
+        <!-- 勤美旗艦門市 -->
 
         <a
           class="info-link"
@@ -985,6 +1207,8 @@
 
 
 
+        <!-- 沙鹿站前門市 -->
+
         <a
           class="info-link"
           href="https://maps.app.goo.gl/r8dnUK8sEeYLBs6t7?g_st=ic"
@@ -1003,6 +1227,8 @@
         </a>
 
 
+
+        <!-- 我的會員卡 -->
 
         <a
           class="info-link"
@@ -1028,9 +1254,9 @@
 
 
 
-  <!-- =========================
-       提示
-  ========================== -->
+  <!-- ==================================================
+       預約成功提示
+  =================================================== -->
 
   <div
     id="toast"
@@ -1043,9 +1269,10 @@
 
   <script>
 
-    /* =========================
+    /* ==================================================
        日期限制
-    ========================== */
+       不允許選擇今天以前
+    ================================================== */
 
     const dateInput =
       document.getElementById("date");
@@ -1056,9 +1283,11 @@
     const localToday =
       [
         today.getFullYear(),
+
         String(
           today.getMonth() + 1
         ).padStart(2, "0"),
+
         String(
           today.getDate()
         ).padStart(2, "0")
@@ -1069,10 +1298,10 @@
 
 
 
-    /* =========================
-       表單
-       目前先做前端示意
-    ========================== */
+    /* ==================================================
+       預約表單
+       目前仍為前端示意
+    ================================================== */
 
     const form =
       document.getElementById(
@@ -1090,6 +1319,13 @@
       function(event) {
 
         event.preventDefault();
+
+
+        /*
+        後續串接 Supabase 時，
+        預約資料寫入可以放在這裡。
+        */
+
 
         toast.classList.add(
           "show"
