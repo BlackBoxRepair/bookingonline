@@ -152,12 +152,6 @@
 
     /* ==================================================
        活動主視覺
-       membership_offer.png
-       
-       不做卡片
-       不要圓角
-       不要陰影
-       直接與深藍背景融合
     ================================================== */
 
     .campaign-visual {
@@ -320,8 +314,11 @@
       background: #ffffff;
     }
 
-
-    /* 日期欄位 */
+    select optgroup {
+      color: #8d8d8d;
+      background: #ffffff;
+      font-weight: 700;
+    }
 
     input[type="date"] {
       color-scheme: dark;
@@ -406,8 +403,7 @@
     }
 
     .activity-number {
-      flex:
-        0 0 30px;
+      flex: 0 0 30px;
 
       width: 30px;
       height: 30px;
@@ -595,9 +591,6 @@
           calc(100% - 24px);
       }
 
-
-      /* Logo */
-
       .site-header-inner {
         min-height: 70px;
 
@@ -610,16 +603,10 @@
         max-height: 40px;
       }
 
-
-      /* 活動圖 */
-
       .campaign-image {
         width: 100%;
         max-width: 100%;
       }
-
-
-      /* 區塊 */
 
       .section {
         padding:
@@ -642,9 +629,6 @@
         font-size: 13px;
       }
 
-
-      /* 表單 */
-
       .booking-card {
         padding:
           20px 17px;
@@ -665,9 +649,6 @@
       .submit-button {
         min-height: 54px;
       }
-
-
-      /* 活動說明 */
 
       .activity-card,
       .information-card {
@@ -696,7 +677,7 @@
 
 
   <!-- ==================================================
-       頂端 Logo 區塊
+       頂端 Logo
   =================================================== -->
 
   <header class="site-header">
@@ -720,7 +701,6 @@
 
   <!-- ==================================================
        活動主視覺
-       圖片直接融合進深藍背景
   =================================================== -->
 
   <section class="campaign-visual">
@@ -820,7 +800,10 @@
 
 
 
-          <!-- 手機型號 -->
+          <!-- ==================================================
+               手機型號
+               已改為下拉式選單
+          =================================================== -->
 
           <div class="field">
 
@@ -831,13 +814,175 @@
               手機型號
             </label>
 
-            <input
+            <select
               id="device"
               name="device"
-              type="text"
-              placeholder="例如：iPhone 16 Pro"
               required
             >
+
+              <option value="">
+                請選擇手機型號
+              </option>
+
+
+              <!-- iPhone 17 系列 -->
+
+              <optgroup label="iPhone 17 系列">
+
+                <option value="iPhone 17 Pro">
+                  iPhone 17 Pro
+                </option>
+
+                <option value="iPhone 17 Pro Max">
+                  iPhone 17 Pro Max
+                </option>
+
+                <option value="iPhone Air">
+                  iPhone Air
+                </option>
+
+                <option value="iPhone 17">
+                  iPhone 17
+                </option>
+
+                <option value="iPhone 17e">
+                  iPhone 17e
+                </option>
+
+              </optgroup>
+
+
+              <!-- 更多 iPhone 機型 -->
+
+              <optgroup label="更多 iPhone 機型">
+
+                <option value="iPhone 16 Pro">
+                  iPhone 16 Pro
+                </option>
+
+                <option value="iPhone 16 Pro Max">
+                  iPhone 16 Pro Max
+                </option>
+
+                <option value="iPhone 16">
+                  iPhone 16
+                </option>
+
+                <option value="iPhone 16 Plus">
+                  iPhone 16 Plus
+                </option>
+
+                <option value="iPhone 16e">
+                  iPhone 16e
+                </option>
+
+
+                <option value="iPhone 15 Pro">
+                  iPhone 15 Pro
+                </option>
+
+                <option value="iPhone 15 Pro Max">
+                  iPhone 15 Pro Max
+                </option>
+
+                <option value="iPhone 15">
+                  iPhone 15
+                </option>
+
+                <option value="iPhone 15 Plus">
+                  iPhone 15 Plus
+                </option>
+
+
+                <option value="iPhone 14 Pro">
+                  iPhone 14 Pro
+                </option>
+
+                <option value="iPhone 14 Pro Max">
+                  iPhone 14 Pro Max
+                </option>
+
+                <option value="iPhone 14">
+                  iPhone 14
+                </option>
+
+                <option value="iPhone 14 Plus">
+                  iPhone 14 Plus
+                </option>
+
+
+                <option value="iPhone 13 Pro">
+                  iPhone 13 Pro
+                </option>
+
+                <option value="iPhone 13 Pro Max">
+                  iPhone 13 Pro Max
+                </option>
+
+                <option value="iPhone 13 mini">
+                  iPhone 13 mini
+                </option>
+
+                <option value="iPhone 13">
+                  iPhone 13
+                </option>
+
+
+                <option value="iPhone SE（第 3 代）">
+                  iPhone SE（第 3 代）
+                </option>
+
+
+                <option value="iPhone 12 Pro">
+                  iPhone 12 Pro
+                </option>
+
+                <option value="iPhone 12 Pro Max">
+                  iPhone 12 Pro Max
+                </option>
+
+                <option value="iPhone 12 mini">
+                  iPhone 12 mini
+                </option>
+
+                <option value="iPhone 12">
+                  iPhone 12
+                </option>
+
+
+                <option value="iPhone 11 Pro">
+                  iPhone 11 Pro
+                </option>
+
+                <option value="iPhone 11 Pro Max">
+                  iPhone 11 Pro Max
+                </option>
+
+                <option value="iPhone 11">
+                  iPhone 11
+                </option>
+
+
+                <option value="iPhone SE（第 2 代）">
+                  iPhone SE（第 2 代）
+                </option>
+
+
+                <option value="iPhone XS">
+                  iPhone XS
+                </option>
+
+                <option value="iPhone XS Max">
+                  iPhone XS Max
+                </option>
+
+                <option value="iPhone XR">
+                  iPhone XR
+                </option>
+
+              </optgroup>
+
+            </select>
 
           </div>
 
@@ -1035,8 +1180,6 @@
       <div class="activity-card">
 
 
-        <!-- 1 -->
-
         <div class="activity-item">
 
           <div class="activity-number">
@@ -1058,8 +1201,6 @@
         </div>
 
 
-
-        <!-- 2 -->
 
         <div class="activity-item">
 
@@ -1083,8 +1224,6 @@
 
 
 
-        <!-- 3 -->
-
         <div class="activity-item">
 
           <div class="activity-number">
@@ -1107,8 +1246,6 @@
 
 
 
-        <!-- 4 -->
-
         <div class="activity-item">
 
           <div class="activity-number">
@@ -1130,8 +1267,6 @@
         </div>
 
 
-
-        <!-- 5 -->
 
         <div class="activity-item">
 
@@ -1186,8 +1321,6 @@
       <div class="information-card">
 
 
-        <!-- 勤美旗艦門市 -->
-
         <a
           class="info-link"
           href="https://maps.app.goo.gl/9CEZ1YGNib6hv1HHA?g_st=ic"
@@ -1207,8 +1340,6 @@
 
 
 
-        <!-- 沙鹿站前門市 -->
-
         <a
           class="info-link"
           href="https://maps.app.goo.gl/r8dnUK8sEeYLBs6t7?g_st=ic"
@@ -1227,8 +1358,6 @@
         </a>
 
 
-
-        <!-- 我的會員卡 -->
 
         <a
           class="info-link"
@@ -1271,7 +1400,6 @@
 
     /* ==================================================
        日期限制
-       不允許選擇今天以前
     ================================================== */
 
     const dateInput =
@@ -1300,7 +1428,7 @@
 
     /* ==================================================
        預約表單
-       目前仍為前端示意
+       目前為前端示意
     ================================================== */
 
     const form =
@@ -1322,8 +1450,8 @@
 
 
         /*
-        後續串接 Supabase 時，
-        預約資料寫入可以放在這裡。
+          後續串 Supabase 時，
+          預約資料寫入放在這裡。
         */
 
 
