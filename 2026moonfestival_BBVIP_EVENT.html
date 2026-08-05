@@ -22,11 +22,6 @@
       --shadow: 0 12px 32px rgba(0,0,0,.18);
     }
 
-
-    /* ==================================================
-       基本設定
-    ================================================== */
-
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
@@ -68,6 +63,11 @@
       font: inherit;
     }
 
+    button {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
 
     /* ==================================================
        共用
@@ -88,9 +88,7 @@
 
     .section-title {
       margin: 0 0 8px;
-
       color: var(--white);
-
       font-size: 26px;
       font-weight: 850;
       letter-spacing: .4px;
@@ -98,9 +96,7 @@
 
     .section-subtitle {
       margin: 0;
-
       color: var(--text-soft);
-
       font-size: 14px;
       line-height: 1.7;
     }
@@ -113,13 +109,9 @@
     .site-header {
       position: relative;
       z-index: 10;
-
       width: 100%;
-
       background: #ffffff;
-
-      border-bottom:
-        1px solid rgba(0,0,0,.055);
+      border-bottom: 1px solid rgba(0,0,0,.055);
     }
 
     .site-header-inner {
@@ -141,8 +133,6 @@
     }
 
     .logo-area img {
-      display: block;
-
       width: auto;
       height: auto;
 
@@ -159,7 +149,6 @@
 
     .campaign-visual {
       width: 100%;
-
       margin: 0;
       padding: 0;
 
@@ -183,8 +172,6 @@
     }
 
     .campaign-image img {
-      display: block;
-
       width: 100%;
       height: auto;
 
@@ -211,12 +198,11 @@
     .booking-card {
       width: 100%;
       min-width: 0;
+      max-width: 100%;
 
       padding: 24px;
 
-      border:
-        1px solid var(--line);
-
+      border: 1px solid var(--line);
       border-radius: var(--radius);
 
       background:
@@ -232,6 +218,7 @@
     .form {
       width: 100%;
       min-width: 0;
+      max-width: 100%;
 
       display: grid;
       gap: 18px;
@@ -240,6 +227,7 @@
     .field {
       width: 100%;
       min-width: 0;
+      max-width: 100%;
 
       display: grid;
       gap: 8px;
@@ -247,7 +235,6 @@
 
     .field label {
       color: var(--white);
-
       font-size: 14px;
       font-weight: 750;
     }
@@ -259,7 +246,7 @@
 
 
     /* ==================================================
-       輸入欄位
+       一般輸入欄
     ================================================== */
 
     input,
@@ -269,20 +256,18 @@
       width: 100%;
       max-width: 100%;
       min-width: 0;
-
       min-height: 52px;
+
+      box-sizing: border-box;
 
       padding: 0 15px;
 
       color: var(--white);
 
-      border:
-        1px solid rgba(255,255,255,.13);
-
+      border: 1px solid rgba(255,255,255,.13);
       border-radius: 14px;
 
-      background:
-        rgba(255,255,255,.075);
+      background: rgba(255,255,255,.075);
 
       outline: none;
 
@@ -293,20 +278,17 @@
     }
 
     input::placeholder {
-      color:
-        rgba(255,255,255,.36);
+      color: rgba(255,255,255,.36);
     }
 
     input:focus,
     select:focus {
       border-color: var(--gold);
 
-      background:
-        rgba(255,255,255,.095);
+      background: rgba(255,255,255,.095);
 
       box-shadow:
-        0 0 0 3px
-        rgba(247,181,0,.12);
+        0 0 0 3px rgba(247,181,0,.12);
     }
 
     select {
@@ -324,33 +306,20 @@
       font-weight: 700;
     }
 
+    select:disabled {
+      cursor: not-allowed;
 
-    /* ==================================================
-       日期欄位
-       防止 iPhone / Safari 超出表單
-    ================================================== */
+      color: rgba(255,255,255,.35);
 
-    .date-field {
-      width: 100%;
-      min-width: 0;
-      overflow: hidden;
-    }
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.08);
 
-    input[type="date"] {
-      display: block;
-
-      width: 100%;
-      max-width: 100%;
-      min-width: 0;
-
-      box-sizing: border-box;
-
-      color-scheme: dark;
+      opacity: 1;
     }
 
 
     /* ==================================================
-       門市選擇按鈕
+       門市選擇
     ================================================== */
 
     .store-options {
@@ -366,8 +335,6 @@
     }
 
     .store-button {
-      position: relative;
-
       width: 100%;
       min-width: 0;
       min-height: 58px;
@@ -378,16 +345,12 @@
       align-items: center;
       justify-content: center;
 
-      border:
-        1px solid rgba(255,255,255,.15);
-
+      border: 1px solid rgba(255,255,255,.15);
       border-radius: 15px;
 
-      background:
-        rgba(255,255,255,.065);
+      background: rgba(255,255,255,.065);
 
-      color:
-        rgba(255,255,255,.82);
+      color: rgba(255,255,255,.82);
 
       font-size: 14px;
       font-weight: 750;
@@ -405,8 +368,7 @@
     }
 
     .store-button:hover {
-      background:
-        rgba(255,255,255,.09);
+      background: rgba(255,255,255,.09);
     }
 
     .store-button:active {
@@ -426,42 +388,156 @@
       border-color: var(--gold);
 
       box-shadow:
-        0 8px 22px
-        rgba(247,181,0,.18);
+        0 8px 22px rgba(247,181,0,.18);
     }
 
     .store-button.selected::before {
       content: "✓";
-
       margin-right: 6px;
-
       font-size: 14px;
       font-weight: 900;
     }
 
 
     /* ==================================================
-       尚未選擇門市的時段
+       2026 年 9 月專屬月曆
     ================================================== */
 
-    select:disabled {
-      cursor: not-allowed;
+    .calendar {
+      width: 100%;
+      max-width: 100%;
 
-      color:
-        rgba(255,255,255,.35);
+      padding: 16px;
 
-      background:
-        rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 16px;
 
-      border-color:
-        rgba(255,255,255,.08);
+      background: rgba(255,255,255,.055);
 
-      opacity: 1;
+      overflow: hidden;
+    }
+
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 1px 0 15px;
+
+      color: var(--white);
+
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .calendar-weekdays,
+    .calendar-days {
+      display: grid;
+
+      grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+      gap: 6px;
+    }
+
+    .calendar-weekdays {
+      margin-bottom: 7px;
+    }
+
+    .calendar-weekday {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      height: 28px;
+
+      color: rgba(255,255,255,.48);
+
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .calendar-day {
+      aspect-ratio: 1 / 1;
+
+      width: 100%;
+      min-width: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 0;
+
+      border: 1px solid transparent;
+      border-radius: 10px;
+
+      background: transparent;
+
+      color: rgba(255,255,255,.88);
+
+      font-size: 13px;
+      font-weight: 650;
+
+      cursor: pointer;
+
+      transition:
+        background .15s ease,
+        color .15s ease,
+        border-color .15s ease,
+        transform .12s ease;
+    }
+
+    .calendar-day:hover {
+      background: rgba(255,255,255,.08);
+    }
+
+    .calendar-day:active {
+      transform: scale(.94);
+    }
+
+    .calendar-day.selected {
+      background: var(--gold);
+      color: var(--navy);
+
+      border-color: var(--gold);
+
+      font-weight: 850;
+
+      box-shadow:
+        0 5px 14px rgba(247,181,0,.18);
+    }
+
+    .calendar-day.disabled {
+      color: rgba(255,255,255,.18);
+
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .calendar-empty {
+      aspect-ratio: 1 / 1;
+    }
+
+    .selected-date-display {
+      display: none;
+
+      margin-top: 10px;
+
+      color: var(--gold);
+
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .selected-date-display.show {
+      display: block;
     }
 
 
     /* ==================================================
-       確認核選框
+       核選框
+       不使用外層框線 / 底色
     ================================================== */
 
     .agreement {
@@ -472,15 +548,11 @@
 
       gap: 11px;
 
-      padding: 15px 16px;
+      padding: 2px 2px 0;
 
-      border:
-        1px solid rgba(247,181,0,.24);
-
-      border-radius: 15px;
-
-      background:
-        rgba(247,181,0,.065);
+      background: transparent;
+      border: 0;
+      border-radius: 0;
 
       cursor: pointer;
     }
@@ -489,26 +561,27 @@
       appearance: none;
       -webkit-appearance: none;
 
-      flex: 0 0 21px;
+      flex: 0 0 22px;
 
-      width: 21px;
-      height: 21px;
-      min-width: 21px;
-      min-height: 21px;
+      width: 22px;
+      height: 22px;
 
-      margin: 1px 0 0 0;
+      min-width: 22px;
+      min-height: 22px;
+
+      margin: 1px 0 0;
       padding: 0;
 
+      display: grid;
+      place-content: center;
+
       border:
-        1.5px solid rgba(255,255,255,.45);
+        1.5px solid rgba(255,255,255,.5);
 
       border-radius: 6px;
 
       background:
-        rgba(255,255,255,.06);
-
-      display: grid;
-      place-content: center;
+        rgba(255,255,255,.05);
 
       cursor: pointer;
     }
@@ -545,8 +618,7 @@
     }
 
     .agreement-text {
-      color:
-        rgba(255,255,255,.88);
+      color: rgba(255,255,255,.88);
 
       font-size: 13px;
       line-height: 1.65;
@@ -556,14 +628,14 @@
 
 
     /* ==================================================
-       送出按鈕
+       確認預約
     ================================================== */
 
     .submit-button {
       width: 100%;
       min-height: 56px;
 
-      margin-top: 2px;
+      margin-top: 3px;
 
       border: 0;
       border-radius: 16px;
@@ -581,21 +653,18 @@
       font-weight: 850;
 
       box-shadow:
-        0 10px 26px
-        rgba(247,181,0,.23);
+        0 10px 26px rgba(247,181,0,.23);
 
       cursor: pointer;
 
       transition:
         transform .15s ease,
-        opacity .15s ease,
         box-shadow .15s ease;
     }
 
     .submit-button:hover {
       box-shadow:
-        0 12px 30px
-        rgba(247,181,0,.3);
+        0 12px 30px rgba(247,181,0,.3);
     }
 
     .submit-button:active {
@@ -610,13 +679,10 @@
     .activity-card {
       overflow: hidden;
 
-      border:
-        1px solid var(--line);
-
+      border: 1px solid var(--line);
       border-radius: var(--radius);
 
-      background:
-        rgba(255,255,255,.055);
+      background: rgba(255,255,255,.055);
     }
 
     .activity-item {
@@ -689,13 +755,10 @@
     .information-card {
       overflow: hidden;
 
-      border:
-        1px solid var(--line);
-
+      border: 1px solid var(--line);
       border-radius: var(--radius);
 
-      background:
-        rgba(255,255,255,.055);
+      background: rgba(255,255,255,.055);
     }
 
     .info-link {
@@ -749,7 +812,7 @@
 
 
     /* ==================================================
-       提示訊息
+       Toast
     ================================================== */
 
     .toast {
@@ -760,16 +823,13 @@
 
       z-index: 100;
 
-      width:
-        calc(100% - 40px);
-
+      width: calc(100% - 40px);
       max-width: 420px;
 
       padding: 16px 18px;
 
       border:
-        1px solid
-        rgba(247,181,0,.35);
+        1px solid rgba(247,181,0,.35);
 
       border-radius: 16px;
 
@@ -784,11 +844,9 @@
       font-weight: 700;
 
       box-shadow:
-        0 15px 35px
-        rgba(0,0,0,.3);
+        0 15px 35px rgba(0,0,0,.3);
 
       opacity: 0;
-
       pointer-events: none;
 
       transform:
@@ -809,21 +867,18 @@
 
 
     /* ==================================================
-       手機版
+       手機
     ================================================== */
 
     @media (max-width: 600px) {
 
       .container {
-        width:
-          calc(100% - 24px);
+        width: calc(100% - 24px);
       }
 
       .site-header-inner {
         min-height: 70px;
-
-        padding:
-          10px 0;
+        padding: 10px 0;
       }
 
       .logo-area img {
@@ -837,8 +892,7 @@
       }
 
       .section {
-        padding:
-          29px 0;
+        padding: 29px 0;
       }
 
       .booking-section {
@@ -861,14 +915,13 @@
         width: 100%;
         min-width: 0;
 
-        padding:
-          20px 17px;
+        padding: 20px 17px;
 
         border-radius: 19px;
       }
 
       .form {
-        gap: 16px;
+        gap: 17px;
       }
 
       input,
@@ -879,15 +932,32 @@
       .store-button {
         min-height: 56px;
 
-        padding:
-          8px 5px;
+        padding: 8px 4px;
 
         font-size: 13px;
       }
 
-      .agreement {
-        padding:
-          14px;
+      .calendar {
+        padding: 13px 10px;
+      }
+
+      .calendar-header {
+        padding-bottom: 12px;
+        font-size: 15px;
+      }
+
+      .calendar-weekdays,
+      .calendar-days {
+        gap: 4px;
+      }
+
+      .calendar-day {
+        border-radius: 9px;
+        font-size: 12px;
+      }
+
+      .calendar-weekday {
+        font-size: 10px;
       }
 
       .agreement-text {
@@ -904,15 +974,12 @@
       }
 
       .activity-item {
-        padding:
-          18px 17px;
+        padding: 18px 17px;
       }
 
       .info-link {
         min-height: 64px;
-
-        padding:
-          0 17px;
+        padding: 0 17px;
       }
 
     }
@@ -970,9 +1037,7 @@
        預約
   =================================================== -->
 
-  <section
-    class="section booking-section"
-  >
+  <section class="section booking-section">
 
     <div class="container">
 
@@ -1023,7 +1088,7 @@
 
 
 
-          <!-- 聯絡電話 -->
+          <!-- 電話 -->
 
           <div class="field">
 
@@ -1048,9 +1113,7 @@
 
 
 
-          <!-- ==================================================
-               手機型號
-          =================================================== -->
+          <!-- 手機型號 -->
 
           <div class="field">
 
@@ -1119,7 +1182,6 @@
                   iPhone 16e
                 </option>
 
-
                 <option value="iPhone 15 Pro">
                   iPhone 15 Pro
                 </option>
@@ -1135,7 +1197,6 @@
                 <option value="iPhone 15 Plus">
                   iPhone 15 Plus
                 </option>
-
 
                 <option value="iPhone 14 Pro">
                   iPhone 14 Pro
@@ -1153,7 +1214,6 @@
                   iPhone 14 Plus
                 </option>
 
-
                 <option value="iPhone 13 Pro">
                   iPhone 13 Pro
                 </option>
@@ -1170,11 +1230,9 @@
                   iPhone 13
                 </option>
 
-
                 <option value="iPhone SE（第 3 代）">
                   iPhone SE（第 3 代）
                 </option>
-
 
                 <option value="iPhone 12 Pro">
                   iPhone 12 Pro
@@ -1192,7 +1250,6 @@
                   iPhone 12
                 </option>
 
-
                 <option value="iPhone 11 Pro">
                   iPhone 11 Pro
                 </option>
@@ -1205,11 +1262,9 @@
                   iPhone 11
                 </option>
 
-
                 <option value="iPhone SE（第 2 代）">
                   iPhone SE（第 2 代）
                 </option>
-
 
                 <option value="iPhone XS">
                   iPhone XS
@@ -1231,17 +1286,13 @@
 
 
 
-          <!-- ==================================================
-               預約門市
-               左右兩個按鈕
-          =================================================== -->
+          <!-- 預約門市 -->
 
           <div class="field">
 
             <label class="required">
               預約門市
             </label>
-
 
             <div
               class="store-options"
@@ -1259,7 +1310,6 @@
                 勤美旗艦門市
               </button>
 
-
               <button
                 type="button"
                 class="store-button"
@@ -1271,12 +1321,6 @@
               </button>
 
             </div>
-
-
-            <!--
-              真正送出資料時使用，
-              使用者不會看到
-            -->
 
             <input
               type="hidden"
@@ -1291,33 +1335,65 @@
 
           <!-- ==================================================
                預約日期
+               僅顯示 2026 年 9 月
           =================================================== -->
 
-          <div class="field date-field">
+          <div class="field">
 
-            <label
-              for="date"
-              class="required"
-            >
+            <label class="required">
               預約日期
             </label>
 
+
+            <div
+              class="calendar"
+              id="calendar"
+            >
+
+              <div class="calendar-header">
+                2026 年 9 月
+              </div>
+
+
+              <div class="calendar-weekdays">
+
+                <div class="calendar-weekday">日</div>
+                <div class="calendar-weekday">一</div>
+                <div class="calendar-weekday">二</div>
+                <div class="calendar-weekday">三</div>
+                <div class="calendar-weekday">四</div>
+                <div class="calendar-weekday">五</div>
+                <div class="calendar-weekday">六</div>
+
+              </div>
+
+
+              <div
+                class="calendar-days"
+                id="calendarDays"
+              ></div>
+
+
+              <div
+                class="selected-date-display"
+                id="selectedDateDisplay"
+              ></div>
+
+            </div>
+
+
             <input
+              type="hidden"
               id="date"
               name="date"
-              type="date"
-              max="2026-09-30"
-              required
+              value=""
             >
 
           </div>
 
 
 
-          <!-- ==================================================
-               預約時段
-               依門市動態載入
-          =================================================== -->
+          <!-- 預約時段 -->
 
           <div class="field">
 
@@ -1345,9 +1421,7 @@
 
 
 
-          <!-- ==================================================
-               活動確認
-          =================================================== -->
+          <!-- 活動確認 -->
 
           <label
             class="agreement"
@@ -1369,9 +1443,7 @@
 
 
 
-          <!-- ==================================================
-               送出
-          =================================================== -->
+          <!-- 送出 -->
 
           <button
             type="submit"
@@ -1399,7 +1471,6 @@
 
     <div class="container">
 
-
       <div class="section-header">
 
         <h2 class="section-title">
@@ -1407,7 +1478,6 @@
         </h2>
 
       </div>
-
 
 
       <div class="activity-card">
@@ -1426,7 +1496,7 @@
             </div>
 
             <div class="activity-text">
-              即日起至 9/30 止。
+              2026/09/01 至 2026/09/30。
             </div>
 
           </div>
@@ -1617,7 +1687,7 @@
 
 
   <!-- ==================================================
-       提示
+       Toast
   =================================================== -->
 
   <div
@@ -1632,7 +1702,7 @@
   <script>
 
     /* ==================================================
-       取得元素
+       元素
     ================================================== */
 
     const form =
@@ -1650,47 +1720,22 @@
     const dateInput =
       document.getElementById("date");
 
+    const calendarDays =
+      document.getElementById("calendarDays");
+
+    const selectedDateDisplay =
+      document.getElementById("selectedDateDisplay");
+
+    const agreement =
+      document.getElementById("agreement");
+
     const toast =
       document.getElementById("toast");
 
 
 
     /* ==================================================
-       預約日期限制
-
-       最早：今天
-       最晚：2026/09/30
-    ================================================== */
-
-    const today =
-      new Date();
-
-    const todayString =
-      [
-        today.getFullYear(),
-        String(
-          today.getMonth() + 1
-        ).padStart(2, "0"),
-        String(
-          today.getDate()
-        ).padStart(2, "0")
-      ].join("-");
-
-
-    const campaignEndDate =
-      "2026-09-30";
-
-
-    dateInput.min =
-      todayString;
-
-    dateInput.max =
-      campaignEndDate;
-
-
-
-    /* ==================================================
-       各門市時段設定
+       門市時段
     ================================================== */
 
     const storeTimes = {
@@ -1724,7 +1769,7 @@
 
 
     /* ==================================================
-       更新預約時段
+       更新時段
     ================================================== */
 
     function updateTimeOptions(storeName) {
@@ -1750,8 +1795,7 @@
         !storeTimes[storeName]
       ) {
 
-        timeSelect.disabled =
-          true;
+        timeSelect.disabled = true;
 
         placeholder.textContent =
           "請先選擇預約門市";
@@ -1761,9 +1805,7 @@
       }
 
 
-      storeTimes[
-        storeName
-      ].forEach(
+      storeTimes[storeName].forEach(
         function(time) {
 
           const option =
@@ -1791,7 +1833,7 @@
 
 
     /* ==================================================
-       門市按鈕
+       門市選擇
     ================================================== */
 
     storeButtons.forEach(
@@ -1804,8 +1846,6 @@
             const selectedStore =
               button.dataset.store;
 
-
-            /* 清除原本選取狀態 */
 
             storeButtons.forEach(
               function(item) {
@@ -1823,8 +1863,6 @@
             );
 
 
-            /* 設定目前選取 */
-
             button.classList.add(
               "selected"
             );
@@ -1835,13 +1873,9 @@
             );
 
 
-            /* 寫入隱藏欄位 */
-
             storeInput.value =
               selectedStore;
 
-
-            /* 更新時間 */
 
             updateTimeOptions(
               selectedStore
@@ -1856,51 +1890,141 @@
 
 
     /* ==================================================
-       額外檢查日期
+       產生 2026 年 9 月月曆
     ================================================== */
 
-    dateInput.addEventListener(
-      "change",
-      function() {
+    const calendarYear =
+      2026;
 
-        if (!dateInput.value) {
-          return;
-        }
+    const calendarMonth =
+      8;
+      // JS 月份從 0 開始
+      // 8 = 九月
 
 
-        if (
-          dateInput.value <
-          todayString
-        ) {
+    const firstDay =
+      new Date(
+        calendarYear,
+        calendarMonth,
+        1
+      ).getDay();
 
-          dateInput.value =
-            "";
 
-          showToast(
-            "無法選擇今天以前的日期"
+    const daysInMonth =
+      new Date(
+        calendarYear,
+        calendarMonth + 1,
+        0
+      ).getDate();
+
+
+    /*
+      補上九月一號以前的空格
+    */
+
+    for (
+      let i = 0;
+      i < firstDay;
+      i++
+    ) {
+
+      const empty =
+        document.createElement("div");
+
+      empty.className =
+        "calendar-empty";
+
+      calendarDays.appendChild(
+        empty
+      );
+
+    }
+
+
+
+    /*
+      建立 1 ～ 30 日
+    */
+
+    for (
+      let day = 1;
+      day <= daysInMonth;
+      day++
+    ) {
+
+      const button =
+        document.createElement("button");
+
+      button.type =
+        "button";
+
+      button.className =
+        "calendar-day";
+
+      button.textContent =
+        day;
+
+
+      const dayText =
+        String(day).padStart(
+          2,
+          "0"
+        );
+
+
+      const dateValue =
+        `2026-09-${dayText}`;
+
+
+      button.dataset.date =
+        dateValue;
+
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          document
+            .querySelectorAll(
+              ".calendar-day"
+            )
+            .forEach(
+              function(item) {
+
+                item.classList.remove(
+                  "selected"
+                );
+
+              }
+            );
+
+
+          button.classList.add(
+            "selected"
           );
 
-          return;
-
-        }
-
-
-        if (
-          dateInput.value >
-          campaignEndDate
-        ) {
 
           dateInput.value =
-            "";
+            dateValue;
 
-          showToast(
-            "活動預約僅開放至 2026/09/30"
+
+          selectedDateDisplay.textContent =
+            `已選擇：2026 / 09 / ${dayText}`;
+
+
+          selectedDateDisplay.classList.add(
+            "show"
           );
 
         }
+      );
 
-      }
-    );
+
+      calendarDays.appendChild(
+        button
+      );
+
+    }
 
 
 
@@ -1908,7 +2032,8 @@
        Toast
     ================================================== */
 
-    let toastTimer = null;
+    let toastTimer =
+      null;
 
 
     function showToast(message) {
@@ -1948,7 +2073,7 @@
 
     /* ==================================================
        表單送出
-       目前仍為前端示意
+       現階段仍為前端示意
     ================================================== */
 
     form.addEventListener(
@@ -1957,8 +2082,6 @@
 
         event.preventDefault();
 
-
-        /* 必須選擇門市 */
 
         if (
           !storeInput.value
@@ -1972,23 +2095,6 @@
 
         }
 
-
-        /* 必須選擇時段 */
-
-        if (
-          !timeSelect.value
-        ) {
-
-          showToast(
-            "請選擇預約時段"
-          );
-
-          return;
-
-        }
-
-
-        /* 日期確認 */
 
         if (
           !dateInput.value
@@ -2004,14 +2110,24 @@
 
 
         if (
-          dateInput.value <
-          todayString ||
-          dateInput.value >
-          campaignEndDate
+          !timeSelect.value
         ) {
 
           showToast(
-            "請選擇有效的活動日期"
+            "請選擇預約時段"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !agreement.checked
+        ) {
+
+          showToast(
+            "請先確認活動使用規則"
           );
 
           return;
@@ -2020,17 +2136,25 @@
 
 
         /*
-          後續正式串接 Supabase 時，
-          可以在這裡讀取：
+          下一步接 Supabase 時可取得：
 
-          name
-          phone
-          device
-          store
-          date
-          time
+          姓名：
+          document.getElementById("name").value
 
-          並寫入預約資料表。
+          電話：
+          document.getElementById("phone").value
+
+          型號：
+          document.getElementById("device").value
+
+          門市：
+          storeInput.value
+
+          日期：
+          dateInput.value
+
+          時段：
+          timeSelect.value
         */
 
 
