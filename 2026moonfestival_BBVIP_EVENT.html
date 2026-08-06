@@ -19,8 +19,6 @@
     中秋月禮｜會員限定活動
   </title>
 
-
-  <!-- Supabase JS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
@@ -58,11 +56,6 @@
 
     }
 
-
-
-    /* ==================================================
-       基本設定
-    ================================================== */
 
     * {
 
@@ -159,11 +152,6 @@
     }
 
 
-
-    /* ==================================================
-       共用
-    ================================================== */
-
     .container {
 
       width:
@@ -181,7 +169,6 @@
 
     /* ==================================================
        頂部 LOGO
-       高度已縮短約 1/3
     ================================================== */
 
     .site-header {
@@ -242,10 +229,10 @@
         auto;
 
       max-width:
-        180px;
+        200px;
 
       max-height:
-        34px;
+        38px;
 
       object-fit:
         contain;
@@ -479,11 +466,6 @@
       font-size:
         16px;
 
-      transition:
-        border-color .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
-
     }
 
 
@@ -679,7 +661,7 @@
 
 
     /* ==================================================
-       共用 Section
+       Section
     ================================================== */
 
     .section {
@@ -815,6 +797,12 @@
     }
 
 
+
+    /* ==================================================
+       不符合資格提示
+       移除底框 / 背景 / 圓角
+    ================================================== */
+
     .member-warning-wrap {
 
       display:
@@ -836,14 +824,20 @@
 
     .member-ineligible {
 
+      margin:
+        0;
+
       padding:
-        11px 13px;
+        0;
+
+      border:
+        0;
 
       border-radius:
-        11px;
+        0;
 
       background:
-        rgba(255,85,85,.08);
+        transparent;
 
       color:
         var(--red);
@@ -881,9 +875,6 @@
       min-width:
         0;
 
-      max-width:
-        100%;
-
       padding:
         24px;
 
@@ -909,12 +900,6 @@
 
 
     .form {
-
-      width:
-        100%;
-
-      min-width:
-        0;
 
       display:
         grid;
@@ -968,10 +953,6 @@
 
 
 
-    /* ==================================================
-       表單欄位
-    ================================================== */
-
     input[type="text"],
     input[type="tel"],
     select {
@@ -997,12 +978,6 @@
       max-height:
         var(--control-height);
 
-      box-sizing:
-        border-box;
-
-      margin:
-        0;
-
       padding:
         0 15px;
 
@@ -1024,9 +999,6 @@
 
       font-size:
         16px;
-
-      line-height:
-        normal;
 
     }
 
@@ -1229,15 +1201,12 @@
 
 
     /* ==================================================
-       九月月曆
+       月曆
     ================================================== */
 
     .calendar {
 
       width:
-        100%;
-
-      max-width:
         100%;
 
       padding:
@@ -1435,7 +1404,7 @@
 
 
     /* ==================================================
-       核選框
+       Checkbox
     ================================================== */
 
     .agreement {
@@ -1454,12 +1423,6 @@
 
       padding:
         2px;
-
-      background:
-        transparent;
-
-      border:
-        0;
 
       cursor:
         pointer;
@@ -1511,9 +1474,6 @@
 
       background:
         rgba(255,255,255,.05);
-
-      cursor:
-        pointer;
 
     }
 
@@ -1810,7 +1770,7 @@
 
 
     /* ==================================================
-       資訊 Footer
+       Footer
     ================================================== */
 
     .information-section {
@@ -2022,9 +1982,6 @@
       }
 
 
-
-      /* 頂部白色區塊縮短 */
-
       .site-header-inner {
 
         min-height:
@@ -2036,19 +1993,18 @@
       }
 
 
+      /* Logo 稍微放大 */
+
       .logo-area img {
 
         max-width:
-          165px;
+          185px;
 
         max-height:
-          32px;
+          35px;
 
       }
 
-
-
-      /* 會員核對頁高度同步 */
 
       .member-gate {
 
@@ -2129,6 +2085,17 @@
 
         font-size:
           12px;
+
+      }
+
+
+      .member-ineligible {
+
+        font-size:
+          13px;
+
+        line-height:
+          1.6;
 
       }
 
@@ -2322,7 +2289,7 @@
 
 
   <!-- ==================================================
-       頂部 LOGO
+       LOGO
   ================================================== -->
 
   <header class="site-header">
@@ -2384,8 +2351,6 @@
         >
 
 
-          <!-- 會員電話 -->
-
           <div class="verify-field">
 
             <label
@@ -2409,8 +2374,6 @@
           </div>
 
 
-
-          <!-- 會員生日 -->
 
           <div class="verify-field">
 
@@ -2460,6 +2423,7 @@
           class="verify-message"
         ></div>
 
+
       </div>
 
     </div>
@@ -2478,9 +2442,7 @@
   >
 
 
-    <!-- ==================================================
-         活動主圖
-    ================================================== -->
+    <!-- 活動主圖 -->
 
     <section class="campaign-visual">
 
@@ -2517,7 +2479,6 @@
             </h2>
 
 
-            <!-- 會員會籍 -->
             <div
               id="memberStatus"
               class="member-status"
@@ -2636,172 +2597,56 @@
                 </option>
 
 
+                <optgroup label="iPhone 17 系列">
 
-                <optgroup
-                  label="iPhone 17 系列"
-                >
-
-                  <option>
-                    iPhone 17 Pro
-                  </option>
-
-                  <option>
-                    iPhone 17 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone Air
-                  </option>
-
-                  <option>
-                    iPhone 17
-                  </option>
-
-                  <option>
-                    iPhone 17e
-                  </option>
+                  <option>iPhone 17 Pro</option>
+                  <option>iPhone 17 Pro Max</option>
+                  <option>iPhone Air</option>
+                  <option>iPhone 17</option>
+                  <option>iPhone 17e</option>
 
                 </optgroup>
 
 
+                <optgroup label="更多 iPhone 機型">
 
-                <optgroup
-                  label="更多 iPhone 機型"
-                >
+                  <option>iPhone 16 Pro</option>
+                  <option>iPhone 16 Pro Max</option>
+                  <option>iPhone 16</option>
+                  <option>iPhone 16 Plus</option>
+                  <option>iPhone 16e</option>
 
+                  <option>iPhone 15 Pro</option>
+                  <option>iPhone 15 Pro Max</option>
+                  <option>iPhone 15</option>
+                  <option>iPhone 15 Plus</option>
 
-                  <option>
-                    iPhone 16 Pro
-                  </option>
+                  <option>iPhone 14 Pro</option>
+                  <option>iPhone 14 Pro Max</option>
+                  <option>iPhone 14</option>
+                  <option>iPhone 14 Plus</option>
 
-                  <option>
-                    iPhone 16 Pro Max
-                  </option>
+                  <option>iPhone 13 Pro</option>
+                  <option>iPhone 13 Pro Max</option>
+                  <option>iPhone 13 mini</option>
+                  <option>iPhone 13</option>
 
-                  <option>
-                    iPhone 16
-                  </option>
+                  <option>iPhone SE（第 3 代）</option>
 
-                  <option>
-                    iPhone 16 Plus
-                  </option>
+                  <option>iPhone 12 Pro</option>
+                  <option>iPhone 12 Pro Max</option>
+                  <option>iPhone 12 mini</option>
+                  <option>iPhone 12</option>
 
-                  <option>
-                    iPhone 16e
-                  </option>
+                  <option>iPhone 11 Pro</option>
+                  <option>iPhone 11 Pro Max</option>
+                  <option>iPhone 11</option>
 
+                  <option>iPhone SE（第 2 代）</option>
 
-
-                  <option>
-                    iPhone 15 Pro
-                  </option>
-
-                  <option>
-                    iPhone 15 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 15
-                  </option>
-
-                  <option>
-                    iPhone 15 Plus
-                  </option>
-
-
-
-                  <option>
-                    iPhone 14 Pro
-                  </option>
-
-                  <option>
-                    iPhone 14 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 14
-                  </option>
-
-                  <option>
-                    iPhone 14 Plus
-                  </option>
-
-
-
-                  <option>
-                    iPhone 13 Pro
-                  </option>
-
-                  <option>
-                    iPhone 13 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 13 mini
-                  </option>
-
-                  <option>
-                    iPhone 13
-                  </option>
-
-
-
-                  <option>
-                    iPhone SE（第 3 代）
-                  </option>
-
-
-
-                  <option>
-                    iPhone 12 Pro
-                  </option>
-
-                  <option>
-                    iPhone 12 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 12 mini
-                  </option>
-
-                  <option>
-                    iPhone 12
-                  </option>
-
-
-
-                  <option>
-                    iPhone 11 Pro
-                  </option>
-
-                  <option>
-                    iPhone 11 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 11
-                  </option>
-
-
-
-                  <option>
-                    iPhone SE（第 2 代）
-                  </option>
-
-
-
-                  <option>
-                    iPhone XS
-                  </option>
-
-                  <option>
-                    iPhone XS Max
-                  </option>
-
-                  <option>
-                    iPhone XR
-                  </option>
-
+                  <option>iPhone XS</option>
+                  <option>iPhone XS Max</option>
+                  <option>iPhone XR</option>
 
                 </optgroup>
 
@@ -2837,7 +2682,6 @@
                 >
                   勤美旗艦門市
                 </button>
-
 
 
                 <button
@@ -2881,46 +2725,23 @@
                 </div>
 
 
-
                 <div class="calendar-weekdays">
 
-                  <div class="calendar-weekday">
-                    日
-                  </div>
-
-                  <div class="calendar-weekday">
-                    一
-                  </div>
-
-                  <div class="calendar-weekday">
-                    二
-                  </div>
-
-                  <div class="calendar-weekday">
-                    三
-                  </div>
-
-                  <div class="calendar-weekday">
-                    四
-                  </div>
-
-                  <div class="calendar-weekday">
-                    五
-                  </div>
-
-                  <div class="calendar-weekday">
-                    六
-                  </div>
+                  <div class="calendar-weekday">日</div>
+                  <div class="calendar-weekday">一</div>
+                  <div class="calendar-weekday">二</div>
+                  <div class="calendar-weekday">三</div>
+                  <div class="calendar-weekday">四</div>
+                  <div class="calendar-weekday">五</div>
+                  <div class="calendar-weekday">六</div>
 
                 </div>
-
 
 
                 <div
                   id="calendarDays"
                   class="calendar-days"
                 ></div>
-
 
 
                 <div
@@ -2971,7 +2792,7 @@
 
 
 
-            <!-- 活動規則確認 -->
+            <!-- 活動確認 -->
 
             <label
               class="agreement"
@@ -2994,8 +2815,6 @@
             </label>
 
 
-
-            <!-- 確認預約 -->
 
             <button
               type="submit"
@@ -3038,9 +2857,6 @@
         <div class="activity-card">
 
 
-
-          <!-- 活動期間 -->
-
           <div class="activity-block">
 
             <div class="activity-label">
@@ -3054,8 +2870,6 @@
           </div>
 
 
-
-          <!-- 可選期間 -->
 
           <div class="activity-block">
 
@@ -3071,8 +2885,6 @@
 
 
 
-          <!-- 活動門市 -->
-
           <div class="activity-block">
 
             <div class="activity-label">
@@ -3087,10 +2899,7 @@
 
 
 
-          <!-- 活動權益 -->
-
           <div class="activity-block">
-
 
             <div class="activity-label">
               活動權益
@@ -3099,9 +2908,6 @@
 
             <div class="member-benefits">
 
-
-
-              <!-- 白金 -->
 
               <div class="benefit-row">
 
@@ -3126,8 +2932,6 @@
 
 
 
-              <!-- 金卡 -->
-
               <div class="benefit-row">
 
                 <div class="benefit-level">
@@ -3150,8 +2954,6 @@
               </div>
 
 
-
-              <!-- 創始 -->
 
               <div class="benefit-row">
 
@@ -3181,8 +2983,6 @@
 
 
 
-          <!-- 創始會員定義 -->
-
           <div class="activity-block">
 
             <div class="activity-label">
@@ -3204,8 +3004,6 @@
 
 
 
-          <!-- 注意事項 -->
-
           <div class="activity-block">
 
             <div class="activity-label">
@@ -3214,7 +3012,6 @@
 
 
             <ol class="notice-list">
-
 
               <li>
                 每位合格會員在期間內皆可兌換一次福利。
@@ -3239,7 +3036,6 @@
                 請提前檢視會員票券錢包內是否持有活動票券。
               </li>
 
-
             </ol>
 
           </div>
@@ -3254,7 +3050,7 @@
 
 
     <!-- ==================================================
-         資訊 Footer
+         Footer
     ================================================== -->
 
     <footer class="information-section">
@@ -3267,11 +3063,7 @@
         </h2>
 
 
-        <nav
-          class="information-links"
-          aria-label="資訊"
-        >
-
+        <nav class="information-links">
 
 
           <a
@@ -3284,7 +3076,6 @@
           </a>
 
 
-
           <a
             class="info-link"
             href="https://maps.app.goo.gl/r8dnUK8sEeYLBs6t7?g_st=ic"
@@ -3293,7 +3084,6 @@
           >
             沙鹿站前門市
           </a>
-
 
 
           <a
@@ -3315,10 +3105,6 @@
   </main>
 
 
-
-  <!-- ==================================================
-       Toast
-  ================================================== -->
 
   <div
     id="toast"
@@ -3409,10 +3195,6 @@
 
 
 
-    /* ==================================================
-       電話格式化
-    ================================================== */
-
     function normalizePhone(
       phone
     ) {
@@ -3429,11 +3211,7 @@
 
 
     /* ==================================================
-       生日輸入自動加 -
-       
-       19950422
-       ↓
-       1995-04-22
+       生日自動格式
     ================================================== */
 
     function formatBirthdayInput(
@@ -3524,10 +3302,6 @@
     );
 
 
-
-    /* ==================================================
-       驗證生日是否合法
-    ================================================== */
 
     function normalizeBirthday(
       value
@@ -3656,10 +3430,6 @@
 
 
 
-    /* ==================================================
-       驗證訊息
-    ================================================== */
-
     function showVerifyError(
       message
     ) {
@@ -3696,12 +3466,6 @@
 
     /* ==================================================
        會員核對
-       
-       Supabase Function：
-       verify_2026moon_member
-       
-       Function 內仍限制：
-       role = member
     ================================================== */
 
     verifyForm.addEventListener(
@@ -3857,10 +3621,6 @@
 
 
 
-          /* ==================================================
-             自動帶入姓名
-          ================================================== */
-
           document.getElementById(
             "name"
           ).value =
@@ -3868,20 +3628,12 @@
 
 
 
-          /* ==================================================
-             自動帶入電話
-          ================================================== */
-
           document.getElementById(
             "phone"
           ).value =
             member.phone || phone;
 
 
-
-          /* ==================================================
-             清除舊狀態
-          ================================================== */
 
           memberStatus.innerHTML =
             "";
@@ -3892,17 +3644,6 @@
           );
 
 
-
-          /* ==================================================
-             合格會員
-             
-             PLATINUM → 白金會員
-             GOLD     → 金卡會員
-             
-             其他會員：
-             updated_at 在指定日期內
-             → 創始會員
-          ================================================== */
 
           if (
 
@@ -3937,12 +3678,6 @@
           }
 
 
-
-          /* ==================================================
-             驗證成功
-             但初步不符合活動資格
-          ================================================== */
-
           else {
 
 
@@ -3954,10 +3689,6 @@
           }
 
 
-
-          /* ==================================================
-             進入活動主頁
-          ================================================== */
 
           memberGate.hidden =
             true;
@@ -4018,7 +3749,7 @@
 
 
     /* ==================================================
-       預約相關元素
+       預約
     ================================================== */
 
     const bookingForm =
@@ -4076,10 +3807,6 @@
 
 
 
-    /* ==================================================
-       門市時段
-    ================================================== */
-
     const storeTimes = {
 
 
@@ -4116,10 +3843,6 @@
     };
 
 
-
-    /* ==================================================
-       更新時段
-    ================================================== */
 
     function updateTimeOptions(
       storeName
@@ -4218,10 +3941,6 @@
 
 
 
-    /* ==================================================
-       門市按鈕
-    ================================================== */
-
     storeButtons.forEach(
       function(
         button
@@ -4292,7 +4011,7 @@
 
 
     /* ==================================================
-       2026 年 9 月月曆
+       2026 年 9 月
     ================================================== */
 
     const calendarYear =
@@ -4322,8 +4041,6 @@
 
 
 
-    /* 九月第一天前的空白 */
-
     for (
       let i = 0;
       i < firstDay;
@@ -4349,8 +4066,6 @@
     }
 
 
-
-    /* 1～30 日 */
 
     for (
       let day = 1;
@@ -4512,9 +4227,7 @@
 
     /* ==================================================
        預約送出
-       
-       現在仍為前端測試版本
-       尚未建立活動預約資料表
+       目前仍為測試版本
     ================================================== */
 
     bookingForm.addEventListener(
@@ -4601,10 +4314,6 @@
     );
 
 
-
-    /* ==================================================
-       初始化
-    ================================================== */
 
     updateTimeOptions(
       ""
