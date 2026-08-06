@@ -1,89 +1,56 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  />
+  >
 
   <meta
     name="theme-color"
     content="#ffffff"
-  />
+  >
 
-  <title>
-    中秋月禮｜會員限定活動
-  </title>
+  <title>中秋月禮｜會員限定活動</title>
 
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-  ></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-
     :root {
-
       --navy: #042741;
       --navy-deep: #031d31;
-
       --gold: #f7b500;
       --gold-light: #ffd65c;
-
       --white: #ffffff;
+      --red: #ff7272;
 
-      --red: #ff6b6b;
-
-      --text-soft:
-        rgba(255,255,255,.68);
-
-      --line:
-        rgba(255,255,255,.10);
+      --text-soft: rgba(255,255,255,.68);
+      --line: rgba(255,255,255,.10);
 
       --radius: 22px;
-
-      --shadow:
-        0 12px 32px
-        rgba(0,0,0,.18);
+      --shadow: 0 12px 32px rgba(0,0,0,.18);
 
       --control-height: 54px;
-
       --control-radius: 14px;
-
     }
-
 
     * {
-
       box-sizing: border-box;
-
-      -webkit-tap-highlight-color:
-        transparent;
-
+      -webkit-tap-highlight-color: transparent;
     }
-
 
     [hidden] {
-
       display: none !important;
-
     }
-
 
     html {
-
       scroll-behavior: smooth;
-
     }
 
-
     body {
-
       margin: 0;
-
       min-height: 100vh;
 
       font-family:
@@ -94,264 +61,145 @@
         "Microsoft JhengHei",
         sans-serif;
 
-      background:
-        var(--navy);
-
-      color:
-        var(--white);
-
+      background: var(--navy);
+      color: var(--white);
     }
-
 
     img {
-
       display: block;
-
       max-width: 100%;
-
     }
-
 
     a {
-
       color: inherit;
-
       text-decoration: none;
-
     }
-
 
     button,
     input,
     select {
-
       font: inherit;
-
     }
-
 
     button {
-
       -webkit-appearance: none;
-
       appearance: none;
-
     }
-
-
-
-    /* ==================================================
-       共用
-    ================================================== */
-
 
     .container {
-
-      width:
-        min(
-          720px,
-          calc(100% - 32px)
-        );
-
-      margin:
-        0 auto;
-
+      width: min(720px, calc(100% - 32px));
+      margin: 0 auto;
     }
-
 
 
     /* ==================================================
-       頂部 LOGO
+       LOGO
     ================================================== */
 
-
     .site-header {
-
       width: 100%;
-
-      background:
-        #ffffff;
+      background: #ffffff;
 
       border-bottom:
-        1px solid
-        rgba(0,0,0,.055);
-
+        1px solid rgba(0,0,0,.055);
     }
-
 
     .site-header-inner {
-
-      min-height:
-        78px;
+      min-height: 78px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
-      padding:
-        12px 0;
-
+      padding: 12px 0;
     }
-
 
     .logo-area {
-
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
     }
-
 
     .logo-area img {
-
       width: auto;
-
       height: auto;
 
-      max-width:
-        220px;
+      max-width: 220px;
+      max-height: 48px;
 
-      max-height:
-        48px;
-
-      object-fit:
-        contain;
-
+      object-fit: contain;
     }
-
 
 
     /* ==================================================
        會員核對
     ================================================== */
 
-
     .member-gate {
-
-      min-height:
-        calc(
-          100vh - 78px
-        );
+      min-height: calc(100vh - 78px);
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
-      padding:
-        36px 0 70px;
+      padding: 36px 0 70px;
 
       background:
-
         radial-gradient(
           circle at 50% 10%,
           rgba(247,181,0,.10),
           transparent 32%
         ),
-
         var(--navy);
-
     }
-
 
     .verify-wrap {
-
-      width:
-        min(
-          520px,
-          calc(100% - 32px)
-        );
-
-      margin:
-        0 auto;
-
+      width: min(520px, calc(100% - 32px));
+      margin: 0 auto;
     }
-
 
     .verify-heading {
-
-      margin-bottom:
-        26px;
-
-      text-align:
-        center;
-
+      margin-bottom: 26px;
+      text-align: center;
     }
-
 
     .verify-eyebrow {
+      margin-bottom: 10px;
 
-      margin-bottom:
-        10px;
+      color: var(--gold);
 
-      color:
-        var(--gold);
-
-      font-size:
-        13px;
-
-      font-weight:
-        800;
-
-      letter-spacing:
-        1.4px;
-
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
     }
-
 
     .verify-title {
+      margin: 0 0 10px;
 
-      margin:
-        0 0 10px;
+      color: var(--white);
 
-      color:
-        var(--white);
-
-      font-size:
-        30px;
-
-      font-weight:
-        850;
-
+      font-size: 30px;
+      font-weight: 850;
     }
-
 
     .verify-subtitle {
-
       margin: 0;
 
-      color:
-        var(--text-soft);
+      color: var(--text-soft);
 
-      font-size:
-        14px;
-
-      line-height:
-        1.75;
-
+      font-size: 14px;
+      line-height: 1.75;
     }
 
-
     .verify-card {
-
-      padding:
-        24px;
+      padding: 24px;
 
       border:
-        1px solid
-        rgba(255,255,255,.11);
+        1px solid rgba(255,255,255,.11);
 
-      border-radius:
-        22px;
+      border-radius: 22px;
 
       background:
-
         linear-gradient(
           145deg,
           rgba(255,255,255,.075),
@@ -359,522 +207,342 @@
         );
 
       box-shadow:
-        0 16px 38px
-        rgba(0,0,0,.18);
-
+        0 16px 38px rgba(0,0,0,.18);
     }
-
 
     .verify-form {
-
       display: grid;
-
-      gap:
-        18px;
-
+      gap: 18px;
     }
-
 
     .verify-field {
-
       display: grid;
-
-      gap:
-        8px;
-
+      gap: 8px;
     }
-
 
     .verify-field label {
+      color: var(--white);
 
-      color:
-        var(--white);
-
-      font-size:
-        14px;
-
-      font-weight:
-        750;
-
+      font-size: 14px;
+      font-weight: 750;
     }
-
 
     .verify-required::after {
-
-      content:
-        " *";
-
-      color:
-        var(--gold);
-
+      content: " *";
+      color: var(--gold);
     }
 
-
     .verify-input {
-
       display: block;
 
       width: 100%;
-
       min-width: 0;
+      height: 54px;
 
-      height:
-        54px;
-
-      padding:
-        0 15px;
+      padding: 0 15px;
 
       border:
-        1px solid
-        rgba(255,255,255,.14);
+        1px solid rgba(255,255,255,.14);
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
       background:
         rgba(255,255,255,.075);
 
-      color:
-        var(--white);
+      color: var(--white);
 
       outline: none;
 
-      font-size:
-        16px;
+      font-size: 16px;
 
       transition:
         border-color .2s ease,
         background .2s ease,
         box-shadow .2s ease;
-
     }
-
 
     .verify-input::placeholder {
-
-      color:
-        rgba(255,255,255,.36);
-
+      color: rgba(255,255,255,.36);
     }
 
-
     .verify-input:focus {
-
-      border-color:
-        var(--gold);
+      border-color: var(--gold);
 
       background:
         rgba(255,255,255,.095);
 
       box-shadow:
-        0 0 0 3px
-        rgba(247,181,0,.12);
-
+        0 0 0 3px rgba(247,181,0,.12);
     }
-
-
-    /*
-      Birthday 使用文字輸入，
-      不再叫出系統 Date Picker
-    */
 
     #verifyBirthday {
-
-      letter-spacing:
-        .4px;
-
-      font-variant-numeric:
-        tabular-nums;
-
+      letter-spacing: .4px;
+      font-variant-numeric: tabular-nums;
     }
 
-
     .verify-hint {
-
-      margin-top:
-        -1px;
+      margin-top: -1px;
 
       color:
         rgba(255,255,255,.42);
 
-      font-size:
-        11px;
-
-      line-height:
-        1.55;
-
+      font-size: 11px;
+      line-height: 1.55;
     }
 
-
     .verify-button {
-
       width: 100%;
+      min-height: 56px;
 
-      min-height:
-        56px;
-
-      margin-top:
-        3px;
+      margin-top: 3px;
 
       border: 0;
-
-      border-radius:
-        16px;
+      border-radius: 16px;
 
       background:
-
         linear-gradient(
           135deg,
           var(--gold-light),
           var(--gold)
         );
 
-      color:
-        var(--navy);
+      color: var(--navy);
 
-      font-size:
-        17px;
+      font-size: 17px;
+      font-weight: 850;
 
-      font-weight:
-        850;
-
-      cursor:
-        pointer;
+      cursor: pointer;
 
       box-shadow:
-        0 10px 26px
-        rgba(247,181,0,.22);
-
+        0 10px 26px rgba(247,181,0,.22);
     }
-
 
     .verify-button:disabled {
-
-      opacity:
-        .55;
-
-      cursor:
-        wait;
-
+      opacity: .55;
+      cursor: wait;
     }
-
 
     .verify-message {
+      display: none;
 
-      display:
-        none;
+      margin-top: 15px;
 
-      margin-top:
-        15px;
+      color: #ff8989;
 
-      color:
-        #ff8989;
+      text-align: center;
 
-      text-align:
-        center;
-
-      font-size:
-        13px;
-
-      font-weight:
-        700;
-
-      line-height:
-        1.65;
-
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.65;
     }
-
 
     .verify-message.show {
-
-      display:
-        block;
-
+      display: block;
     }
-
 
 
     /* ==================================================
        活動主圖
     ================================================== */
 
-
     .campaign-visual {
-
       width: 100%;
 
       margin: 0;
-
       padding: 0;
 
-      background:
-        var(--navy);
+      background: var(--navy);
 
-      overflow:
-        hidden;
-
+      overflow: hidden;
     }
-
 
     .campaign-image {
-
       width: 100%;
+      max-width: 760px;
 
-      max-width:
-        760px;
-
-      margin:
-        0 auto;
-
+      margin: 0 auto;
     }
-
 
     .campaign-image img {
-
       width: 100%;
-
       height: auto;
-
     }
 
 
-
     /* ==================================================
-       Section
+       共用 Section
     ================================================== */
-
 
     .section {
-
-      padding:
-        34px 0;
-
+      padding: 34px 0;
     }
-
 
     .section-header {
-
-      margin-bottom:
-        20px;
-
+      margin-bottom: 20px;
     }
-
 
     .section-title {
-
       margin: 0;
 
-      color:
-        var(--white);
+      color: var(--white);
 
-      font-size:
-        26px;
-
-      font-weight:
-        850;
-
+      font-size: 26px;
+      font-weight: 850;
     }
-
 
     .section-subtitle {
+      margin: 9px 0 0;
 
-      margin:
-        9px 0 0;
+      color: var(--text-soft);
 
-      color:
-        var(--text-soft);
-
-      font-size:
-        14px;
-
-      line-height:
-        1.7;
-
+      font-size: 14px;
+      line-height: 1.7;
     }
-
 
 
     /* ==================================================
-       會員身份
+       預約標題 + 會員會籍
     ================================================== */
 
+    .booking-title-row {
+      width: 100%;
 
-    .member-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      margin-top:
-        11px;
-
+      gap: 14px;
     }
 
+    .member-status {
+      flex: 0 0 auto;
+    }
+
+    .member-status:empty {
+      display: none;
+    }
 
     .member-level-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-      display:
-        inline-flex;
+      min-height: 32px;
 
-      align-items:
-        center;
-
-      min-height:
-        32px;
-
-      padding:
-        6px 13px;
+      padding: 6px 13px;
 
       border:
-        1px solid
-        rgba(247,181,0,.38);
+        1px solid rgba(247,181,0,.42);
 
-      border-radius:
-        999px;
+      border-radius: 999px;
 
       background:
         rgba(247,181,0,.12);
 
-      color:
-        var(--gold);
+      color: var(--gold);
 
-      font-size:
-        13px;
+      font-size: 13px;
+      font-weight: 800;
 
-      font-weight:
-        800;
-
+      white-space: nowrap;
     }
 
+    .member-warning-wrap {
+      display: none;
+
+      margin-top: 12px;
+    }
+
+    .member-warning-wrap.show {
+      display: block;
+    }
 
     .member-ineligible {
+      padding: 11px 13px;
 
-      padding:
-        11px 13px;
-
-      border-radius:
-        11px;
+      border-radius: 11px;
 
       background:
         rgba(255,85,85,.08);
 
-      color:
-        #ff7777;
+      color: var(--red);
 
-      font-size:
-        13px;
-
-      font-weight:
-        750;
-
-      line-height:
-        1.65;
-
+      font-size: 13px;
+      font-weight: 750;
+      line-height: 1.65;
     }
-
 
 
     /* ==================================================
        預約
     ================================================== */
 
-
     .booking-section {
-
-      padding-top:
-        28px;
-
+      padding-top: 28px;
     }
 
-
     .booking-card {
-
       width: 100%;
 
-      padding:
-        24px;
+      padding: 24px;
 
       border:
-        1px solid
-        var(--line);
+        1px solid var(--line);
 
-      border-radius:
-        var(--radius);
+      border-radius: var(--radius);
 
       background:
-
         linear-gradient(
           145deg,
           rgba(255,255,255,.075),
           rgba(255,255,255,.035)
         );
 
-      box-shadow:
-        var(--shadow);
-
+      box-shadow: var(--shadow);
     }
-
 
     .form {
-
       display: grid;
-
-      gap:
-        18px;
-
+      gap: 18px;
     }
-
 
     .field {
-
       display: grid;
-
-      gap:
-        8px;
+      gap: 8px;
 
       width: 100%;
-
       min-width: 0;
-
     }
-
 
     .field label {
+      color: var(--white);
 
-      color:
-        var(--white);
-
-      font-size:
-        14px;
-
-      font-weight:
-        750;
-
+      font-size: 14px;
+      font-weight: 750;
     }
-
 
     .required::after {
-
-      content:
-        " *";
-
-      color:
-        var(--gold);
-
+      content: " *";
+      color: var(--gold);
     }
-
 
     input[type="text"],
     input[type="tel"],
     select {
+      display: block;
 
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
 
-      height:
-        var(--control-height);
+      height: var(--control-height);
+      min-height: var(--control-height);
+      max-height: var(--control-height);
 
-      padding:
-        0 15px;
+      padding: 0 15px;
 
       border:
-        1px solid
-        rgba(255,255,255,.13);
+        1px solid rgba(255,255,255,.13);
 
       border-radius:
         var(--control-radius);
@@ -882,144 +550,91 @@
       background-color:
         rgba(255,255,255,.075);
 
-      color:
-        var(--white);
+      color: var(--white);
 
-      outline:
-        none;
+      outline: none;
 
-      font-size:
-        16px;
-
+      font-size: 16px;
     }
-
 
     input::placeholder {
-
       color:
         rgba(255,255,255,.36);
-
     }
-
 
     input:focus,
     select:focus {
-
-      border-color:
-        var(--gold);
+      border-color: var(--gold);
 
       box-shadow:
-        0 0 0 3px
-        rgba(247,181,0,.12);
-
+        0 0 0 3px rgba(247,181,0,.12);
     }
-
 
     select {
+      -webkit-appearance: none;
+      appearance: none;
 
-      -webkit-appearance:
-        none;
+      padding-right: 46px;
 
-      appearance:
-        none;
-
-      padding-right:
-        46px;
-
-      cursor:
-        pointer;
+      cursor: pointer;
 
       background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 
-        url(
-          "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"
-        );
-
-      background-repeat:
-        no-repeat;
-
-      background-position:
-        right 15px center;
-
-      background-size:
-        17px 17px;
-
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 17px 17px;
     }
-
 
     select option {
-
-      color:
-        #111111;
-
-      background:
-        #ffffff;
-
+      color: #111111;
+      background: #ffffff;
     }
-
 
     select optgroup {
+      color: #777777;
+      background: #ffffff;
 
-      color:
-        #777777;
-
-      background:
-        #ffffff;
-
-      font-weight:
-        700;
-
+      font-weight: 700;
     }
 
-
     select:disabled {
-
       color:
         rgba(255,255,255,.35);
 
       background-color:
         rgba(255,255,255,.04);
 
-      opacity:
-        1;
-
+      opacity: 1;
+      cursor: not-allowed;
     }
-
 
 
     /* ==================================================
        門市
     ================================================== */
 
-
     .store-options {
-
       display: grid;
 
       grid-template-columns:
         minmax(0,1fr)
         minmax(0,1fr);
 
-      gap:
-        10px;
-
+      gap: 10px;
     }
 
-
     .store-button {
+      width: 100%;
+      min-width: 0;
+      min-height: 58px;
 
-      min-height:
-        58px;
-
-      padding:
-        10px 8px;
+      padding: 10px 8px;
 
       border:
-        1px solid
-        rgba(255,255,255,.15);
+        1px solid rgba(255,255,255,.15);
 
-      border-radius:
-        15px;
+      border-radius: 15px;
 
       background:
         rgba(255,255,255,.065);
@@ -1027,944 +642,587 @@
       color:
         rgba(255,255,255,.82);
 
-      font-size:
-        14px;
+      font-size: 14px;
+      font-weight: 750;
 
-      font-weight:
-        750;
-
-      cursor:
-        pointer;
-
+      cursor: pointer;
     }
 
-
     .store-button.selected {
-
-      color:
-        var(--navy);
+      color: var(--navy);
 
       background:
-
         linear-gradient(
           135deg,
           var(--gold-light),
           var(--gold)
         );
 
-      border-color:
-        var(--gold);
-
+      border-color: var(--gold);
     }
-
 
     .store-button.selected::before {
+      content: "✓";
 
-      content:
-        "✓";
+      margin-right: 6px;
 
-      margin-right:
-        6px;
-
-      font-weight:
-        900;
-
+      font-weight: 900;
     }
-
 
 
     /* ==================================================
        月曆
     ================================================== */
 
-
     .calendar {
+      width: 100%;
 
-      width:
-        100%;
-
-      padding:
-        16px;
+      padding: 16px;
 
       border:
-        1px solid
-        rgba(255,255,255,.13);
+        1px solid rgba(255,255,255,.13);
 
-      border-radius:
-        16px;
+      border-radius: 16px;
 
       background:
         rgba(255,255,255,.055);
-
     }
-
 
     .calendar-header {
+      padding-bottom: 15px;
 
-      text-align:
-        center;
+      text-align: center;
 
-      padding-bottom:
-        15px;
-
-      font-size:
-        16px;
-
-      font-weight:
-        800;
-
+      font-size: 16px;
+      font-weight: 800;
     }
-
 
     .calendar-weekdays,
     .calendar-days {
-
       display: grid;
 
       grid-template-columns:
-        repeat(
-          7,
-          minmax(0,1fr)
-        );
+        repeat(7,minmax(0,1fr));
 
-      gap:
-        6px;
-
+      gap: 6px;
     }
-
 
     .calendar-weekdays {
-
-      margin-bottom:
-        7px;
-
+      margin-bottom: 7px;
     }
 
-
     .calendar-weekday {
-
-      height:
-        28px;
+      height: 28px;
 
       display: flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
+      align-items: center;
+      justify-content: center;
 
       color:
         rgba(255,255,255,.48);
 
-      font-size:
-        11px;
-
-      font-weight:
-        700;
-
+      font-size: 11px;
+      font-weight: 700;
     }
 
-
     .calendar-day {
-
-      aspect-ratio:
-        1/1;
+      aspect-ratio: 1 / 1;
 
       display: flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
+      align-items: center;
+      justify-content: center;
 
       padding: 0;
 
       border:
-        1px solid
-        transparent;
+        1px solid transparent;
 
-      border-radius:
-        10px;
+      border-radius: 10px;
 
-      background:
-        transparent;
+      background: transparent;
 
       color:
         rgba(255,255,255,.88);
 
-      cursor:
-        pointer;
-
+      cursor: pointer;
     }
-
 
     .calendar-day.selected {
+      background: var(--gold);
+      color: var(--navy);
 
-      background:
-        var(--gold);
+      border-color: var(--gold);
 
-      color:
-        var(--navy);
-
-      border-color:
-        var(--gold);
-
-      font-weight:
-        850;
-
+      font-weight: 850;
     }
-
 
     .calendar-empty {
-
-      aspect-ratio:
-        1/1;
-
+      aspect-ratio: 1 / 1;
     }
-
 
     .selected-date-display {
+      display: none;
 
-      display:
-        none;
+      margin-top: 10px;
 
-      margin-top:
-        10px;
+      color: var(--gold);
 
-      color:
-        var(--gold);
-
-      font-size:
-        13px;
-
-      font-weight:
-        750;
-
+      font-size: 13px;
+      font-weight: 750;
     }
-
 
     .selected-date-display.show {
-
-      display:
-        block;
-
+      display: block;
     }
-
 
 
     /* ==================================================
        Checkbox
     ================================================== */
 
-
     .agreement {
-
       display: flex;
+      align-items: flex-start;
 
-      align-items:
-        flex-start;
+      gap: 11px;
 
-      gap:
-        11px;
+      padding: 2px;
 
-      padding:
-        2px;
-
-      cursor:
-        pointer;
-
+      cursor: pointer;
     }
 
-
     .agreement input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
 
-      appearance:
-        none;
+      flex: 0 0 22px;
 
-      -webkit-appearance:
-        none;
+      width: 22px;
+      height: 22px;
 
-      flex:
-        0 0 22px;
+      min-width: 22px;
+      min-height: 22px;
 
-      width:
-        22px;
-
-      height:
-        22px;
-
-      margin:
-        1px 0 0;
+      margin: 1px 0 0;
+      padding: 0;
 
       border:
-        1.5px solid
-        rgba(255,255,255,.5);
+        1.5px solid rgba(255,255,255,.5);
 
-      border-radius:
-        6px;
+      border-radius: 6px;
 
       background:
         rgba(255,255,255,.05);
 
-      display:
-        grid;
-
-      place-content:
-        center;
-
+      display: grid;
+      place-content: center;
     }
 
-
     .agreement input[type="checkbox"]::before {
+      content: "";
 
-      content:
-        "";
-
-      width:
-        10px;
-
-      height:
-        6px;
+      width: 10px;
+      height: 6px;
 
       border-left:
-        2px solid
-        var(--navy);
+        2px solid var(--navy);
 
       border-bottom:
-        2px solid
-        var(--navy);
+        2px solid var(--navy);
 
       transform:
         rotate(-45deg)
         scale(0);
-
     }
-
 
     .agreement input[type="checkbox"]:checked {
-
-      background:
-        var(--gold);
-
-      border-color:
-        var(--gold);
-
+      background: var(--gold);
+      border-color: var(--gold);
     }
 
-
     .agreement input[type="checkbox"]:checked::before {
-
       transform:
         rotate(-45deg)
         scale(1);
-
     }
 
-
     .agreement-text {
-
       color:
         rgba(255,255,255,.88);
 
-      font-size:
-        13px;
+      font-size: 13px;
+      line-height: 1.65;
 
-      line-height:
-        1.65;
-
-      font-weight:
-        650;
-
+      font-weight: 650;
     }
 
-
     .submit-button {
+      width: 100%;
+      min-height: 56px;
 
-      width:
-        100%;
-
-      min-height:
-        56px;
-
-      border:
-        0;
-
-      border-radius:
-        16px;
+      border: 0;
+      border-radius: 16px;
 
       background:
-
         linear-gradient(
           135deg,
           var(--gold-light),
           var(--gold)
         );
 
-      color:
-        var(--navy);
+      color: var(--navy);
 
-      font-size:
-        17px;
+      font-size: 17px;
+      font-weight: 850;
 
-      font-weight:
-        850;
-
-      cursor:
-        pointer;
-
+      cursor: pointer;
     }
-
 
 
     /* ==================================================
        活動說明
     ================================================== */
 
-
     .activity-card {
-
-      overflow:
-        hidden;
+      overflow: hidden;
 
       border:
-        1px solid
-        var(--line);
+        1px solid var(--line);
 
       border-radius:
         var(--radius);
 
       background:
         rgba(255,255,255,.055);
-
     }
-
 
     .activity-block {
-
-      padding:
-        20px;
+      padding: 20px;
 
       border-bottom:
-        1px solid
-        var(--line);
-
+        1px solid var(--line);
     }
-
 
     .activity-block:last-child {
-
-      border-bottom:
-        0;
-
+      border-bottom: 0;
     }
-
 
     .activity-label {
+      margin-bottom: 7px;
 
-      margin-bottom:
-        7px;
+      color: var(--gold);
 
-      color:
-        var(--gold);
-
-      font-size:
-        14px;
-
-      font-weight:
-        800;
-
+      font-size: 14px;
+      font-weight: 800;
     }
 
-
     .activity-value {
-
       color:
         rgba(255,255,255,.88);
 
-      font-size:
-        14px;
-
-      line-height:
-        1.75;
-
+      font-size: 14px;
+      line-height: 1.75;
     }
-
 
     .member-benefits {
-
       display: grid;
-
-      gap:
-        10px;
-
+      gap: 10px;
     }
 
-
     .benefit-row {
-
-      padding:
-        12px 14px;
+      padding: 12px 14px;
 
       border:
-        1px solid
-        rgba(255,255,255,.075);
+        1px solid rgba(255,255,255,.075);
 
-      border-radius:
-        13px;
+      border-radius: 13px;
 
       background:
         rgba(255,255,255,.055);
-
     }
-
 
     .benefit-level {
+      margin-bottom: 4px;
 
-      margin-bottom:
-        4px;
-
-      font-size:
-        14px;
-
-      font-weight:
-        800;
-
+      font-size: 14px;
+      font-weight: 800;
     }
 
-
     .benefit-desc {
-
       color:
         rgba(255,255,255,.7);
 
-      font-size:
-        13px;
-
-      line-height:
-        1.65;
-
+      font-size: 13px;
+      line-height: 1.65;
     }
-
 
     .benefit-highlight {
-
-      color:
-        var(--gold);
-
-      font-weight:
-        800;
-
+      color: var(--gold);
+      font-weight: 800;
     }
 
-
     .notice-list {
-
-      margin:
-        0;
-
-      padding-left:
-        21px;
+      margin: 0;
+      padding-left: 21px;
 
       color:
         rgba(255,255,255,.78);
 
-      font-size:
-        13px;
-
-      line-height:
-        1.8;
-
+      font-size: 13px;
+      line-height: 1.8;
     }
-
 
     .notice-list li {
-
-      margin-bottom:
-        7px;
-
+      margin-bottom: 7px;
     }
 
+    .notice-list li:last-child {
+      margin-bottom: 0;
+    }
 
 
     /* ==================================================
        Footer
     ================================================== */
 
-
     .information-section {
+      width: 100%;
 
-      width:
-        100%;
-
-      margin-top:
-        30px;
+      margin-top: 30px;
 
       padding:
         48px 0
-        calc(
-          54px +
-          env(safe-area-inset-bottom)
-        );
+        calc(54px + env(safe-area-inset-bottom));
 
-      background:
-        var(--navy-deep);
+      background: var(--navy-deep);
 
       border-top:
-        1px solid
-        rgba(255,255,255,.045);
-
+        1px solid rgba(255,255,255,.045);
     }
-
 
     .information-inner {
-
       width:
-        min(
-          720px,
-          calc(100% - 48px)
-        );
+        min(720px, calc(100% - 48px));
 
-      margin:
-        0 auto;
-
+      margin: 0 auto;
     }
-
 
     .information-title {
+      margin: 0 0 28px;
 
-      margin:
-        0 0 28px;
-
-      font-size:
-        22px;
-
-      font-weight:
-        700;
-
+      font-size: 22px;
+      font-weight: 700;
     }
-
 
     .information-links {
+      display: flex;
+      flex-direction: column;
 
-      display:
-        flex;
-
-      flex-direction:
-        column;
-
-      align-items:
-        flex-start;
-
+      align-items: flex-start;
     }
 
-
     .info-link {
+      display: inline-flex;
+      align-items: center;
 
-      display:
-        inline-flex;
+      min-height: 50px;
 
-      align-items:
-        center;
-
-      min-height:
-        50px;
-
-      padding:
-        7px 0;
+      padding: 7px 0;
 
       color:
         rgba(255,255,255,.78);
 
-      font-size:
-        16px;
-
+      font-size: 16px;
     }
 
-
     .info-link::after {
+      content: "↗";
 
-      content:
-        "↗";
-
-      margin-left:
-        9px;
+      margin-left: 9px;
 
       color:
         rgba(255,255,255,.5);
 
-      font-size:
-        15px;
-
+      font-size: 15px;
     }
-
 
 
     /* ==================================================
        Toast
     ================================================== */
 
-
     .toast {
+      position: fixed;
 
-      position:
-        fixed;
+      left: 50%;
+      bottom: 30px;
 
-      left:
-        50%;
-
-      bottom:
-        30px;
-
-      z-index:
-        100;
+      z-index: 100;
 
       width:
         calc(100% - 40px);
 
-      max-width:
-        420px;
+      max-width: 420px;
 
-      padding:
-        16px 18px;
+      padding: 16px 18px;
 
       border:
-        1px solid
-        rgba(247,181,0,.35);
+        1px solid rgba(247,181,0,.35);
 
-      border-radius:
-        16px;
+      border-radius: 16px;
 
       background:
         rgba(4,39,65,.97);
 
-      color:
-        var(--white);
+      color: var(--white);
 
-      text-align:
-        center;
+      text-align: center;
 
-      font-size:
-        14px;
-
-      font-weight:
-        700;
+      font-size: 14px;
+      font-weight: 700;
 
       box-shadow:
-        0 15px 35px
-        rgba(0,0,0,.3);
+        0 15px 35px rgba(0,0,0,.3);
 
-      opacity:
-        0;
-
-      pointer-events:
-        none;
+      opacity: 0;
+      pointer-events: none;
 
       transform:
         translateX(-50%)
         translateY(18px);
 
-      transition:
-        .25s ease;
-
+      transition: .25s ease;
     }
 
-
     .toast.show {
-
-      opacity:
-        1;
+      opacity: 1;
 
       transform:
         translateX(-50%)
         translateY(0);
-
     }
-
 
 
     /* ==================================================
        Mobile
     ================================================== */
 
-
-    @media
-    (max-width:600px) {
-
+    @media (max-width: 600px) {
 
       .container {
-
         width:
           calc(100% - 24px);
-
       }
-
 
       .site-header-inner {
+        min-height: 70px;
 
-        min-height:
-          70px;
-
-        padding:
-          10px 0;
-
+        padding: 10px 0;
       }
-
 
       .logo-area img {
-
-        max-width:
-          190px;
-
-        max-height:
-          40px;
-
+        max-width: 190px;
+        max-height: 40px;
       }
 
-
       .member-gate {
-
         min-height:
-          calc(
-            100vh - 70px
-          );
+          calc(100vh - 70px);
 
         padding:
           32px 0 60px;
-
       }
-
 
       .verify-title {
-
-        font-size:
-          27px;
-
+        font-size: 27px;
       }
-
 
       .verify-card {
-
-        padding:
-          21px 18px;
-
+        padding: 21px 18px;
       }
-
 
       .campaign-image {
-
-        max-width:
-          100%;
-
+        max-width: 100%;
       }
-
 
       .section {
-
-        padding:
-          29px 0;
-
+        padding: 29px 0;
       }
-
 
       .booking-section {
-
-        padding-top:
-          22px;
-
+        padding-top: 22px;
       }
-
 
       .section-title {
-
-        font-size:
-          24px;
-
+        font-size: 24px;
       }
 
+      .booking-title-row {
+        gap: 10px;
+      }
+
+      .member-level-badge {
+        min-height: 30px;
+
+        padding: 5px 11px;
+
+        font-size: 12px;
+      }
 
       .booking-card {
+        padding: 20px 17px;
 
-        padding:
-          20px 17px;
-
-        border-radius:
-          19px;
-
+        border-radius: 19px;
       }
 
+      input[type="text"],
+      input[type="tel"],
+      select {
+        height: 54px;
+        min-height: 54px;
+        max-height: 54px;
+
+        font-size: 16px;
+      }
 
       .store-button {
+        min-height: 56px;
 
-        min-height:
-          56px;
+        padding: 8px 4px;
 
-        padding:
-          8px 4px;
-
-        font-size:
-          13px;
-
+        font-size: 13px;
       }
-
 
       .calendar {
-
-        padding:
-          13px 10px;
-
+        padding: 13px 10px;
       }
-
 
       .calendar-weekdays,
       .calendar-days {
-
-        gap:
-          4px;
-
+        gap: 4px;
       }
-
 
       .calendar-day {
-
-        font-size:
-          12px;
-
+        font-size: 12px;
       }
-
 
       .activity-block {
-
-        padding:
-          18px 17px;
-
+        padding: 18px 17px;
       }
-
 
       .information-section {
+        margin-top: 22px;
 
-        margin-top:
-          22px;
-
-        padding-top:
-          40px;
-
+        padding-top: 40px;
       }
-
 
       .information-inner {
-
         width:
           calc(100% - 48px);
-
       }
-
     }
-
   </style>
 </head>
-
 
 
 <body>
@@ -1973,7 +1231,6 @@
   <!-- ==================================================
        LOGO
   ================================================== -->
-
 
   <header class="site-header">
 
@@ -1998,7 +1255,6 @@
        會員核對
   ================================================== -->
 
-
   <section
     id="memberGate"
     class="member-gate"
@@ -2013,11 +1269,9 @@
           BBVIP MEMBER
         </div>
 
-
         <h1 class="verify-title">
           會員核對
         </h1>
-
 
         <p class="verify-subtitle">
           本活動為會員限定，請先輸入會員資料進行身分核對。
@@ -2035,8 +1289,6 @@
         >
 
 
-          <!-- 會員電話 -->
-
           <div class="verify-field">
 
             <label
@@ -2045,7 +1297,6 @@
             >
               會員電話
             </label>
-
 
             <input
               id="verifyPhone"
@@ -2061,8 +1312,6 @@
 
 
 
-          <!-- 會員生日 -->
-
           <div class="verify-field">
 
             <label
@@ -2072,7 +1321,6 @@
               會員生日
             </label>
 
-
             <input
               id="verifyBirthday"
               class="verify-input"
@@ -2081,10 +1329,8 @@
               autocomplete="bday"
               maxlength="10"
               placeholder="YYYY-MM-DD"
-              aria-label="會員生日，格式為年、月、日"
               required
             >
-
 
             <div class="verify-hint">
               請由西元年份開始輸入，例如 19950422。
@@ -2102,16 +1348,13 @@
             進入活動
           </button>
 
-
         </form>
-
 
 
         <div
           id="verifyMessage"
           class="verify-message"
         ></div>
-
 
       </div>
 
@@ -2122,9 +1365,8 @@
 
 
   <!-- ==================================================
-       活動頁面
+       活動主頁
   ================================================== -->
-
 
   <main
     id="mainContent"
@@ -2133,7 +1375,6 @@
 
 
     <!-- 活動主圖 -->
-
 
     <section class="campaign-visual">
 
@@ -2151,9 +1392,8 @@
 
 
     <!-- ==================================================
-         預約
+         預約登記
     ================================================== -->
-
 
     <section class="section booking-section">
 
@@ -2162,15 +1402,35 @@
 
         <div class="section-header">
 
-          <h2 class="section-title">
-            預約
-          </h2>
 
+          <!-- 標題與會籍左右排列 -->
+
+          <div class="booking-title-row">
+
+            <h2 class="section-title">
+              預約登記
+            </h2>
+
+            <div
+              id="memberStatus"
+              class="member-status"
+            ></div>
+
+          </div>
+
+
+          <!-- 不符合資格時顯示於標題下方 -->
 
           <div
-            id="memberStatus"
-            class="member-status"
-          ></div>
+            id="memberWarningWrap"
+            class="member-warning-wrap"
+          >
+
+            <div class="member-ineligible">
+              初步偵測您未符合活動資格，有任何疑問請與客服聯繫。
+            </div>
+
+          </div>
 
 
           <p class="section-subtitle">
@@ -2200,7 +1460,6 @@
                 姓名
               </label>
 
-
               <input
                 id="name"
                 name="name"
@@ -2214,7 +1473,7 @@
 
 
 
-            <!-- 電話 -->
+            <!-- 聯絡電話 -->
 
             <div class="field">
 
@@ -2224,7 +1483,6 @@
               >
                 聯絡電話
               </label>
-
 
               <input
                 id="phone"
@@ -2250,7 +1508,6 @@
                 手機型號
               </label>
 
-
               <select
                 id="device"
                 name="device"
@@ -2262,161 +1519,56 @@
                 </option>
 
 
-                <optgroup
-                  label="iPhone 17 系列"
-                >
+                <optgroup label="iPhone 17 系列">
 
-                  <option>
-                    iPhone 17 Pro
-                  </option>
-
-                  <option>
-                    iPhone 17 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone Air
-                  </option>
-
-                  <option>
-                    iPhone 17
-                  </option>
-
-                  <option>
-                    iPhone 17e
-                  </option>
+                  <option>iPhone 17 Pro</option>
+                  <option>iPhone 17 Pro Max</option>
+                  <option>iPhone Air</option>
+                  <option>iPhone 17</option>
+                  <option>iPhone 17e</option>
 
                 </optgroup>
 
 
+                <optgroup label="更多 iPhone 機型">
 
-                <optgroup
-                  label="更多 iPhone 機型"
-                >
+                  <option>iPhone 16 Pro</option>
+                  <option>iPhone 16 Pro Max</option>
+                  <option>iPhone 16</option>
+                  <option>iPhone 16 Plus</option>
+                  <option>iPhone 16e</option>
 
-                  <option>
-                    iPhone 16 Pro
-                  </option>
+                  <option>iPhone 15 Pro</option>
+                  <option>iPhone 15 Pro Max</option>
+                  <option>iPhone 15</option>
+                  <option>iPhone 15 Plus</option>
 
-                  <option>
-                    iPhone 16 Pro Max
-                  </option>
+                  <option>iPhone 14 Pro</option>
+                  <option>iPhone 14 Pro Max</option>
+                  <option>iPhone 14</option>
+                  <option>iPhone 14 Plus</option>
 
-                  <option>
-                    iPhone 16
-                  </option>
+                  <option>iPhone 13 Pro</option>
+                  <option>iPhone 13 Pro Max</option>
+                  <option>iPhone 13 mini</option>
+                  <option>iPhone 13</option>
 
-                  <option>
-                    iPhone 16 Plus
-                  </option>
+                  <option>iPhone SE（第 3 代）</option>
 
-                  <option>
-                    iPhone 16e
-                  </option>
+                  <option>iPhone 12 Pro</option>
+                  <option>iPhone 12 Pro Max</option>
+                  <option>iPhone 12 mini</option>
+                  <option>iPhone 12</option>
 
+                  <option>iPhone 11 Pro</option>
+                  <option>iPhone 11 Pro Max</option>
+                  <option>iPhone 11</option>
 
-                  <option>
-                    iPhone 15 Pro
-                  </option>
+                  <option>iPhone SE（第 2 代）</option>
 
-                  <option>
-                    iPhone 15 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 15
-                  </option>
-
-                  <option>
-                    iPhone 15 Plus
-                  </option>
-
-
-                  <option>
-                    iPhone 14 Pro
-                  </option>
-
-                  <option>
-                    iPhone 14 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 14
-                  </option>
-
-                  <option>
-                    iPhone 14 Plus
-                  </option>
-
-
-                  <option>
-                    iPhone 13 Pro
-                  </option>
-
-                  <option>
-                    iPhone 13 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 13 mini
-                  </option>
-
-                  <option>
-                    iPhone 13
-                  </option>
-
-
-                  <option>
-                    iPhone SE（第 3 代）
-                  </option>
-
-
-                  <option>
-                    iPhone 12 Pro
-                  </option>
-
-                  <option>
-                    iPhone 12 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 12 mini
-                  </option>
-
-                  <option>
-                    iPhone 12
-                  </option>
-
-
-                  <option>
-                    iPhone 11 Pro
-                  </option>
-
-                  <option>
-                    iPhone 11 Pro Max
-                  </option>
-
-                  <option>
-                    iPhone 11
-                  </option>
-
-
-                  <option>
-                    iPhone SE（第 2 代）
-                  </option>
-
-
-                  <option>
-                    iPhone XS
-                  </option>
-
-                  <option>
-                    iPhone XS Max
-                  </option>
-
-                  <option>
-                    iPhone XR
-                  </option>
+                  <option>iPhone XS</option>
+                  <option>iPhone XS Max</option>
+                  <option>iPhone XR</option>
 
                 </optgroup>
 
@@ -2434,7 +1586,6 @@
                 預約門市
               </label>
 
-
               <div
                 class="store-options"
                 role="radiogroup"
@@ -2448,7 +1599,6 @@
                   勤美旗艦門市
                 </button>
 
-
                 <button
                   type="button"
                   class="store-button"
@@ -2458,7 +1608,6 @@
                 </button>
 
               </div>
-
 
               <input
                 type="hidden"
@@ -2470,7 +1619,7 @@
 
 
 
-            <!-- 日期 -->
+            <!-- 預約日期 -->
 
             <div class="field">
 
@@ -2478,52 +1627,28 @@
                 預約日期
               </label>
 
-
               <div class="calendar">
 
                 <div class="calendar-header">
                   2026 年 9 月
                 </div>
 
-
                 <div class="calendar-weekdays">
 
-                  <div class="calendar-weekday">
-                    日
-                  </div>
-
-                  <div class="calendar-weekday">
-                    一
-                  </div>
-
-                  <div class="calendar-weekday">
-                    二
-                  </div>
-
-                  <div class="calendar-weekday">
-                    三
-                  </div>
-
-                  <div class="calendar-weekday">
-                    四
-                  </div>
-
-                  <div class="calendar-weekday">
-                    五
-                  </div>
-
-                  <div class="calendar-weekday">
-                    六
-                  </div>
+                  <div class="calendar-weekday">日</div>
+                  <div class="calendar-weekday">一</div>
+                  <div class="calendar-weekday">二</div>
+                  <div class="calendar-weekday">三</div>
+                  <div class="calendar-weekday">四</div>
+                  <div class="calendar-weekday">五</div>
+                  <div class="calendar-weekday">六</div>
 
                 </div>
-
 
                 <div
                   id="calendarDays"
                   class="calendar-days"
                 ></div>
-
 
                 <div
                   id="selectedDateDisplay"
@@ -2531,7 +1656,6 @@
                 ></div>
 
               </div>
-
 
               <input
                 id="date"
@@ -2543,7 +1667,7 @@
 
 
 
-            <!-- 時間 -->
+            <!-- 預約時段 -->
 
             <div class="field">
 
@@ -2553,7 +1677,6 @@
               >
                 預約時段
               </label>
-
 
               <select
                 id="time"
@@ -2585,7 +1708,6 @@
                 required
               >
 
-
               <span class="agreement-text">
                 我已知悉該活動每位會員僅能獲得優惠一次，確認進行預約！
               </span>
@@ -2615,7 +1737,6 @@
     <!-- ==================================================
          活動說明
     ================================================== -->
-
 
     <section class="section">
 
@@ -2683,7 +1804,6 @@
               活動權益
             </div>
 
-
             <div class="member-benefits">
 
 
@@ -2694,16 +1814,12 @@
                 </div>
 
                 <div class="benefit-desc">
-
                   可
-
                   <span class="benefit-highlight">
                     免費
                   </span>
-
                   取得一次保貼更換服務
                   （原價 890 元）
-
                 </div>
 
               </div>
@@ -2717,16 +1833,12 @@
                 </div>
 
                 <div class="benefit-desc">
-
                   可以
-
                   <span class="benefit-highlight">
                     499 元
                   </span>
-
                   取得一次保貼更換服務
                   （原價 890 元）
-
                 </div>
 
               </div>
@@ -2740,16 +1852,12 @@
                 </div>
 
                 <div class="benefit-desc">
-
                   可以
-
                   <span class="benefit-highlight">
                     599 元
                   </span>
-
                   取得一次保貼更換服務
                   （原價 890 元）
-
                 </div>
 
               </div>
@@ -2767,15 +1875,12 @@
               創始會員定義
             </div>
 
-
             <div class="activity-value">
-
               於 2026/01/01～2026/06/30
               期間加入黑盒子維修中心 BBVIP 盒芯會籍，
               且在 2026/01/01 後至今，
               於勤美旗艦、沙鹿站前任一門市
               進行過設備維修或配件購買的任何貴賓皆屬之。
-
             </div>
 
           </div>
@@ -2788,26 +1893,21 @@
               注意事項
             </div>
 
-
             <ol class="notice-list">
 
               <li>
                 每位合格會員在期間內皆可兌換一次福利。
               </li>
 
-
               <li>
-                預約後若需更改服務時間，
-                請聯繫 LINE 官方客服。
+                預約後若需更改服務時間，請聯繫 LINE 官方客服。
               </li>
-
 
               <li>
                 本次活動僅限 iPhone X～iPhone 17 系列，
                 提供之保護貼為 9H 鋼化亮面玻璃貼，
                 更換後不提供保固。
               </li>
-
 
               <li>
                 預約後於指定時間前往指定門市，
@@ -2829,19 +1929,16 @@
 
 
     <!-- ==================================================
-         Footer
+         資訊 Footer
     ================================================== -->
-
 
     <footer class="information-section">
 
       <div class="information-inner">
 
-
         <h2 class="information-title">
           資訊
         </h2>
-
 
         <nav class="information-links">
 
@@ -2868,6 +1965,7 @@
 
           <a
             class="info-link"
+            href="https://blackboxrepair.github.io/m-link"
             href="https://blackboxrepair.github.io/membership"
           >
             我的會員卡
@@ -2885,10 +1983,7 @@
 
 
 
-  <!-- ==================================================
-       Toast
-  ================================================== -->
-
+  <!-- Toast -->
 
   <div
     id="toast"
@@ -2899,18 +1994,19 @@
 
   <script>
 
-
     /* ==================================================
-       SUPABASE
+       Supabase
     ================================================== */
-
 
     const SUPABASE_URL =
       "https://nszwpwimwxvjguoalzwt.supabase.co";
 
-
+    /*
+      請保留你目前網站已經填入的 anon key。
+      不要改成 service_role key。
+    */
     const SUPABASE_ANON_KEY =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zendwd2ltd3h2amd1b2Fsend0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMzY1NzYsImV4cCI6MjA4MTcxMjU3Nn0.TaAt4aqEhDsONWtDCagD5rlTMknEWfhq8fMVL1Rt4lg";
+      "請貼上你目前使用的 SUPABASE ANON KEY";
 
 
     const supabaseClient =
@@ -2922,62 +2018,36 @@
 
 
     /* ==================================================
-       會員核對元素
+       會員核對
     ================================================== */
-
 
     const memberGate =
-      document.getElementById(
-        "memberGate"
-      );
-
+      document.getElementById("memberGate");
 
     const mainContent =
-      document.getElementById(
-        "mainContent"
-      );
-
+      document.getElementById("mainContent");
 
     const verifyForm =
-      document.getElementById(
-        "verifyForm"
-      );
-
+      document.getElementById("verifyForm");
 
     const verifyPhone =
-      document.getElementById(
-        "verifyPhone"
-      );
-
+      document.getElementById("verifyPhone");
 
     const verifyBirthday =
-      document.getElementById(
-        "verifyBirthday"
-      );
-
+      document.getElementById("verifyBirthday");
 
     const verifyButton =
-      document.getElementById(
-        "verifyButton"
-      );
-
+      document.getElementById("verifyButton");
 
     const verifyMessage =
-      document.getElementById(
-        "verifyMessage"
-      );
-
+      document.getElementById("verifyMessage");
 
     const memberStatus =
-      document.getElementById(
-        "memberStatus"
-      );
+      document.getElementById("memberStatus");
 
+    const memberWarningWrap =
+      document.getElementById("memberWarningWrap");
 
-
-    /* ==================================================
-       電話標準化
-    ================================================== */
 
 
     function normalizePhone(phone) {
@@ -2994,81 +2064,49 @@
 
 
     /* ==================================================
-       生日輸入自動格式化
+       生日輸入
 
        19950422
        ↓
        1995-04-22
     ================================================== */
 
-
-    function formatBirthdayInput(
-      value
-    ) {
-
+    function formatBirthdayInput(value) {
 
       const digits =
-        String(
-          value || ""
-        )
-        .replace(
-          /\D/g,
-          ""
-        )
-        .slice(
-          0,
-          8
-        );
+        String(value || "")
+          .replace(/\D/g, "")
+          .slice(0, 8);
 
 
-      if (
-        digits.length <= 4
-      ) {
-
+      if (digits.length <= 4) {
         return digits;
-
       }
 
 
-      if (
-        digits.length <= 6
-      ) {
+      if (digits.length <= 6) {
 
         return (
-          digits.slice(
-            0,
-            4
-          )
+          digits.slice(0, 4)
           +
           "-"
           +
-          digits.slice(
-            4
-          )
+          digits.slice(4)
         );
 
       }
 
 
       return (
-        digits.slice(
-          0,
-          4
-        )
+        digits.slice(0, 4)
         +
         "-"
         +
-        digits.slice(
-          4,
-          6
-        )
+        digits.slice(4, 6)
         +
         "-"
         +
-        digits.slice(
-          6,
-          8
-        )
+        digits.slice(6, 8)
       );
 
     }
@@ -3089,65 +2127,33 @@
 
 
 
-    /* ==================================================
-       驗證生日是否合法
-    ================================================== */
-
-
-    function normalizeBirthday(
-      value
-    ) {
-
+    function normalizeBirthday(value) {
 
       const digits =
-        String(
-          value || ""
-        )
-        .replace(
-          /\D/g,
-          ""
-        );
+        String(value || "")
+          .replace(/\D/g, "");
 
 
-      if (
-        digits.length !== 8
-      ) {
-
+      if (digits.length !== 8) {
         return null;
-
       }
 
 
       const year =
         Number(
-          digits.slice(
-            0,
-            4
-          )
+          digits.slice(0, 4)
         );
-
 
       const month =
         Number(
-          digits.slice(
-            4,
-            6
-          )
+          digits.slice(4, 6)
         );
-
 
       const day =
         Number(
-          digits.slice(
-            6,
-            8
-          )
+          digits.slice(6, 8)
         );
 
-
-      /*
-        使用 UTC 避免時區造成日期位移
-      */
 
       const testDate =
         new Date(
@@ -3159,25 +2165,12 @@
         );
 
 
-      /*
-        檢查是否是真正存在的日期
-      */
-
       if (
-
-        testDate.getUTCFullYear()
-          !== year
-
+        testDate.getUTCFullYear() !== year
         ||
-
-        testDate.getUTCMonth() + 1
-          !== month
-
+        testDate.getUTCMonth() + 1 !== month
         ||
-
-        testDate.getUTCDate()
-          !== day
-
+        testDate.getUTCDate() !== day
       ) {
 
         return null;
@@ -3185,44 +2178,26 @@
       }
 
 
-      const monthText =
-        String(
-          month
-        ).padStart(
-          2,
-          "0"
-        );
-
-
-      const dayText =
-        String(
-          day
-        ).padStart(
-          2,
-          "0"
-        );
-
-
       return (
-        `${year}-${monthText}-${dayText}`
+        String(year).padStart(4, "0")
+        +
+        "-"
+        +
+        String(month).padStart(2, "0")
+        +
+        "-"
+        +
+        String(day).padStart(2, "0")
       );
 
     }
 
 
 
-    /* ==================================================
-       驗證錯誤
-    ================================================== */
-
-
-    function showVerifyError(
-      message
-    ) {
+    function showVerifyError(message) {
 
       verifyMessage.textContent =
         message;
-
 
       verifyMessage.classList.add(
         "show"
@@ -3237,7 +2212,6 @@
       verifyMessage.textContent =
         "";
 
-
       verifyMessage.classList.remove(
         "show"
       );
@@ -3246,23 +2220,13 @@
 
 
 
-    /* ==================================================
-       會員核對
-    ================================================== */
-
-
     verifyForm.addEventListener(
       "submit",
-      async function(
-        event
-      ) {
-
+      async function(event) {
 
         event.preventDefault();
 
-
         hideVerifyError();
-
 
 
         const phone =
@@ -3277,10 +2241,7 @@
           );
 
 
-
-        if (
-          !phone
-        ) {
+        if (!phone) {
 
           showVerifyError(
             "請輸入會員電話。"
@@ -3291,10 +2252,7 @@
         }
 
 
-
-        if (
-          !birthday
-        ) {
+        if (!birthday) {
 
           showVerifyError(
             "請輸入正確的會員生日，例如 1995-04-22。"
@@ -3307,15 +2265,8 @@
         }
 
 
-
-        /*
-          將欄位再次統一顯示成
-          YYYY-MM-DD
-        */
-
         verifyBirthday.value =
           birthday;
-
 
 
         verifyButton.disabled =
@@ -3326,34 +2277,22 @@
           "會員資料核對中…";
 
 
-
         try {
-
 
           const {
             data,
             error
           } =
-
             await supabaseClient.rpc(
               "verify_2026moon_member",
               {
-
-                p_phone:
-                  phone,
-
-                p_birthday:
-                  birthday
-
+                p_phone: phone,
+                p_birthday: birthday
               }
             );
 
 
-
-          if (
-            error
-          ) {
-
+          if (error) {
 
             console.error(
               "會員核對錯誤：",
@@ -3371,43 +2310,24 @@
           }
 
 
-
           const member =
-
-            Array.isArray(
-              data
-            )
-
-            ?
-
-            data[0]
-
-            :
-
-            data;
+            Array.isArray(data)
+              ? data[0]
+              : data;
 
 
-
-          if (
-            !member
-          ) {
-
+          if (!member) {
 
             showVerifyError(
               "查無符合的會員資料，請確認會員電話與生日是否與會員資料相同。"
             );
-
 
             return;
 
           }
 
 
-
-          /* ==================================================
-             自動填入姓名
-          ================================================== */
-
+          /* 自動填入姓名 */
 
           document.getElementById(
             "name"
@@ -3415,11 +2335,7 @@
             member.full_name || "";
 
 
-
-          /* ==================================================
-             自動填入電話
-          ================================================== */
-
+          /* 自動填入電話 */
 
           document.getElementById(
             "phone"
@@ -3427,23 +2343,26 @@
             member.phone || phone;
 
 
-
-          /* ==================================================
-             顯示會員資格
-          ================================================== */
-
+          /* 清空上一個資格顯示 */
 
           memberStatus.innerHTML =
             "";
 
+          memberWarningWrap.classList.remove(
+            "show"
+          );
 
+
+          /* ==================================================
+             合格會員
+             會籍顯示在「預約登記」右邊
+          ================================================== */
 
           if (
             member.eligible
             &&
             member.membership_label
           ) {
-
 
             const badge =
               document.createElement(
@@ -3463,37 +2382,24 @@
               badge
             );
 
-
-          } else {
-
-
-            const warning =
-              document.createElement(
-                "div"
-              );
+          }
 
 
-            warning.className =
-              "member-ineligible";
+          /* ==================================================
+             不符合資格
+             長警告文字改放標題下面
+          ================================================== */
 
+          else {
 
-            warning.textContent =
-              "初步偵測您未符合活動資格，有任何疑問請與客服聯繫。";
-
-
-            memberStatus.appendChild(
-              warning
+            memberWarningWrap.classList.add(
+              "show"
             );
-
 
           }
 
 
-
-          /* ==================================================
-             進入活動
-          ================================================== */
-
+          /* 進入活動 */
 
           memberGate.hidden =
             true;
@@ -3503,32 +2409,22 @@
             false;
 
 
-          window.scrollTo(
-            {
-              top: 0,
-              behavior: "instant"
-            }
-          );
+          window.scrollTo({
+            top: 0,
+            behavior: "instant"
+          });
 
 
+        } catch (err) {
 
-        } catch (
-          err
-        ) {
-
-
-          console.error(
-            err
-          );
+          console.error(err);
 
 
           showVerifyError(
             "系統暫時無法完成會員核對，請稍後再試。"
           );
 
-
         } finally {
-
 
           verifyButton.disabled =
             false;
@@ -3537,9 +2433,7 @@
           verifyButton.textContent =
             "進入活動";
 
-
         }
-
 
       }
     );
@@ -3550,54 +2444,45 @@
        預約
     ================================================== */
 
-
     const bookingForm =
       document.getElementById(
         "bookingForm"
       );
-
 
     const storeInput =
       document.getElementById(
         "store"
       );
 
-
     const storeButtons =
       document.querySelectorAll(
         ".store-button"
       );
-
 
     const timeSelect =
       document.getElementById(
         "time"
       );
 
-
     const dateInput =
       document.getElementById(
         "date"
       );
-
 
     const calendarDays =
       document.getElementById(
         "calendarDays"
       );
 
-
     const selectedDateDisplay =
       document.getElementById(
         "selectedDateDisplay"
       );
 
-
     const agreement =
       document.getElementById(
         "agreement"
       );
-
 
     const toast =
       document.getElementById(
@@ -3610,12 +2495,9 @@
        門市時間
     ================================================== */
 
-
     const storeTimes = {
 
-
       "勤美旗艦門市": [
-
         "11:00",
         "12:00",
         "13:00",
@@ -3625,12 +2507,9 @@
         "17:00",
         "18:00",
         "19:00"
-
       ],
 
-
       "沙鹿站前門市": [
-
         "12:00",
         "13:00",
         "14:00",
@@ -3640,18 +2519,13 @@
         "18:00",
         "19:00",
         "20:00"
-
       ]
-
 
     };
 
 
 
-    function updateTimeOptions(
-      storeName
-    ) {
-
+    function updateTimeOptions(storeName) {
 
       timeSelect.innerHTML =
         "";
@@ -3672,19 +2546,11 @@
       );
 
 
-
       if (
-
         !storeName
-
         ||
-
-        !storeTimes[
-          storeName
-        ]
-
+        !storeTimes[storeName]
       ) {
-
 
         timeSelect.disabled =
           true;
@@ -3699,19 +2565,14 @@
       }
 
 
-
       placeholder.textContent =
         "請選擇預約時段";
-
 
 
       storeTimes[
         storeName
       ].forEach(
-        function(
-          time
-        ) {
-
+        function(time) {
 
           const option =
             document.createElement(
@@ -3731,50 +2592,37 @@
             option
           );
 
-
         }
       );
 
 
-
       timeSelect.disabled =
         false;
-
 
     }
 
 
 
     storeButtons.forEach(
-      function(
-        button
-      ) {
-
+      function(button) {
 
         button.addEventListener(
           "click",
           function() {
 
-
             const selectedStore =
               button.dataset.store;
 
 
-
             storeButtons.forEach(
-              function(
-                item
-              ) {
-
+              function(item) {
 
                 item.classList.remove(
                   "selected"
                 );
 
-
               }
             );
-
 
 
             button.classList.add(
@@ -3782,20 +2630,16 @@
             );
 
 
-
             storeInput.value =
               selectedStore;
-
 
 
             updateTimeOptions(
               selectedStore
             );
 
-
           }
         );
-
 
       }
     );
@@ -3803,17 +2647,14 @@
 
 
     /* ==================================================
-       九月月曆
+       2026 年 9 月月曆
     ================================================== */
-
 
     const calendarYear =
       2026;
 
-
     const calendarMonth =
       8;
-
 
 
     const firstDay =
@@ -3824,7 +2665,6 @@
       ).getDay();
 
 
-
     const daysInMonth =
       new Date(
         calendarYear,
@@ -3833,13 +2673,11 @@
       ).getDate();
 
 
-
     for (
       let i = 0;
       i < firstDay;
       i++
     ) {
-
 
       const empty =
         document.createElement(
@@ -3855,7 +2693,6 @@
         empty
       );
 
-
     }
 
 
@@ -3865,7 +2702,6 @@
       day <= daysInMonth;
       day++
     ) {
-
 
       const button =
         document.createElement(
@@ -3885,45 +2721,34 @@
         day;
 
 
-
       const dayText =
-        String(
-          day
-        ).padStart(
+        String(day).padStart(
           2,
           "0"
         );
-
 
 
       const dateValue =
         `2026-09-${dayText}`;
 
 
-
       button.addEventListener(
         "click",
         function() {
-
 
           document
             .querySelectorAll(
               ".calendar-day"
             )
             .forEach(
-              function(
-                item
-              ) {
-
+              function(item) {
 
                 item.classList.remove(
                   "selected"
                 );
 
-
               }
             );
-
 
 
           button.classList.add(
@@ -3931,31 +2756,25 @@
           );
 
 
-
           dateInput.value =
             dateValue;
-
 
 
           selectedDateDisplay.textContent =
             `已選擇：2026 / 09 / ${dayText}`;
 
 
-
           selectedDateDisplay.classList.add(
             "show"
           );
-
 
         }
       );
 
 
-
       calendarDays.appendChild(
         button
       );
-
 
     }
 
@@ -3965,16 +2784,11 @@
        Toast
     ================================================== */
 
-
     let toastTimer =
       null;
 
 
-
-    function showToast(
-      message
-    ) {
-
+    function showToast(message) {
 
       toast.textContent =
         message;
@@ -3985,35 +2799,26 @@
       );
 
 
-
-      if (
-        toastTimer
-      ) {
-
+      if (toastTimer) {
 
         clearTimeout(
           toastTimer
         );
 
-
       }
-
 
 
       toastTimer =
         setTimeout(
           function() {
 
-
             toast.classList.remove(
               "show"
             );
 
-
           },
           2300
         );
-
 
     }
 
@@ -4021,102 +2826,72 @@
 
     /* ==================================================
        預約送出
-       目前仍是測試模式
+       目前仍為前端測試
     ================================================== */
-
 
     bookingForm.addEventListener(
       "submit",
-      function(
-        event
-      ) {
-
+      function(event) {
 
         event.preventDefault();
 
 
-
-        if (
-          !storeInput.value
-        ) {
-
+        if (!storeInput.value) {
 
           showToast(
             "請選擇預約門市"
           );
 
-
           return;
 
         }
 
 
-
-        if (
-          !dateInput.value
-        ) {
-
+        if (!dateInput.value) {
 
           showToast(
             "請選擇預約日期"
           );
 
-
           return;
 
         }
 
 
-
-        if (
-          !timeSelect.value
-        ) {
-
+        if (!timeSelect.value) {
 
           showToast(
             "請選擇預約時段"
           );
 
-
           return;
 
         }
 
 
-
-        if (
-          !agreement.checked
-        ) {
-
+        if (!agreement.checked) {
 
           showToast(
             "請先確認活動使用規則"
           );
 
-
           return;
 
         }
-
 
 
         showToast(
           "目前為預約介面測試版本"
         );
 
-
       }
     );
 
 
 
-    updateTimeOptions(
-      ""
-    );
-
+    updateTimeOptions("");
 
   </script>
-
 
 </body>
 </html>
