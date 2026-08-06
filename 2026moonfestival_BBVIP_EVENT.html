@@ -34,6 +34,7 @@
 
       --white: #ffffff;
       --red: #ff7272;
+      --green: #6dd6a0;
 
       --text-soft:
         rgba(255,255,255,.68);
@@ -800,7 +801,6 @@
 
     /* ==================================================
        不符合資格提示
-       移除底框 / 背景 / 圓角
     ================================================== */
 
     .member-warning-wrap {
@@ -831,9 +831,6 @@
         0;
 
       border:
-        0;
-
-      border-radius:
         0;
 
       background:
@@ -977,6 +974,9 @@
 
       max-height:
         var(--control-height);
+
+      margin:
+        0;
 
       padding:
         0 15px;
@@ -1590,6 +1590,196 @@
     }
 
 
+    .submit-button:disabled {
+
+      opacity:
+        .58;
+
+      cursor:
+        wait;
+
+      box-shadow:
+        none;
+
+    }
+
+
+
+    /* ==================================================
+       預約完成
+    ================================================== */
+
+    .booking-success {
+
+      display:
+        none;
+
+      padding:
+        30px 22px;
+
+      border:
+        1px solid
+        rgba(247,181,0,.22);
+
+      border-radius:
+        var(--radius);
+
+      background:
+
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.075),
+          rgba(255,255,255,.035)
+        );
+
+      text-align:
+        center;
+
+      box-shadow:
+        var(--shadow);
+
+    }
+
+
+    .booking-success.show {
+
+      display:
+        block;
+
+    }
+
+
+    .success-icon {
+
+      width:
+        58px;
+
+      height:
+        58px;
+
+      margin:
+        0 auto 17px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      border-radius:
+        50%;
+
+      background:
+        var(--gold);
+
+      color:
+        var(--navy);
+
+      font-size:
+        30px;
+
+      font-weight:
+        900;
+
+    }
+
+
+    .success-title {
+
+      margin:
+        0 0 9px;
+
+      font-size:
+        23px;
+
+      font-weight:
+        850;
+
+    }
+
+
+    .success-text {
+
+      margin:
+        0;
+
+      color:
+        var(--text-soft);
+
+      font-size:
+        14px;
+
+      line-height:
+        1.75;
+
+    }
+
+
+    .success-detail {
+
+      margin-top:
+        20px;
+
+      padding:
+        15px 17px;
+
+      border-radius:
+        14px;
+
+      background:
+        rgba(255,255,255,.055);
+
+      text-align:
+        left;
+
+    }
+
+
+    .success-detail-row {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      padding:
+        7px 0;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .success-detail-label {
+
+      color:
+        rgba(255,255,255,.48);
+
+    }
+
+
+    .success-detail-value {
+
+      color:
+        rgba(255,255,255,.92);
+
+      font-weight:
+        700;
+
+      text-align:
+        right;
+
+    }
+
+
 
     /* ==================================================
        活動說明
@@ -1993,8 +2183,6 @@
       }
 
 
-      /* Logo 稍微放大 */
-
       .logo-area img {
 
         max-width:
@@ -2211,6 +2399,17 @@
 
         min-height:
           54px;
+
+      }
+
+
+      .booking-success {
+
+        padding:
+          27px 18px;
+
+        border-radius:
+          19px;
 
       }
 
@@ -2489,8 +2688,6 @@
 
 
 
-          <!-- 不符合資格提示 -->
-
           <div
             id="memberWarningWrap"
             class="member-warning-wrap"
@@ -2513,7 +2710,14 @@
 
 
 
-        <div class="booking-card">
+        <!-- ==================================================
+             預約表單
+        ================================================== -->
+
+        <div
+          id="bookingCard"
+          class="booking-card"
+        >
 
 
           <form
@@ -2521,9 +2725,6 @@
             class="form"
           >
 
-
-
-            <!-- 姓名 -->
 
             <div class="field">
 
@@ -2548,8 +2749,6 @@
 
 
 
-            <!-- 聯絡電話 -->
-
             <div class="field">
 
               <label
@@ -2572,8 +2771,6 @@
             </div>
 
 
-
-            <!-- 手機型號 -->
 
             <div class="field">
 
@@ -2792,7 +2989,7 @@
 
 
 
-            <!-- 活動確認 -->
+            <!-- 核選 -->
 
             <label
               class="agreement"
@@ -2816,7 +3013,10 @@
 
 
 
+            <!-- 送出 -->
+
             <button
+              id="submitBookingButton"
               type="submit"
               class="submit-button"
             >
@@ -2828,6 +3028,126 @@
 
 
         </div>
+
+
+
+        <!-- ==================================================
+             預約成功
+        ================================================== -->
+
+        <div
+          id="bookingSuccess"
+          class="booking-success"
+        >
+
+
+          <div class="success-icon">
+            ✓
+          </div>
+
+
+          <h3 class="success-title">
+            預約完成
+          </h3>
+
+
+          <p class="success-text">
+            您的活動預約已成功登記，請依預約時間前往指定門市。
+          </p>
+
+
+          <div class="success-detail">
+
+
+            <div class="success-detail-row">
+
+              <span class="success-detail-label">
+                會員資格
+              </span>
+
+              <span
+                id="successMembership"
+                class="success-detail-value"
+              ></span>
+
+            </div>
+
+
+            <div class="success-detail-row">
+
+              <span class="success-detail-label">
+                活動優惠
+              </span>
+
+              <span
+                id="successPrice"
+                class="success-detail-value"
+              ></span>
+
+            </div>
+
+
+            <div class="success-detail-row">
+
+              <span class="success-detail-label">
+                手機型號
+              </span>
+
+              <span
+                id="successDevice"
+                class="success-detail-value"
+              ></span>
+
+            </div>
+
+
+            <div class="success-detail-row">
+
+              <span class="success-detail-label">
+                預約門市
+              </span>
+
+              <span
+                id="successStore"
+                class="success-detail-value"
+              ></span>
+
+            </div>
+
+
+            <div class="success-detail-row">
+
+              <span class="success-detail-label">
+                預約日期
+              </span>
+
+              <span
+                id="successDate"
+                class="success-detail-value"
+              ></span>
+
+            </div>
+
+
+            <div class="success-detail-row">
+
+              <span class="success-detail-label">
+                預約時段
+              </span>
+
+              <span
+                id="successTime"
+                class="success-detail-value"
+              ></span>
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
 
       </div>
 
@@ -2916,16 +3236,11 @@
                 </div>
 
                 <div class="benefit-desc">
-
                   可
-
                   <span class="benefit-highlight">
                     免費
                   </span>
-
-                  取得一次保貼更換服務
-                  （原價 890 元）
-
+                  取得一次保貼更換服務（原價 890 元）
                 </div>
 
               </div>
@@ -2939,16 +3254,11 @@
                 </div>
 
                 <div class="benefit-desc">
-
                   可以
-
                   <span class="benefit-highlight">
                     499 元
                   </span>
-
-                  取得一次保貼更換服務
-                  （原價 890 元）
-
+                  取得一次保貼更換服務（原價 890 元）
                 </div>
 
               </div>
@@ -2962,16 +3272,11 @@
                 </div>
 
                 <div class="benefit-desc">
-
                   可以
-
                   <span class="benefit-highlight">
                     599 元
                   </span>
-
-                  取得一次保貼更換服務
-                  （原價 890 元）
-
+                  取得一次保貼更換服務（原價 890 元）
                 </div>
 
               </div>
@@ -2989,15 +3294,12 @@
               創始會員定義
             </div>
 
-
             <div class="activity-value">
-
               於 2026/01/01～2026/06/30
               期間加入黑盒子維修中心 BBVIP 盒芯會籍，
               且在 2026/01/01 後至今，
               於勤美旗艦、沙鹿站前任一門市
               進行過設備維修或配件購買的任何貴賓皆屬之。
-
             </div>
 
           </div>
@@ -3017,18 +3319,15 @@
                 每位合格會員在期間內皆可兌換一次福利。
               </li>
 
-
               <li>
                 預約後若需更改服務時間，請聯繫 LINE 官方客服。
               </li>
-
 
               <li>
                 本次活動僅限 iPhone X～iPhone 17 系列，
                 提供之保護貼為 9H 鋼化亮面玻璃貼，
                 更換後不提供保固。
               </li>
-
 
               <li>
                 預約後於指定時間前往指定門市，
@@ -3137,7 +3436,22 @@
 
 
     /* ==================================================
-       會員核對
+       已驗證會員暫存資料
+    ================================================== */
+
+    let verifiedMemberPhone =
+      "";
+
+    let verifiedMemberBirthday =
+      "";
+
+    let verifiedMemberEligible =
+      false;
+
+
+
+    /* ==================================================
+       會員核對元素
     ================================================== */
 
     const memberGate =
@@ -3195,9 +3509,7 @@
 
 
 
-    function normalizePhone(
-      phone
-    ) {
+    function normalizePhone(phone) {
 
       return String(
         phone || ""
@@ -3217,7 +3529,6 @@
     function formatBirthdayInput(
       value
     ) {
-
 
       const digits =
         String(
@@ -3291,12 +3602,10 @@
       "input",
       function() {
 
-
         verifyBirthday.value =
           formatBirthdayInput(
             verifyBirthday.value
           );
-
 
       }
     );
@@ -3306,7 +3615,6 @@
     function normalizeBirthday(
       value
     ) {
-
 
       const digits =
         String(
@@ -3390,40 +3698,15 @@
 
 
       return (
-
-        String(
-          year
-        ).padStart(
-          4,
-          "0"
-        )
-
+        String(year).padStart(4, "0")
         +
-
         "-"
-
         +
-
-        String(
-          month
-        ).padStart(
-          2,
-          "0"
-        )
-
+        String(month).padStart(2, "0")
         +
-
         "-"
-
         +
-
-        String(
-          day
-        ).padStart(
-          2,
-          "0"
-        )
-
+        String(day).padStart(2, "0")
       );
 
     }
@@ -3434,7 +3717,6 @@
       message
     ) {
 
-
       verifyMessage.textContent =
         message;
 
@@ -3443,13 +3725,11 @@
         "show"
       );
 
-
     }
 
 
 
     function hideVerifyError() {
-
 
       verifyMessage.textContent =
         "";
@@ -3458,7 +3738,6 @@
       verifyMessage.classList.remove(
         "show"
       );
-
 
     }
 
@@ -3474,12 +3753,9 @@
         event
       ) {
 
-
         event.preventDefault();
 
-
         hideVerifyError();
-
 
 
         const phone =
@@ -3494,45 +3770,36 @@
           );
 
 
-
         if (
           !phone
         ) {
-
 
           showVerifyError(
             "請輸入會員電話。"
           );
 
-
           return;
 
         }
-
 
 
         if (
           !birthday
         ) {
 
-
           showVerifyError(
             "請輸入正確的會員生日，例如 1995-04-22。"
           );
 
-
           verifyBirthday.focus();
-
 
           return;
 
         }
 
 
-
         verifyBirthday.value =
           birthday;
-
 
 
         verifyButton.disabled =
@@ -3541,7 +3808,6 @@
 
         verifyButton.textContent =
           "會員資料核對中…";
-
 
 
         try {
@@ -3566,11 +3832,9 @@
             );
 
 
-
           if (
             error
           ) {
-
 
             console.error(
               "會員核對錯誤：",
@@ -3588,27 +3852,17 @@
           }
 
 
-
           const member =
-
-            Array.isArray(
-              data
-            )
-
-            ?
-
-            data[0]
-
-            :
-
-            data;
-
+            Array.isArray(data)
+              ?
+              data[0]
+              :
+              data;
 
 
           if (
             !member
           ) {
-
 
             showVerifyError(
               "查無符合的會員資料，請確認會員電話與生日是否與會員資料相同。"
@@ -3621,11 +3875,29 @@
 
 
 
+          /* 儲存本次已驗證身份 */
+
+          verifiedMemberPhone =
+            phone;
+
+
+          verifiedMemberBirthday =
+            birthday;
+
+
+          verifiedMemberEligible =
+            Boolean(
+              member.eligible
+            );
+
+
+
+          /* 自動帶入會員資料 */
+
           document.getElementById(
             "name"
           ).value =
             member.full_name || "";
-
 
 
           document.getElementById(
@@ -3634,6 +3906,8 @@
             member.phone || phone;
 
 
+
+          /* 清除舊狀態 */
 
           memberStatus.innerHTML =
             "";
@@ -3644,6 +3918,8 @@
           );
 
 
+
+          /* 合格會員 */
 
           if (
 
@@ -3678,6 +3954,8 @@
           }
 
 
+          /* 不符合資格 */
+
           else {
 
 
@@ -3690,6 +3968,8 @@
 
 
 
+          /* 進入主頁 */
+
           memberGate.hidden =
             true;
 
@@ -3698,16 +3978,10 @@
             false;
 
 
-          window.scrollTo(
-            {
-              top:
-                0,
-
-              behavior:
-                "instant"
-            }
-          );
-
+          window.scrollTo({
+            top: 0,
+            behavior: "instant"
+          });
 
 
         }
@@ -3758,6 +4032,24 @@
       );
 
 
+    const bookingCard =
+      document.getElementById(
+        "bookingCard"
+      );
+
+
+    const bookingSuccess =
+      document.getElementById(
+        "bookingSuccess"
+      );
+
+
+    const submitBookingButton =
+      document.getElementById(
+        "submitBookingButton"
+      );
+
+
     const storeInput =
       document.getElementById(
         "store"
@@ -3800,12 +4092,22 @@
       );
 
 
+    const deviceSelect =
+      document.getElementById(
+        "device"
+      );
+
+
     const toast =
       document.getElementById(
         "toast"
       );
 
 
+
+    /* ==================================================
+       門市時段
+    ================================================== */
 
     const storeTimes = {
 
@@ -3868,7 +4170,6 @@
       );
 
 
-
       if (
 
         !storeName
@@ -3895,10 +4196,8 @@
       }
 
 
-
       placeholder.textContent =
         "請選擇預約時段";
-
 
 
       storeTimes[
@@ -3932,7 +4231,6 @@
       );
 
 
-
       timeSelect.disabled =
         false;
 
@@ -3956,7 +4254,6 @@
               button.dataset.store;
 
 
-
             storeButtons.forEach(
               function(
                 item
@@ -3978,7 +4275,6 @@
             );
 
 
-
             button.classList.add(
               "selected"
             );
@@ -3990,10 +4286,8 @@
             );
 
 
-
             storeInput.value =
               selectedStore;
-
 
 
             updateTimeOptions(
@@ -4022,14 +4316,12 @@
       8;
 
 
-
     const firstDay =
       new Date(
         calendarYear,
         calendarMonth,
         1
       ).getDay();
-
 
 
     const daysInMonth =
@@ -4092,7 +4384,6 @@
         day;
 
 
-
       const dayText =
         String(
           day
@@ -4102,10 +4393,8 @@
         );
 
 
-
       const dateValue =
         `2026-09-${dayText}`;
-
 
 
       button.addEventListener(
@@ -4132,21 +4421,17 @@
             );
 
 
-
           button.classList.add(
             "selected"
           );
-
 
 
           dateInput.value =
             dateValue;
 
 
-
           selectedDateDisplay.textContent =
             `已選擇：2026 / 09 / ${dayText}`;
-
 
 
           selectedDateDisplay.classList.add(
@@ -4156,7 +4441,6 @@
 
         }
       );
-
 
 
       calendarDays.appendChild(
@@ -4176,7 +4460,6 @@
       null;
 
 
-
     function showToast(
       message
     ) {
@@ -4189,7 +4472,6 @@
       toast.classList.add(
         "show"
       );
-
 
 
       if (
@@ -4205,7 +4487,6 @@
       }
 
 
-
       toastTimer =
         setTimeout(
           function() {
@@ -4217,7 +4498,7 @@
 
 
           },
-          2300
+          2800
         );
 
 
@@ -4226,18 +4507,144 @@
 
 
     /* ==================================================
-       預約送出
-       目前仍為測試版本
+       顯示預約成功
+    ================================================== */
+
+    function showBookingSuccess(
+      result
+    ) {
+
+
+      bookingCard.style.display =
+        "none";
+
+
+      bookingSuccess.classList.add(
+        "show"
+      );
+
+
+      document.getElementById(
+        "successMembership"
+      ).textContent =
+        result.membership_label || "-";
+
+
+      document.getElementById(
+        "successPrice"
+      ).textContent =
+        Number(
+          result.benefit_price
+        ) === 0
+          ?
+          "免費"
+          :
+          `$${result.benefit_price}`;
+
+
+      document.getElementById(
+        "successDevice"
+      ).textContent =
+        deviceSelect.value;
+
+
+      document.getElementById(
+        "successStore"
+      ).textContent =
+        storeInput.value;
+
+
+      document.getElementById(
+        "successDate"
+      ).textContent =
+        dateInput.value.replaceAll(
+          "-",
+          "/"
+        );
+
+
+      document.getElementById(
+        "successTime"
+      ).textContent =
+        timeSelect.value;
+
+
+      bookingSuccess.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+
+    }
+
+
+
+    /* ==================================================
+       正式建立預約
     ================================================== */
 
     bookingForm.addEventListener(
       "submit",
-      function(
+      async function(
         event
       ) {
 
 
         event.preventDefault();
+
+
+
+        /* 必須先完成會員核對 */
+
+        if (
+          !verifiedMemberPhone
+          ||
+          !verifiedMemberBirthday
+        ) {
+
+
+          showToast(
+            "會員驗證資料已失效，請重新整理頁面後再次核對。"
+          );
+
+
+          return;
+
+        }
+
+
+
+        /* 前端先阻擋明顯不符合資格者 */
+
+        if (
+          !verifiedMemberEligible
+        ) {
+
+
+          showToast(
+            "初步偵測您未符合活動資格，有任何疑問請與客服聯繫。"
+          );
+
+
+          return;
+
+        }
+
+
+
+        if (
+          !deviceSelect.value
+        ) {
+
+
+          showToast(
+            "請選擇手機型號"
+          );
+
+
+          return;
+
+        }
 
 
 
@@ -4305,15 +4712,192 @@
 
 
 
-        showToast(
-          "目前為預約介面測試版本"
-        );
+        /* 防止重複點擊 */
+
+        submitBookingButton.disabled =
+          true;
+
+
+        submitBookingButton.textContent =
+          "預約送出中…";
+
+
+
+        try {
+
+
+          const {
+            data,
+            error
+          } =
+
+            await supabaseClient.rpc(
+              "create_2026moon_booking",
+              {
+
+                p_phone:
+                  verifiedMemberPhone,
+
+                p_birthday:
+                  verifiedMemberBirthday,
+
+                p_device_model:
+                  deviceSelect.value,
+
+                p_store:
+                  storeInput.value,
+
+                p_booking_date:
+                  dateInput.value,
+
+                p_booking_time:
+                  timeSelect.value
+
+              }
+            );
+
+
+
+          if (
+            error
+          ) {
+
+
+            console.error(
+              "建立預約 RPC 錯誤：",
+              error
+            );
+
+
+            showToast(
+              "預約建立失敗，請稍後再試。"
+            );
+
+
+            return;
+
+          }
+
+
+
+          const result =
+            Array.isArray(data)
+              ?
+              data[0]
+              :
+              data;
+
+
+
+          if (
+            !result
+          ) {
+
+
+            showToast(
+              "系統沒有收到預約結果，請稍後再試。"
+            );
+
+
+            return;
+
+          }
+
+
+
+          /* RPC 判斷失敗 */
+
+          if (
+            !result.success
+          ) {
+
+
+            showToast(
+              result.message
+              ||
+              "無法建立預約。"
+            );
+
+
+            return;
+
+          }
+
+
+
+          /* ==================================================
+             預約成功
+          ================================================== */
+
+
+          showBookingSuccess(
+            result
+          );
+
+
+          showToast(
+            "預約建立成功"
+          );
+
+
+
+        }
+
+        catch (
+          err
+        ) {
+
+
+          console.error(
+            "預約系統錯誤：",
+            err
+          );
+
+
+          showToast(
+            "系統暫時無法建立預約，請稍後再試。"
+          );
+
+
+        }
+
+        finally {
+
+
+          /*
+            只有尚未成功時才恢復按鈕。
+            成功後 bookingCard 已經被隱藏。
+          */
+
+          if (
+            bookingSuccess.classList.contains(
+              "show"
+            ) === false
+          ) {
+
+
+            submitBookingButton.disabled =
+              false;
+
+
+            submitBookingButton.textContent =
+              "確認預約";
+
+
+          }
+
+
+        }
 
 
       }
     );
 
 
+
+    /* ==================================================
+       初始化
+    ================================================== */
 
     updateTimeOptions(
       ""
