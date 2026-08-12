@@ -3256,7 +3256,7 @@
                 <div class="benefit-desc">
                   可以
                   <span class="benefit-highlight">
-                    499 元
+                    199 元
                   </span>
                   取得一次保貼更換服務（原價 890 元）
                 </div>
@@ -3274,7 +3274,7 @@
                 <div class="benefit-desc">
                   可以
                   <span class="benefit-highlight">
-                    599 元
+                    299 元
                   </span>
                   取得一次保貼更換服務（原價 890 元）
                 </div>
@@ -3432,6 +3432,109 @@
         SUPABASE_URL,
         SUPABASE_ANON_KEY
       );
+
+
+
+    /* ==================================================
+       中秋活動 LINE 通知 Apps Script
+    ================================================== */
+
+    const MOON2026_LINE_NOTIFY_URL =
+      "https://script.google.com/macros/s/AKfycbwqi8cD5glDrAuc1hVzEY0JiWQolBhm_n-qoE-6c9mKHKBM7m19G2WQ64LEooxUsAxA/exec";
+
+
+    function notifyMoon2026Line(
+      bookingId
+    ) {
+
+
+      if (
+        !bookingId
+      ) {
+
+
+        console.warn(
+          "本次預約沒有取得 booking_id，因此略過 LINE 通知。"
+        );
+
+
+        return;
+
+
+      }
+
+
+      try {
+
+
+        fetch(
+          MOON2026_LINE_NOTIFY_URL,
+          {
+
+            method:
+              "POST",
+
+            mode:
+              "no-cors",
+
+            headers: {
+
+              "Content-Type":
+                "text/plain;charset=utf-8"
+
+            },
+
+            body:
+              JSON.stringify({
+
+                action:
+                  "2026moon_booking",
+
+                booking_id:
+                  bookingId
+
+              })
+
+          }
+        )
+        .catch(
+          function(
+            error
+          ) {
+
+
+            /*
+              LINE 通知屬於預約完成後的附加流程。
+              即使通知失敗，也不能影響客人的預約成功結果。
+            */
+
+            console.error(
+              "中秋活動 LINE 通知送出失敗：",
+              error
+            );
+
+
+          }
+        );
+
+
+      }
+
+      catch (
+        error
+      ) {
+
+
+        console.error(
+          "中秋活動 LINE 通知發生錯誤：",
+          error
+        );
+
+
+      }
+
+
+    }
 
 
 
@@ -4828,6 +4931,18 @@
           /* ==================================================
              預約成功
           ================================================== */
+
+
+          /*
+            Supabase 已成功建立預約後，
+            直接把這次回傳的 booking_id 傳給中秋活動 Apps Script。
+
+            LINE 通知不等待回應，也不影響客人的預約成功畫面。
+          */
+
+          notifyMoon2026Line(
+            result.booking_id
+          );
 
 
           showBookingSuccess(
