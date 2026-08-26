@@ -493,34 +493,6 @@
     }
 
 
-    #verifyBirthday {
-
-      letter-spacing:
-        .4px;
-
-      font-variant-numeric:
-        tabular-nums;
-
-    }
-
-
-    .verify-hint {
-
-      margin-top:
-        -1px;
-
-      color:
-        rgba(255,255,255,.42);
-
-      font-size:
-        11px;
-
-      line-height:
-        1.55;
-
-    }
-
-
     .verify-button {
 
       width:
@@ -2535,7 +2507,7 @@
 
 
         <p class="verify-subtitle">
-          本活動為會員限定，請先輸入會員資料進行身分核對。
+          本活動為會員限定，請輸入會員登記電話進行身分核對。
         </p>
 
       </div>
@@ -2571,39 +2543,6 @@
             >
 
           </div>
-
-
-
-          <div class="verify-field">
-
-            <label
-              class="verify-required"
-              for="verifyBirthday"
-            >
-              會員生日
-            </label>
-
-
-            <input
-              id="verifyBirthday"
-              class="verify-input"
-              type="text"
-              inputmode="numeric"
-              autocomplete="bday"
-              maxlength="10"
-              placeholder="YYYY-MM-DD"
-              required
-            >
-
-
-            <div class="verify-hint">
-              請由西元年份開始輸入，例如 19950422。
-            </div>
-
-          </div>
-
-
-
           <button
             id="verifyButton"
             class="verify-button"
@@ -3544,10 +3483,6 @@
 
     let verifiedMemberPhone =
       "";
-
-    let verifiedMemberBirthday =
-      "";
-
     let verifiedMemberEligible =
       false;
 
@@ -3579,14 +3514,6 @@
       document.getElementById(
         "verifyPhone"
       );
-
-
-    const verifyBirthday =
-      document.getElementById(
-        "verifyBirthday"
-      );
-
-
     const verifyButton =
       document.getElementById(
         "verifyButton"
@@ -3622,199 +3549,6 @@
       );
 
     }
-
-
-
-    /* ==================================================
-       生日自動格式
-    ================================================== */
-
-    function formatBirthdayInput(
-      value
-    ) {
-
-      const digits =
-        String(
-          value || ""
-        )
-        .replace(
-          /\D/g,
-          ""
-        )
-        .slice(
-          0,
-          8
-        );
-
-
-      if (
-        digits.length <= 4
-      ) {
-
-        return digits;
-
-      }
-
-
-      if (
-        digits.length <= 6
-      ) {
-
-        return (
-          digits.slice(
-            0,
-            4
-          )
-          +
-          "-"
-          +
-          digits.slice(
-            4
-          )
-        );
-
-      }
-
-
-      return (
-        digits.slice(
-          0,
-          4
-        )
-        +
-        "-"
-        +
-        digits.slice(
-          4,
-          6
-        )
-        +
-        "-"
-        +
-        digits.slice(
-          6,
-          8
-        )
-      );
-
-    }
-
-
-
-    verifyBirthday.addEventListener(
-      "input",
-      function() {
-
-        verifyBirthday.value =
-          formatBirthdayInput(
-            verifyBirthday.value
-          );
-
-      }
-    );
-
-
-
-    function normalizeBirthday(
-      value
-    ) {
-
-      const digits =
-        String(
-          value || ""
-        )
-        .replace(
-          /\D/g,
-          ""
-        );
-
-
-      if (
-        digits.length !== 8
-      ) {
-
-        return null;
-
-      }
-
-
-      const year =
-        Number(
-          digits.slice(
-            0,
-            4
-          )
-        );
-
-
-      const month =
-        Number(
-          digits.slice(
-            4,
-            6
-          )
-        );
-
-
-      const day =
-        Number(
-          digits.slice(
-            6,
-            8
-          )
-        );
-
-
-      const testDate =
-        new Date(
-          Date.UTC(
-            year,
-            month - 1,
-            day
-          )
-        );
-
-
-      if (
-
-        testDate.getUTCFullYear()
-        !==
-        year
-
-        ||
-
-        testDate.getUTCMonth() + 1
-        !==
-        month
-
-        ||
-
-        testDate.getUTCDate()
-        !==
-        day
-
-      ) {
-
-        return null;
-
-      }
-
-
-      return (
-        String(year).padStart(4, "0")
-        +
-        "-"
-        +
-        String(month).padStart(2, "0")
-        +
-        "-"
-        +
-        String(day).padStart(2, "0")
-      );
-
-    }
-
-
 
     function showVerifyError(
       message
@@ -3865,14 +3599,6 @@
           normalizePhone(
             verifyPhone.value
           );
-
-
-        const birthday =
-          normalizeBirthday(
-            verifyBirthday.value
-          );
-
-
         if (
           !phone
         ) {
@@ -3884,27 +3610,6 @@
           return;
 
         }
-
-
-        if (
-          !birthday
-        ) {
-
-          showVerifyError(
-            "請輸入正確的會員生日，例如 1995-04-22。"
-          );
-
-          verifyBirthday.focus();
-
-          return;
-
-        }
-
-
-        verifyBirthday.value =
-          birthday;
-
-
         verifyButton.disabled =
           true;
 
@@ -3926,10 +3631,7 @@
               {
 
                 p_phone:
-                  phone,
-
-                p_birthday:
-                  birthday
+                  phone
 
               }
             );
@@ -3968,7 +3670,7 @@
           ) {
 
             showVerifyError(
-              "查無符合的會員資料，請確認會員電話與生日是否與會員資料相同。"
+              "查無符合的會員資料，請確認會員電話是否與會員資料相同。"
             );
 
 
@@ -3982,12 +3684,6 @@
 
           verifiedMemberPhone =
             phone;
-
-
-          verifiedMemberBirthday =
-            birthday;
-
-
           verifiedMemberEligible =
             Boolean(
               member.eligible
@@ -4701,8 +4397,6 @@
 
         if (
           !verifiedMemberPhone
-          ||
-          !verifiedMemberBirthday
         ) {
 
 
@@ -4840,9 +4534,6 @@
 
                 p_phone:
                   verifiedMemberPhone,
-
-                p_birthday:
-                  verifiedMemberBirthday,
 
                 p_device_model:
                   deviceSelect.value,
